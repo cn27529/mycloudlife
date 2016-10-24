@@ -154,7 +154,7 @@ router.get('/acc/:id', function(req, res) {
 });
 
 
-//:keyword通關密語是1q2w3e!Q@W#E
+//all的通關密語是1q2w3e!Q@W#E
 router.get('/all/:keyword', function(req, res) {
 
     //var id = req.params.id;
