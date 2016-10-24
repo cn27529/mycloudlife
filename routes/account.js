@@ -151,8 +151,8 @@ router.get('/has/:email', function(req, res) {
 
 });
 
-
-router.get('/all', function(req, res) {
+//all的通關密語是1q2w3e!Q@W#E
+router.get('/all/:keyword', function(req, res) {
 
     var id = req.params.id;
     //var token = req.params.token; //先不檢查
