@@ -6,7 +6,10 @@ var cool = require('cool-ascii-faces');
 //文件
 //https://cn27529.gitbooks.io/mycloudlife-api/content/account.html
 
-
+router.get('/', function(req, res) {
+    res.send(cool());
+    //console.log(cool());
+});
 
 //create
 router.post('/create', function(req, res) {
@@ -32,16 +35,17 @@ router.post('/create', function(req, res) {
             }
         })
         .spread(function(data, created) {
-                console.log(data.get({
-                    plain: true
-                }))
+            console.log(data.get({
+                plain: true
+            }))
 
-                //console.log(data);
-                json.id = data.id; //這是使用者的資料代碼, 可存在用戶端
-                json.msg = "ok,資料己建立";
-            }
-            res.json(json);
+            //console.log(data);
+            json.id = data.id; //這是使用者的資料代碼, 可存在用戶端
+            json.msg = "ok,資料己建立";
+
         })
+
+    res.json(json);
 
 });
 
@@ -156,7 +160,11 @@ router.get('/has/:email', function(req, res) {
 
 });
 
-//all的通關密語是1q2w3e!Q@W#E
+router.get('/all', function(req, res) {
+    res.json(cool());
+});
+
+//all的通關密語是Q_QtaiwanQvQ
 router.get('/all/:keyword', function(req, res) {
 
     var keyword = req.params.keyword;
@@ -166,13 +174,13 @@ router.get('/all/:keyword', function(req, res) {
 
     }).then(function(data) {
 
-        if (keyword != "1q2w3e!Q@W#E") data = null;
+        if (keyword != "Q_QtaiwanQvQ") data = cool();
         //console.log(data);
         res.json(data);
 
     });
     //res.send(cool());
-    console.log(cool());
+    //console.log(cool());
 
 });
 

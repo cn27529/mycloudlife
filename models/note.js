@@ -6,8 +6,7 @@ module.exports = function(sequelize, DataTypes) {
     var Note = sequelize.define("Note", {
         title: DataTypes.STRING,
         body: DataTypes.TEXT,
-        nodeday: DataTypes.STRING,
-        ProfileId: DataTypes.INTEGER
+        noteday: DataTypes.STRING
     }, {
         freezeTableName: false,
         classMethods: {

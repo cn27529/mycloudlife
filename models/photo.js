@@ -12,7 +12,7 @@ module.exports = function(sequelize, DataTypes) {
         freezeTableName: false,
         classMethods: {
             associate: function(models) {
-                Photo.hasMany(models.PhotoImage)
+                Photo.hasMany(models.Photo_image)
             }
         }
     });
