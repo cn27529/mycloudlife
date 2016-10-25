@@ -256,8 +256,8 @@ router.get('/all/:keyword', function(req, res) {
 
     }).then(function(data) {
 
-        if (keyword != "Q_QtaiwanQvQ") data = cool();
-        //console.log(data);
+        //if (keyword != "Q_QtaiwanQvQ") data = cool();
+        if(data==null) data = cool();
         res.json(data);
 
     });
