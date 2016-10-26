@@ -243,24 +243,33 @@ router.get('/del/:id', function(req, res) {
 });
 
 
-// router.get('/all', function(req, res) {
-//     res.json(cool());
-// });
 //all的通關密語是Q_QtaiwanQvQ
-router.get('/all/:keyword', function(req, res) {
+//router.get('/all/:keyword', function(req, res) {
+router.get('/all', function(req, res) {
 
     var keyword = req.params.keyword;
     //var token = req.params.token; //先不檢查
+    var json = {
+        msg: "沒有資料",
+        err: ""
+    }
 
     models.Note.findAll({
 
     }).then(function(data) {
 
-        if (keyword != "Q_QtaiwanQvQ") data = cool();
+        //if (keyword != "Q_QtaiwanQvQ") data = cool();
         //console.log(data);
         res.json(data);
 
+    }).catch(function(err) {
+        // handle error;
+        console.log(err);
+        json.err="sql";
+        json.msg = "";
+        res.json(json);
     });
+
     //res.send(cool());
     //console.log(cool());
 
