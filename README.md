@@ -19,3 +19,5 @@ git commit -am "heroku"
 git push heroku master <---push to heroku
 heroku logs --tail   <---see push logs
 ```
+# [ API文件 ](https://cn27529.gitbooks.io/mycloudlife-api/content/)  
+# [ DB文件 ](https://cn27529.gitbooks.io/mycloudlife-book/content/)  

@@ -15,7 +15,7 @@ var transporter = nodemailer.createTransport();
 //信件內容參數
 var mailOptions = {
     from: 'cn27529@hotmail.com',
-    to: 'larry0220@gmail.com',
+    to: 'larry.huang0220@gmail.com',
     subject: 'TEST信件title',
     text: 'TEST信件內容',
     attachments: [{
