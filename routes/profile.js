@@ -152,6 +152,7 @@ router.get('/acc/:id', function(req, res) {
         err: "",
         profiles: []
     }
+
     var id = req.params.id;
     //var token = req.params.token; //先不檢查
 
@@ -161,11 +162,26 @@ router.get('/acc/:id', function(req, res) {
         }
     }).then(function(data) {
 
-        //console.log(data);
-        if (data.length > 0) {
-            json.profiles = data;
-            json.msg = "ok";
-        }
+        //json.profiles = data;
+        data.map(function(item) {
+
+            console.log("------------" + cool());
+            //console.log(item);
+            var info = {
+                name: item.name,
+                "birthday": item.birthday,
+                "sex": item.sex,
+                "role": item.role,
+                "image": item.image,
+                "flag": item.flag
+            }
+            json.profiles.push(info);
+
+        });
+
+        if (data.length > 0) {}
+
+        json.msg = "ok";
         json.id = id;
         res.json(json);
 
@@ -182,7 +198,8 @@ router.get('/acc/:id', function(req, res) {
 });
 
 //all的通關密語是Q_QtaiwanQvQ
-router.get('/all/:keyword', function(req, res) {
+//router.get('/all/:keyword', function(req, res) {
+router.get('/all', function(req, res) {
 
     var keyword = req.params.keyword;
     //var token = req.params.token; //先不檢查
@@ -191,11 +208,18 @@ router.get('/all/:keyword', function(req, res) {
 
     }).then(function(data) {
 
-        if (keyword != "Q_QtaiwanQvQ") data = cool();
+        //if (keyword != "Q_QtaiwanQvQ") data = cool();
         //console.log(data);
         res.json(data);
 
+    }).catch(function(err) {
+        // handle error;
+        console.log(err);
+        json.err = "sql";
+        //json.msg = "";
+        res.json(json);
     });
+
     //res.send(cool());
     //console.log(cool());
 
