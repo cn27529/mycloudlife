@@ -35,9 +35,9 @@ router.post('/create', function(req, res) {
         })
         .spread(function(data, created) {
             console.log(data.get({
-                plain: true
-            }))
-            //console.log(data);
+                    plain: true
+                }))
+                //console.log(data);
             json = {
                 "id": data.id, //這是資料代碼
                 "msg": "ok,資料己建立"
@@ -47,7 +47,7 @@ router.post('/create', function(req, res) {
         }).catch(function(err) {
             // handle error;
             console.log(err);
-            json.err="sql";
+            json.err = "sql";
             //json.msg = "";
             res.json(json);
         });
@@ -93,7 +93,7 @@ router.get('/del/:id', function(req, res) {
     }).catch(function(err) {
         // handle error;
         console.log(err);
-        json.err="sql";
+        json.err = "sql";
         json.msg = "";
         res.json(json);
     });
@@ -129,7 +129,7 @@ router.get('/id/:id', function(req, res) {
     }).catch(function(err) {
         // handle error;
         console.log(err);
-        json.err="sql";
+        json.err = "sql";
         //json.msg = err.message;
         res.json(json);
     });

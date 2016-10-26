@@ -4,7 +4,7 @@ var router = express.Router();
 var cool = require('cool-ascii-faces');
 
 //文件
-//https://cn27529.gitbooks.io/mycloudlife-api/content/account.html
+//https://cn27529.gitbooks.io/mycloudlife-api/content/profile.html
 
 //create
 router.post('/create', function(req, res) {
