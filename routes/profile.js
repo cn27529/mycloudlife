@@ -152,6 +152,7 @@ router.get('/acc/:id', function(req, res) {
         err: "",
         profiles: []
     }
+
     var id = req.params.id;
     //var token = req.params.token; //先不檢查
 
@@ -161,11 +162,26 @@ router.get('/acc/:id', function(req, res) {
         }
     }).then(function(data) {
 
-        //console.log(data);
-        if (data.length > 0) {
-            json.profiles = data;
-            json.msg = "ok";
-        }
+        //json.profiles = data;
+        data.map(function(item) {
+
+            console.log("------------" + cool());
+            //console.log(item);
+            var info = {
+                name: item.name,
+                "birthday": item.birthday,
+                "sex": item.sex,
+                "role": item.role,
+                "image": item.image,
+                "flag": item.flag
+            }
+            json.profiles.push(info);
+
+        });
+
+        if (data.length > 0) {}
+
+        json.msg = "ok";
         json.id = id;
         res.json(json);
 
@@ -192,19 +208,16 @@ router.get('/all', function(req, res) {
 
     }).then(function(data) {
 
-      //if (keyword != "Q_QtaiwanQvQ") data = cool();
-      if(data==null) data = cool();
-      res.json(data);
+        //if (keyword != "Q_QtaiwanQvQ") data = cool();
+        if (data == null) data = cool();
+        res.json(data);
 
     }).catch(function(err) {
         // handle error;
         console.log(err);
-        json.err="sql";
-        //json.msg = "";
+        json.err = "sql";
         res.json(json);
     });
-    //res.send(cool());
-    //console.log(cool());
 
 });
 

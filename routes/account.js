@@ -49,8 +49,8 @@ router.post('/create', function(req, res) {
             // handle error;
             console.log(err);
             json.err = "sql";
-            //json.msg = "";
             res.json(json);
+
         });
 
 
@@ -95,11 +95,16 @@ router.post('/mod', function(req, res) {
             // handle error;
             console.log(err);
             json.err = "sql";
+<<<<<<< HEAD
             //json.msg = "";
+=======
+            //json.msg = err.message;
+>>>>>>> 1991cad236f652a500fc90ac64f8002e15746fd5
             res.json(json);
         });
 
 });
+
 
 router.get('/id/:id', function(req, res) {
 
@@ -119,7 +124,7 @@ router.get('/id/:id', function(req, res) {
         }
     }).then(function(data) {
 
-        console.log(data);
+        //console.log(data);
 
         if (data != null) {
             json.msg = "ok";
@@ -133,9 +138,18 @@ router.get('/id/:id', function(req, res) {
         // handle error;
         console.log(err);
         json.err = "sql";
+<<<<<<< HEAD
         //json.msg = "";
         res.json(json);
     });
+=======
+        //json.msg = err.message;
+        res.json(json);
+    });
+
+    //res.send(cool());
+    //console.log(cool());
+>>>>>>> 1991cad236f652a500fc90ac64f8002e15746fd5
 
 });
 
@@ -174,34 +188,64 @@ router.get('/has/:email', function(req, res) {
         // handle error;
         console.log(err);
         json.err = "sql";
+<<<<<<< HEAD
         //json.msg = "";
         res.json(json);
     });
 
 });
 
+=======
+        //json.msg = err.message;
+        res.json(json);
+    });
+
+    //res.send(cool());
+    //console.log(cool());
+
+});
+
+// router.get('/all', function(req, res) {
+//     res.json(cool());
+// });
+>>>>>>> 1991cad236f652a500fc90ac64f8002e15746fd5
 
 //all的通關密語是Q_QtaiwanQvQ
 //router.get('/all/:keyword', function(req, res) {
 router.get('/all', function(req, res) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1991cad236f652a500fc90ac64f8002e15746fd5
 
     var keyword = req.params.keyword;
     //var token = req.params.token; //先不檢查
+    var json = {
+        msg: "沒有資料",
+        err: ""
+    }
 
     models.Account.findAll({
 
     }).then(function(data) {
 
         //if (keyword != "Q_QtaiwanQvQ") data = cool();
+<<<<<<< HEAD
         if (data == null) data = cool();
+=======
+        //console.log(data);
+>>>>>>> 1991cad236f652a500fc90ac64f8002e15746fd5
         res.json(data);
 
     }).catch(function(err) {
         // handle error;
         console.log(err);
         json.err = "sql";
+<<<<<<< HEAD
         //json.msg = "";
+=======
+        //json.msg = err.message;
+>>>>>>> 1991cad236f652a500fc90ac64f8002e15746fd5
         res.json(json);
     });
     //console.log(cool());

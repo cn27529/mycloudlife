@@ -32,7 +32,7 @@ app.use(function(req, res, next) {
     err.err = 404;
     err.msg = 'Not Found';
     //next(err);
-    console.log(next(err));
+    //console.log(next(err));
     res.json(err);
 });
 
