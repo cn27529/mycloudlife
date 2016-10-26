@@ -89,14 +89,7 @@ router.post('/mod', function(req, res) {
         }).catch(function(err) {
             // handle error;
             console.log(err);
-            json.err = "sql"; <<
-            << << < HEAD
-            //json.msg = "";
-                ===
-                === =
-                //json.msg = err.message;
-                >>>
-                >>> > 1991 cad236f652a500fc90ac64f8002e15746fd5
+            json.err = "sql"; 
             res.json(json);
         });
 
@@ -105,49 +98,42 @@ router.post('/mod', function(req, res) {
 
 router.get('/id/:id', function(req, res) {
 
-var id = req.params.id;
-//var token = req.params.token; //先不檢查
-var json = {
-    id: 0,
-    msg: "沒有資料",
-    err: "",
-    email: "",
-    pwd: ""
-}
-
-models.Account.findOne({
-    where: {
-        id: id
+    var id = req.params.id;
+    //var token = req.params.token; //先不檢查
+    var json = {
+        id: 0,
+        msg: "沒有資料",
+        err: "",
+        email: "",
+        pwd: ""
     }
-}).then(function(data) {
 
-    //console.log(data);
+    models.Account.findOne({
+        where: {
+            id: id
+        }
+    }).then(function(data) {
 
-    if (data != null) {
-        json.msg = "ok";
-        json.id = data.id;
-        json.email = data.email;
-        json.pwd = data.password;
-    }
-    res.json(json);
+        //console.log(data);
 
-}).catch(function(err) {
-    // handle error;
-    console.log(err);
-    json.err = "sql"; <<
-    << << < HEAD
-    //json.msg = "";
-    res.json(json);
-}); ===
-=== =
-//json.msg = err.message;
-res.json(json);
-});
+        if (data != null) {
+            json.msg = "ok";
+            json.id = data.id;
+            json.email = data.email;
+            json.pwd = data.password;
+        }
+        res.json(json);
 
-//res.send(cool());
-//console.log(cool());
->>>
->>> > 1991 cad236f652a500fc90ac64f8002e15746fd5
+    }).catch(function(err) {
+        // handle error;
+        console.log(err);
+        json.err = "sql";
+        //json.msg = "";
+        res.json(json);
+    });
+
+    //res.send(cool());
+    //console.log(cool());
 
 });
 
@@ -185,39 +171,16 @@ router.get('/has/:email', function(req, res) {
     }).catch(function(err) {
         // handle error;
         console.log(err);
-        json.err = "sql"; <<
-        << << < HEAD
+        json.err = "sql";
         //json.msg = "";
         res.json(json);
     });
 
 });
 
-===
-=== =
-//json.msg = err.message;
-res.json(json);
-});
-
-//res.send(cool());
-//console.log(cool());
-
-});
-
-// router.get('/all', function(req, res) {
-//     res.json(cool());
-// });
->>>
->>> > 1991 cad236f652a500fc90ac64f8002e15746fd5
-
 //all的通關密語是Q_QtaiwanQvQ
 //router.get('/all/:keyword', function(req, res) {
-router.get('/all', function(req, res) { <<
-    << << < HEAD
-
-        ===
-        === = >>>
-        >>> > 1991 cad236f652a500fc90ac64f8002e15746fd5
+router.get('/all', function(req, res) {
 
     var keyword = req.params.keyword;
     //var token = req.params.token; //先不檢查
@@ -231,26 +194,13 @@ router.get('/all', function(req, res) { <<
     }).then(function(data) {
 
         //if (keyword != "Q_QtaiwanQvQ") data = cool();
-        <<
-        << << < HEAD
-        if (data == null) data = cool(); ===
-        === =
-        //console.log(data);
-        >>>
-        >>> > 1991 cad236f652a500fc90ac64f8002e15746fd5
+        if (data == null) data = cool();
         res.json(data);
 
     }).catch(function(err) {
         // handle error;
         console.log(err);
-        json.err = "sql"; <<
-        << << < HEAD
-        //json.msg = "";
-            ===
-            === =
-            //json.msg = err.message;
-            >>>
-            >>> > 1991 cad236f652a500fc90ac64f8002e15746fd5
+        json.err = "sql";
         res.json(json);
     });
     //console.log(cool());
