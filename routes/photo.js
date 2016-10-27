@@ -16,6 +16,7 @@ router.post('/create', function(req, res) {
   models.Photo.create({
     title: req.body.photo.title,
     body: req.body.photo.body,
+    photoday: req.body.photo.photoday,
     ProfileId: req.body.id
   }).then(function(data) {
     // console.log(data.get({ plain: true }));
@@ -179,32 +180,6 @@ router.delete('/delimage/:id', function(req, res) {
         "err": ""
       })
     });
-})
-
-
-
-//all的通關密語是Q_QtaiwanQvQ
-//router.get('/all/:keyword', function(req, res) {
-router.get('/all', function(req, res) {
-
-    var keyword = req.params.keyword;
-    //var token = req.params.token; //先不檢查
-
-    models.Photo.findAll({
-
-    }).then(function(data) {
-
-        //if (keyword != "Q_QtaiwanQvQ") data = cool();
-        if (data == null) data = cool();
-        res.json(data);
-
-    }).catch(function(err) {
-        // handle error;
-        console.log(err);
-        json.err = "sql";
-        res.json(json);
-    });
-
 })
 
 
