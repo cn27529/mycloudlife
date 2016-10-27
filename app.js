@@ -14,6 +14,7 @@ var index = require('./routes/index');
 var account = require('./routes/account');
 var profile = require('./routes/profile');
 var note = require('./routes/note');
+var photo = require('./routes/photo');
 
 var cool = require('cool-ascii-faces');
 
@@ -25,6 +26,7 @@ app.use('/', index);
 app.use('/account', account);
 app.use('/profile', profile);
 app.use('/note', note);
+app.use('/photo', photo);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -32,7 +34,7 @@ app.use(function(req, res, next) {
     err.err = 404;
     err.msg = 'Not Found';
     //next(err);
-    console.log(next(err));
+    //console.log(next(err));
     res.json(err);
 });
 
