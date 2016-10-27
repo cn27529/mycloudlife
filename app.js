@@ -14,7 +14,7 @@ var index = require('./routes/index');
 var account = require('./routes/account');
 var profile = require('./routes/profile');
 var note = require('./routes/note');
-
+var photo = require('./routes/photo'); //--------add on 161027
 var cool = require('cool-ascii-faces');
 
 //app.use(cookieParser());
@@ -25,6 +25,7 @@ app.use('/', index);
 app.use('/account', account);
 app.use('/profile', profile);
 app.use('/note', note);
+app.use('/photo', photo); //--------add on 161027
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
