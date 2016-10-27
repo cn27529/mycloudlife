@@ -103,7 +103,7 @@ router.post('/mod', function(req, res) {
 
 
 // get by id
-router.get('/pro/:id/:top', function(req, res) {
+router.get('/limit/:id/:top', function(req, res) {
   var id = req.params.id;
   var top = req.params.top;
   //var token = req.params.token; //先不檢查
