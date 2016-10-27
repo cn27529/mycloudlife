@@ -16,6 +16,7 @@ router.post('/create', function(req, res) {
   models.Photo.create({
     title: req.body.photo.title,
     body: req.body.photo.body,
+    photoday: req.body.photo.photoday,
     ProfileId: req.body.id
   }).then(function(data) {
     // console.log(data.get({ plain: true }));
