@@ -27,7 +27,8 @@ router.post('/create', function(req, res) {
       models.Photo_image.create({
         title: item.title,
         image: item.image,
-        PhotoId: data.id
+        PhotoId: data.id,
+        ProfileId: req.body.id
       })
     });
 
