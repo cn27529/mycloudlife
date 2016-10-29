@@ -9,6 +9,8 @@ module.exports = function(sequelize, DataTypes) {
         noteday: DataTypes.STRING
     }, {
         freezeTableName: false,
+        charset: 'utf8',
+        collate: 'utf8_general_ci',
         classMethods: {
             associate: function(models) {
                 Note.belongsTo(models.Profile, {

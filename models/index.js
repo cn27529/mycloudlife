@@ -10,7 +10,19 @@ var config = require(path.join(__dirname, '..', 'config', 'config.json'))[env];
 if (process.env.DATABASE_URL) {
     var sequelize = new Sequelize(process.env.DATABASE_URL);
 } else {
-    var sequelize = new Sequelize(config.database, config.username, config.password, config);
+    var sequelize = new Sequelize(config.database, config.username, config.password, config,
+      define: {
+          underscored: false
+          freezeTableName: false,
+          syncOnAssociation: true,
+          charset: 'utf8',
+          collate: 'utf8_general_ci',
+          classMethods: {method1: function() {}},
+          instanceMethods: {method2: function() {}},
+          timestamps: true
+        }
+
+    );
 }
 var db = {};
 

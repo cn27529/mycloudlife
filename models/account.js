@@ -10,6 +10,8 @@ module.exports = function(sequelize, DataTypes) {
         //credate: DataTypes.STRING
     }, {
       freezeTableName: false,
+      charset: 'utf8',
+      collate: 'utf8_general_ci',
       classMethods: {
         associate: function(models) {
           Account.hasMany(models.Profile)
