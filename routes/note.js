@@ -112,7 +112,7 @@ router.get('/id/:id', function(req, res) {
     //var token = req.params.token; //先不檢查
     var json = {
         id: 0,
-        msg: "沒有資料可刪除",
+        msg: "沒有資料",
         err: "",
         note: null
     }
