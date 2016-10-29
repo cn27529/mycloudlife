@@ -106,10 +106,6 @@ router.post('/mod', function(req, res) {
 
 });
 
-//
-// router.get('/id', function(req, res) {
-//     res.json(cool());
-// });
 router.get('/id/:id', function(req, res) {
 
     var id = req.params.id;
@@ -172,7 +168,8 @@ router.get('/pro/:id/:top', function(req, res) {
     models.Note.findAll({
         where: {
             ProfileId: id
-        }
+        },
+        limit: top
     }).then(function(data) {
 
         //console.log(data);
@@ -198,9 +195,6 @@ router.get('/pro/:id/:top', function(req, res) {
 });
 
 
-// router.get('/del', function(req, res) {
-//     res.json(cool());
-// });
 //刪除資料
 router.get('/del/:id', function(req, res) {
 
@@ -221,13 +215,20 @@ router.get('/del/:id', function(req, res) {
         console.log(data);
 
         if (data != null) {
-            data.destroy().on('success', function(u) {
-                if (u && u.deletedAt) {
-                    // successfully deleted the project
+
+            models.Note.destroy({
+                    where: {
+                        id: req.params.id
+                    }
+                })
+                .then(function(data) {
+                    console.log(data);
+
                     json.msg = "ok,刪除";
+                    json.id = data.id;
                     res.json(json);
-                }
-            })
+                });
+
         } else {
             res.json(json);
         }

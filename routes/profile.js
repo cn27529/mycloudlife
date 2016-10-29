@@ -198,6 +198,54 @@ router.get('/acc/:id', function(req, res) {
 
 });
 
+//刪除資料
+router.get('/del/:id', function(req, res) {
+
+    var id = req.params.id;
+
+    var json = {
+        id: id,
+        msg: "沒有資料可刪除",
+        err: ""
+    }
+
+    models.Profile.findOne({
+        where: {
+            id: id
+        }
+    }).then(function(data) {
+
+        console.log(data);
+
+        if (data != null) {
+
+            models.Profile.destroy({
+                    where: {
+                        id: req.params.id
+                    }
+                })
+                .then(function(data) {
+                    console.log(data);
+
+                    json.msg = "ok,刪除";
+                    json.id = data.id;
+                    res.json(json);
+                });
+
+        } else {
+            res.json(json);
+        }
+
+    }).catch(function(err) {
+        // handle error;
+        console.log(err);
+        json.err = "sql";
+        json.msg = "";
+        res.json(json);
+    });
+
+});
+
 //all的通關密語是Q_QtaiwanQvQ
 //router.get('/all/:keyword', function(req, res) {
 router.get('/all', function(req, res) {
