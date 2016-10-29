@@ -11,9 +11,7 @@ module.exports = function(sequelize, DataTypes) {
         msg: DataTypes.STRING,
         yymmdd: DataTypes.STRING
     }, {
-        freezeTableName: false,
-        charset: 'utf8',
-        collate: 'utf8_general_ci',
+        freezeTableName: false
     });
 
     return Maillog;

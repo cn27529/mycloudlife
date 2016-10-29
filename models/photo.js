@@ -10,8 +10,6 @@ module.exports = function(sequelize, DataTypes) {
         ProfileId: DataTypes.INTEGER
     }, {
         freezeTableName: false,
-        charset: 'utf8',
-        collate: 'utf8_general_ci',
         classMethods: {
             associate: function(models) {
                 Photo.hasMany(models.Photo_image)

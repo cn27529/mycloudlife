@@ -7,16 +7,14 @@ module.exports = function(sequelize, DataTypes) {
     var Account = sequelize.define("Account", {
         email: DataTypes.STRING,
         password: DataTypes.STRING
-        //credate: DataTypes.STRING
+            //credate: DataTypes.STRING
     }, {
-      freezeTableName: false,
-      charset: 'utf8',
-      collate: 'utf8_general_ci',
-      classMethods: {
-        associate: function(models) {
-          Account.hasMany(models.Profile)
+        freezeTableName: false,
+        classMethods: {
+            associate: function(models) {
+                Account.hasMany(models.Profile)
+            }
         }
-      }
     });
 
     return Account;
