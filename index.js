@@ -7,7 +7,7 @@ var models = require('./models');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '80');
+var port = normalizePort(process.env.PORT || '5000');
 app.set('port', port);
 /**
  * Create HTTP server.
@@ -27,12 +27,12 @@ var server = http.createServer(app);
  * @return {Promise}
  */
 var syncOption = {
-    force: true,
+    force: false,
     logging: false
 };
 
 
-models.sequelize.sync(syncOption).then(function() {
+models.sequelize.sync().then(function() {
     /**
      * Listen on provided port, on all network interfaces.
      */
