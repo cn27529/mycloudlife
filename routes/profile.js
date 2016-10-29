@@ -173,7 +173,8 @@ router.get('/acc/:id', function(req, res) {
                 "sex": item.sex,
                 "role": item.role,
                 "image": item.image,
-                "flag": item.flag
+                "flag": item.flag,
+                "id": item.id
             }
             json.profiles.push(info);
 
