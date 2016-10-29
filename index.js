@@ -28,7 +28,7 @@ var server = http.createServer(app);
  */
 var syncOption = {
     force: true,
-    logging: true
+    logging: false
 };
 
 

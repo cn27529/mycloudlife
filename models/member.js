@@ -9,8 +9,6 @@ module.exports = function(sequelize, DataTypes) {
         email: DataTypes.STRING,
         tag: DataTypes.STRING,
         flag: DataTypes.STRING
-
-        //credate: DataTypes.STRING
     }, {
         // 如果为 true 则表的名称和 model 相同，
         // 为 false MySQL创建的表名称加上复数s

@@ -1,3 +1,4 @@
+
 //引用 nodemailer
 var nodemailer = require('nodemailer');
 //連線資訊
@@ -11,7 +12,6 @@ nodemailer.SMTP = {
 }
 //create reusable transporter object using SMTP transport
 var transporter = nodemailer.createTransport();
-
 
 //信件內容參數
 var mailOptions = {
@@ -32,6 +32,5 @@ transporter.sendMail(mailOptions, function(err, info) {
     if(err){
         return console.log(err);
     }
-    //console.log('Message sent: ' + info.response);
-    return console.log(info);
+    console.log('Message sent: ' + info.response);
 });
