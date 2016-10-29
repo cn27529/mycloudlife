@@ -9,22 +9,40 @@ var models = require('./models');
 
 var port = normalizePort(process.env.PORT || '5000');
 app.set('port', port);
-  /**
-   * Create HTTP server.
-   */
+/**
+ * Create HTTP server.
+ */
 var server = http.createServer(app);
 
-models.sequelize.sync().then(function() {
-  /**
-   * Listen on provided port, on all network interfaces.
-   */
-  server.listen(port, function() {
-    //debug('Express server listening on port ' + server.address().port);
-    console.log('Node app is running on port', port);
-  });
+/**
+ * Sync all defined models to the DB.
+ *
+ * @param {Object} [options={}]
+ * @param {Boolean} [options.force=false] If force is true, each DAO will do DROP TABLE IF EXISTS ..., before it tries to create its own table
+ * @param {RegEx} [options.match] Match a regex against the database name before syncing, a safety check for cases where force: true is used in tests but not live code
+ * @param {Boolean|function} [options.logging=console.log] A function that logs sql queries, or false for no logging
+ * @param {String} [options.schema='public'] The schema that the tables should be created in. This can be overriden for each table in sequelize.define
+ * @param  {String} [options.searchPath=DEFAULT] An optional parameter to specify the schema search_path (Postgres only)
+ * @param {Boolean} [options.hooks=true] If hooks is true then beforeSync, afterSync, beforBulkSync, afterBulkSync hooks will be called
+ * @return {Promise}
+ */
+var syncOption = {
+    force: true,
+    logging: true
+};
 
-  server.on('error', onError);
-  server.on('listening', onListening);
+
+models.sequelize.sync(syncOption).then(function() {
+    /**
+     * Listen on provided port, on all network interfaces.
+     */
+    server.listen(port, function() {
+        //debug('Express server listening on port ' + server.address().port);
+        console.log('Node app is running on port', port);
+    });
+
+    server.on('error', onError);
+    server.on('listening', onListening);
 
 });
 
@@ -34,21 +52,21 @@ models.sequelize.sync().then(function() {
 
 function normalizePort(val) {
 
-  console.log(val);
+    console.log(val);
 
-  var port = parseInt(val, 10);
+    var port = parseInt(val, 10);
 
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
+    if (isNaN(port)) {
+        // named pipe
+        return val;
+    }
 
-  if (port >= 0) {
-    // port number
-    return port;
-  }
+    if (port >= 0) {
+        // port number
+        return port;
+    }
 
-  return false;
+    return false;
 }
 
 /**
@@ -56,27 +74,27 @@ function normalizePort(val) {
  */
 
 function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
+    if (error.syscall !== 'listen') {
+        throw error;
+    }
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+    var bind = typeof port === 'string' ?
+        'Pipe ' + port :
+        'Port ' + port;
 
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
+    // handle specific listen errors with friendly messages
+    switch (error.code) {
+        case 'EACCES':
+            console.error(bind + ' requires elevated privileges');
+            process.exit(1);
+            break;
+        case 'EADDRINUSE':
+            console.error(bind + ' is already in use');
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
 }
 
 /**
@@ -84,9 +102,9 @@ function onError(error) {
  */
 
 function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  //debug('Listening on ' + bind);
+    var addr = server.address();
+    var bind = typeof addr === 'string' ?
+        'pipe ' + addr :
+        'port ' + addr.port;
+    //debug('Listening on ' + bind);
 }

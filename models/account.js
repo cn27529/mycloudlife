@@ -1,6 +1,5 @@
 "use strict";
 
-
 module.exports = function(sequelize, DataTypes) {
 
     //https://cn27529.gitbooks.io/mycloudlife-book/content/account_table.html

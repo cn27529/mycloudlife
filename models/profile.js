@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
         birthday: DataTypes.STRING,
         sex: DataTypes.STRING,
         role: DataTypes.STRING,
-        image: DataTypes.TEXT,
+        image: DataTypes.TEXT('medium'),
         flag: DataTypes.STRING,
         AccountId: DataTypes.INTEGER
     }, {

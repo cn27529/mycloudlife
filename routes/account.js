@@ -89,12 +89,55 @@ router.post('/mod', function(req, res) {
         }).catch(function(err) {
             // handle error;
             console.log(err);
-            json.err = "sql"; 
+            json.err = "sql";
             res.json(json);
         });
 
 });
 
+
+
+router.post('/login', function(req, res) {
+
+    //var email = req.body.email;
+    //var token = req.params.token; //先不檢查
+
+    var json = {
+        id: 0,
+        email: "",
+        msg: "登入帳密不正確",
+        pwd: "",
+        err: ""
+    }
+
+    models.Account.findOne({
+        where: {
+            email: req.body.email,
+            password: req.body.pwd
+        }
+    }).then(function(data) {
+
+        console.log(data);
+
+        if (data != null) {
+            json.msg = "ok,登入成功";
+            json.id = data.id;
+            json.email = data.email;
+            json.pwd = data.password;
+            json.err = "";
+        }
+
+        res.json(json);
+
+    }).catch(function(err) {
+        // handle error;
+        console.log(err);
+        json.err = "sql";
+        //json.msg = "";
+        res.json(json);
+    });
+
+});
 
 router.get('/id/:id', function(req, res) {
 
@@ -136,6 +179,9 @@ router.get('/id/:id', function(req, res) {
     //console.log(cool());
 
 });
+
+
+
 
 router.get('/has/:email', function(req, res) {
 
