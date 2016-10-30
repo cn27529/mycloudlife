@@ -1,6 +1,6 @@
 //引用 nodemailer
-var nodemailer = require('smtp');
-var mailer = require('sendMail');
+var sendMail = require('./sendMail');
+var hello = require('./hello');
 
 //props
 var data = {
@@ -11,4 +11,5 @@ var data = {
 }
 
 //成員邀請
-mailer.sendMail(data.mailForm, data.mailTo, data.title, body);
+sendMail(data.mailForm, data.mailTo, data.title, body);
+//createMail('mycloudedlife1@gmail.com', 'cn27529@hotmail.com', '成員邀請', '<h3>測試測試</h3>');

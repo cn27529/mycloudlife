@@ -2,8 +2,6 @@
 var nodemailer = require('nodemailer');
 var models = require('../models');
 
-var qq =
-
 module.exports = function(mailFrom, mailTo, title, body) {
 
     //連線資訊
@@ -34,10 +32,10 @@ module.exports = function(mailFrom, mailTo, title, body) {
     //寄出
     transporter.sendMail(mailOptions, function(err, info) {
         //info是成功信件相關資訊;err是失敗相關資訊
-        var mailMsg = object;
+        //var mailMsg = object;
         if (err) {
 
-            mailMsg = err.toString();
+            console.log(err);
 
             // models.Meillog.create(function() {
             //     title: title,
@@ -52,7 +50,8 @@ module.exports = function(mailFrom, mailTo, title, body) {
             return console.log(err.toString());
         }
 
-        mailMsg = info.toString();
+        console.log(info);
+
         // models.Meillog.create(function() {
         //     title: title,
         //     body: body,
@@ -62,8 +61,10 @@ module.exports = function(mailFrom, mailTo, title, body) {
         // }).then(function(data) {
         //
         // })
-        console.log(info.toString());
+
 
     });
 
-});
+    return transporter;
+
+};
