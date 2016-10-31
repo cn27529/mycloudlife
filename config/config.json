@@ -13,5 +13,9 @@
     "database": "mycloudlife-test",
     "host": "107.180.56.151",
     "dialect": "mysql"
+  },
+  "test":{
+
   }
+
 }

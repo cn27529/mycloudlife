@@ -6,10 +6,11 @@ module.exports = function(sequelize, DataTypes) {
     var Maillog = sequelize.define("Maillog", {
         title: DataTypes.STRING,
         body: DataTypes.STRING,
-        mailForm: DataTypes.STRING,
+        mailFrom: DataTypes.STRING,
         mailTo: DataTypes.STRING,
         msg: DataTypes.STRING,
-        yymmdd: DataTypes.STRING
+        yymmdd: DataTypes.STRING,
+        yymm: DataTypes.STRING
     }, {
         freezeTableName: false
     });
