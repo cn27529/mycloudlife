@@ -2,7 +2,7 @@
 var nodemailer = require('nodemailer');
 var models = require('../models');
 
-module.exports = function(mailFrom, mailTo, title, body) {
+module.exports = function(mailFrom, mailTo, title, body, callpack) {
 
     //連線資訊
     nodemailer.SMTP = {
@@ -50,21 +50,12 @@ module.exports = function(mailFrom, mailTo, title, body) {
             mailMsg = info.toString();
         }
 
-        models.Maillog.create({
-            title: mailOptions.subject,
-            body: mailOptions.html,
-            mailFrom: mailOptions.from,
-            mailTo: mailOptions.to,
-            msg: mailMsg,
-            yymmdd: yy + mm + dd,
-            yymm: yy + mm
-        }).then(function(data) {
-            if (data != null) {}
-            console.log('models.Maillog.create');
-        })
+        callpack(mailMsg);
+
+        
 
     });
 
-    return transporter;
+    //return transporter;
 
 };
