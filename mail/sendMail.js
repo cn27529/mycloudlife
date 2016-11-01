@@ -34,6 +34,12 @@ module.exports = function(mailFrom, mailTo, title, body) {
         //info是成功信件相關資訊;err是失敗相關資訊
         var mailMsg = "";
 
+        var now = new Date();
+        var month = (now.getMonth() + 1);
+        var yy = (now.getFullYear() <= 9) ? '0' + now.getFullYear().toString() : now.getFullYear().toString();
+        var mm = (month <= 9) ? '0' + month.toString() : month.toString();
+        var dd = (now.getDate() <= 9) ? '0' + now.getDate().toString() : now.getDate().toString();
+
         if (err) {
 
             console.log(err);
@@ -45,7 +51,9 @@ module.exports = function(mailFrom, mailTo, title, body) {
                 body: mailOptions.html,
                 mailFrom: mailOptions.from,
                 mailTo: mailOptions.to,
-                msg: mailMsg
+                msg: mailMsg,
+                yymmdd: yy + mm + dd,
+                yymm: yy + mm
             }).then(function(data) {
                 if (data != null) {}
             })
@@ -61,7 +69,9 @@ module.exports = function(mailFrom, mailTo, title, body) {
             body: mailOptions.html,
             mailFrom: mailOptions.from,
             mailTo: mailOptions.to,
-            msg: mailMsg
+            msg: mailMsg,
+            yymmdd: yy + mm + dd,
+            yymm: yy + mm
         }).then(function(data) {
             if (data != null) {}
         })
