@@ -4,8 +4,8 @@ var nodemailer = require('nodemailer');
 //連線資訊
 nodemailer.SMTP = {
     host: "stmp.gmail.com",//server位置
-    port: 25,//可不給,預設25
-    ssl: false,//可不給,預設false
+    port: 465,//可不給,預設25
+    ssl: true,//可不給,預設false
     user: 'mycloudedlife1@gmail.com', //可不給
     pass: '1029384756@pwd', //可不給
     use_authentication: true//可不給

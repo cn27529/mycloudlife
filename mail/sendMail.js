@@ -5,23 +5,23 @@ var models = require('../models');
 module.exports = function(mailFrom, mailTo, title, body, callpack) {
 
     //連線資訊
+    nodemailer.SMTP = {
+      host: "stmp.gmail.com",//server位置
+      port: 465,//可不給,預設25
+      ssl: true,//可不給,預設false
+      user: 'mycloudedlife1@gmail.com', //可不給
+      pass: '1029384756@pwd', //可不給
+      use_authentication: true//可不給
+    }
+
     // nodemailer.SMTP = {
-    //     host: "stmp.gmail.com", //server位置
-    //     port: 25, //可不給,預設25
-    //     ssl: false, //可不給,預設false
-    //     user: 'mycloudedlife1@gmail.com', //可不給
-    //     pass: '1029384756@pwd', //可不給
+    //     host: "a2plcpnl0572.prod.iad2.secureserver.net", //server位置
+    //     port: 465, //可不給,預設25
+    //     ssl: true, //可不給,預設false
+    //     user: 'service@mycloudedlife.com', //可不給
+    //     pass: '3edc#EDC@pwd', //可不給
     //     use_authentication: true //可不給
     // }
-
-    nodemailer.SMTP = {
-        host: "a2plcpnl0572.prod.iad2.secureserver.net", //server位置
-        port: 465, //可不給,預設25
-        ssl: true, //可不給,預設false
-        user: 'service@mycloudedlife.com', //可不給
-        pass: '3edc#EDC@pwd', //可不給
-        use_authentication: true //可不給
-    }
 
     //create reusable transporter object using SMTP transport
     var transporter = nodemailer.createTransport();
@@ -50,12 +50,12 @@ module.exports = function(mailFrom, mailTo, title, body, callpack) {
         var dd = (now.getDate() <= 9) ? '0' + now.getDate().toString() : now.getDate().toString();
 
         if (err) {
-            console.log(err.toString());
+            console.log(err);
             mailMsg = err.toString();
         }
 
         if (info) {
-            console.log(info.toString());
+            console.log(info);
             mailMsg = info.toString();
         }
 
