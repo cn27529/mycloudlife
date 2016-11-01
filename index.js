@@ -7,8 +7,9 @@ var models = require('./models');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '8080');
-//var port = normalizePort(process.env.PORT || '5000');
+//var port = normalizePort(process.env.PORT || '8080');
+var port = normalizePort(process.env.PORT || '5000');
+
 app.set('port', port);
 /**
  * Create HTTP server.
