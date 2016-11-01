@@ -41,30 +41,16 @@ module.exports = function(mailFrom, mailTo, title, body) {
         var dd = (now.getDate() <= 9) ? '0' + now.getDate().toString() : now.getDate().toString();
 
         if (err) {
-
-            console.log(err);
-
+            console.log(err.toString());
             mailMsg = err.toString();
-
-            models.Maillog.create({
-                title: mailOptions.subject,
-                body: mailOptions.html,
-                mailFrom: mailOptions.from,
-                mailTo: mailOptions.to,
-                msg: mailMsg,
-                yymmdd: yy + mm + dd,
-                yymm: yy + mm
-            }).then(function(data) {
-                if (data != null) {}
-            })
-
-            return console.log(err.toString());
         }
 
-        console.log(info);
-        mailMsg = info.toString();
+        if (info) {
+            console.log(info.toString());
+            mailMsg = info.toString();
+        }
 
-        models.Meillog.create({
+        models.Maillog.create({
             title: mailOptions.subject,
             body: mailOptions.html,
             mailFrom: mailOptions.from,
@@ -74,8 +60,8 @@ module.exports = function(mailFrom, mailTo, title, body) {
             yymm: yy + mm
         }).then(function(data) {
             if (data != null) {}
+            console.log('models.Maillog.create');
         })
-
 
     });
 
