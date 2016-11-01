@@ -5,7 +5,7 @@ var models = require('../models');
 
 //props
 var data = {
-    mailFrom: 'mycloudedlife1@gmail.com',
+    mailFrom: 'service@mycloudedlife.com',
     mailTo: 'cn27529@gmail.com',
     title: '忘記密碼',
     body: '<h3>測試測試</h3>'
