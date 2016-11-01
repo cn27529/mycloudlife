@@ -32,35 +32,39 @@ module.exports = function(mailFrom, mailTo, title, body) {
     //寄出
     transporter.sendMail(mailOptions, function(err, info) {
         //info是成功信件相關資訊;err是失敗相關資訊
-        //var mailMsg = object;
+        var mailMsg = "";
+
         if (err) {
 
             console.log(err);
 
-            // models.Meillog.create(function() {
-            //     title: title,
-            //     body: body,
-            //     mailFrom: mailFrom,
-            //     mailTo: mailTo,
-            //     msg: mailMsg
-            // }).then(function(data) {
-            //
-            // })
+            mailMsg = err.toString();
+
+            models.Maillog.create({
+                title: mailOptions.subject,
+                body: mailOptions.html,
+                mailFrom: mailOptions.from,
+                mailTo: mailOptions.to,
+                msg: mailMsg
+            }).then(function(data) {
+                if (data != null) {}
+            })
 
             return console.log(err.toString());
         }
 
         console.log(info);
+        mailMsg = info.toString();
 
-        // models.Meillog.create(function() {
-        //     title: title,
-        //     body: body,
-        //     mailFrom: mailFrom,
-        //     mailTo: mailTo,
-        //     msg: mailMsg
-        // }).then(function(data) {
-        //
-        // })
+        models.Meillog.create({
+            title: mailOptions.subject,
+            body: mailOptions.html,
+            mailFrom: mailOptions.from,
+            mailTo: mailOptions.to,
+            msg: mailMsg
+        }).then(function(data) {
+            if (data != null) {}
+        })
 
 
     });
