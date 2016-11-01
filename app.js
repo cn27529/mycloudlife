@@ -16,7 +16,7 @@ var profile = require('./routes/profile');
 var note = require('./routes/note');
 var photo = require('./routes/photo'); //--------add on 161027
 var cool = require('cool-ascii-faces');
-var maillog = require('./routes/maillog'); //---------add on 101030
+var maillog = require('./routes/mail'); //---------add on 101030
 
 //app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'public')));
@@ -27,7 +27,8 @@ app.use('/account', account);
 app.use('/profile', profile);
 app.use('/note', note);
 app.use('/photo', photo); //--------add on 161027
-app.use('/maillog', maillog); //---------add on 101030
+app.use('/mail', mail); //---------add on 101030
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
