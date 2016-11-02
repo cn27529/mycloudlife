@@ -56,7 +56,6 @@ router.post('/create', function(req, res) {
 
 
 
-
 //刪除資料
 router.get('/del/:id', function(req, res) {
 
@@ -105,6 +104,85 @@ router.get('/del/:id', function(req, res) {
 
 });
 
+//以email查我的成員
+router.get('/email/:email', function(req, res) {
+
+    var email = req.params.email;
+    //var token = req.params.token; //先不檢查
+    var json = {
+        id: 0,
+        msg: "沒有找到資料",
+        err: "",
+        members: []
+    }
+
+    models.Member.findOne({
+        where: {
+            email: req.params.email
+        }
+    }).then(function(data) {
+
+        //console.log(data);
+        if (data != null) {
+            json.msg = "ok";
+            json.id = data.id;
+            json.members = data;
+        }
+        res.json(json);
+
+    }).catch(function(err) {
+        // handle error;
+        console.log(err);
+        json.err = "sql";
+        //json.msg = err.message;
+        res.json(json);
+    });
+    //res.send(cool());
+    //console.log(cool());
+
+});
+
+//取得我的成員
+router.get('/acc/:id/:tag', function(req, res) {
+
+    var id = req.params.id;
+    var tag = req.params.tag;
+    //var token = req.params.token; //先不檢查
+    var json = {
+        id:"",
+        msg: "沒有資料",
+        err: "",
+        members:[]
+    }
+
+    models.Member.findAll({
+      where: {
+          AccountId: id,
+          tag: tag
+      }
+    }).then(function(data) {
+
+        //if (keyword != "Q_QtaiwanQvQ") data = cool();
+        //console.log(data);
+        json.id= id;
+        json.msg="ok";
+        json.members = data;
+        res.json(json);
+
+    }).catch(function(err) {
+        // handle error;
+        console.log(err);
+        json.err = "sql";
+        //json.msg = err.message;
+        res.json(json);
+
+    });
+
+    //res.send(cool());
+    //console.log(cool());
+
+});
+
 
 router.get('/id/:id', function(req, res) {
 
@@ -112,7 +190,7 @@ router.get('/id/:id', function(req, res) {
     //var token = req.params.token; //先不檢查
     var json = {
         id: 0,
-        msg: "沒有資料",
+        msg: "沒有找到資料",
         err: "",
         note: null
     }
