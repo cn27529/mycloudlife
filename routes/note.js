@@ -195,6 +195,57 @@ router.get('/pro/:id/:top', function(req, res) {
 });
 
 
+
+// http://yourdomain/note/next/:id/:limit/:currentid
+// :id 這是profile資料代碼
+// :limit 是要取得幾筆給前端, 若10, 表示給前端10筆
+// :currentid 提供目前最後一筆的note id, 會由目前的note id往下找:limit筆
+router.get('/next/:id/:top/:currentid', function(req, res) {
+
+    var json = {
+        id: 0,
+        msg: "沒有查詢到資料",
+        err: "",
+        notes: []
+    }
+    var id = req.params.id;
+    var top = req.params.top;
+    var currentid = req.params.currentid;
+    //var token = req.params.token; //先不檢查
+
+    models.Note.findAll({
+        where: {
+            ProfileId: id,
+            id: {
+                $gt: currentid
+            }
+        },
+        limit: top
+    }).then(function(data) {
+
+        //console.log(data);
+        if (data.length > 0) {
+            json.notes = data;
+            json.msg = "ok";
+        }
+        json.id = id;
+        res.json(json);
+
+    }).catch(function(err) {
+
+        // handle error;
+        console.log(err);
+        json.err = "sql";
+        //json.msg = "";
+        res.json(json);
+
+    });
+    //res.send(cool());
+    //console.log(cool());
+
+});
+
+
 //刪除資料
 router.get('/del/:id', function(req, res) {
 
