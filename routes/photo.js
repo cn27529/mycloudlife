@@ -134,7 +134,7 @@ router.get('/limit/:id/:top', function(req, res) {
       where: {
         ProfileId: profileId
       },
-      limit: top,
+      limit: parseInt(top),
       include: [{
         model: models.Photo_image,
       }],

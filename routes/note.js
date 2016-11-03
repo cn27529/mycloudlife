@@ -169,7 +169,7 @@ router.get('/pro/:id/:top', function(req, res) {
         where: {
             ProfileId: id
         },
-        limit: top
+        limit: parseInt(top)
     }).then(function(data) {
 
         //console.log(data);
@@ -220,7 +220,7 @@ router.get('/next/:id/:top/:currentid', function(req, res) {
                 $gt: currentid
             }
         },
-        limit: top
+        limit: parseInt(top)
     }).then(function(data) {
 
         //console.log(data);
