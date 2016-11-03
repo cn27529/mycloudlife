@@ -15,6 +15,7 @@ var account = require('./routes/account');
 var profile = require('./routes/profile');
 var note = require('./routes/note');
 var photo = require('./routes/photo');
+var calendar = require('./routes/calendar');
 
 var cool = require('cool-ascii-faces');
 
@@ -27,6 +28,7 @@ app.use('/account', account);
 app.use('/profile', profile);
 app.use('/note', note);
 app.use('/photo', photo);
+app.use('/calendar', calendar);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
