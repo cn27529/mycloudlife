@@ -32,11 +32,26 @@ router.get('/repwdtest/:email', function(req, res) {
         pwd: '1234qwer'
     }
 
-    sendMail(mail_data.mailFrom, mail_data.mailTo, mail_data.title, mail_data.body);
+    sendMail(mail_data.mailFrom, mail_data.mailTo, mail_data.title, mail_data.body, sendMailCallback);
 
     json.err = "";
     json.msg = "ok,郵件己發送";
     res.json(json);
+
+    //callback function
+    function sendMailCallback(mailMsg) {
+
+        var now = new Date();
+        var month = (now.getMonth() + 1);
+        var yy = (now.getFullYear() <= 9) ? '0' + now.getFullYear().toString() : now.getFullYear().toString();
+        var mm = (month <= 9) ? '0' + month.toString() : month.toString();
+        var dd = (now.getDate() <= 9) ? '0' + now.getDate().toString() : now.getDate().toString();
+
+        console.log(mailMsg);
+        console.log("sendMailCallback:" + now.toLocaleString());
+
+
+    }
 
 });
 
@@ -108,7 +123,17 @@ router.get('/repwd/:email', function(req, res) {
 
     //callback function
     function sendMailCallback(mailMsg) {
+
+        var now = new Date();
+        var month = (now.getMonth() + 1);
+        var yy = (now.getFullYear() <= 9) ? '0' + now.getFullYear().toString() : now.getFullYear().toString();
+        var mm = (month <= 9) ? '0' + month.toString() : month.toString();
+        var dd = (now.getDate() <= 9) ? '0' + now.getDate().toString() : now.getDate().toString();
+
         console.log(mailMsg);
+        console.log("sendMailCallback:" + now.toLocaleString());
+
+
     }
 
 

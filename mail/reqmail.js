@@ -15,5 +15,15 @@ sendMail(data.mailFrom, data.mailTo, data.title, data.body, sendMailCallback);
 
 //callback function
 function sendMailCallback(mailMsg) {
+
+    var now = new Date();
+    var month = (now.getMonth() + 1);
+    var yy = (now.getFullYear() <= 9) ? '0' + now.getFullYear().toString() : now.getFullYear().toString();
+    var mm = (month <= 9) ? '0' + month.toString() : month.toString();
+    var dd = (now.getDate() <= 9) ? '0' + now.getDate().toString() : now.getDate().toString();
+
     console.log(mailMsg);
+    console.log("sendMailCallback:" + now.toLocaleString());
+
+
 }
