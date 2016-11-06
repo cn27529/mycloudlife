@@ -38,6 +38,15 @@ module.exports = function(mailFrom, mailTo, title, body, callpack) {
             // }]
     };
 
+    // // verify connection configuration
+    // transporter.verify(function(error, success) {
+    //     if (error) {
+    //         console.log(error);
+    //     } else {
+    //         console.log('Server is ready to take our messages');
+    //     }
+    // });
+
     //寄出
     transporter.sendMail(mailOptions, function(err, info) {
         //info是成功信件相關資訊;err是失敗相關資訊
@@ -75,6 +84,8 @@ module.exports = function(mailFrom, mailTo, title, body, callpack) {
         // })
 
     });
+
+
 
     //return transporter;
 
