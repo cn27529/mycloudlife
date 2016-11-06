@@ -6,12 +6,12 @@ module.exports = function(mailFrom, mailTo, title, body, callpack) {
 
     //連線資訊
     nodemailer.SMTP = {
-      host: "stmp.gmail.com",//server位置
-      port: 465,//可不給,預設25
-      ssl: true,//可不給,預設false
-      user: 'mycloudedlife1@gmail.com', //可不給
-      pass: '1029384756@pwd', //可不給
-      use_authentication: true//可不給
+        host: "stmp.gmail.com",//server位置
+        port: 465,//可不給,預設25
+        ssl: true,//可不給,預設false
+        user: 'mycloudedlife1@gmail.com', //可不給
+        pass: '1029384756@pwd', //可不給
+        use_authentication: true//可不給
     }
 
     // nodemailer.SMTP = {
@@ -56,7 +56,7 @@ module.exports = function(mailFrom, mailTo, title, body, callpack) {
 
         if (info) {
             console.log(info);
-            mailMsg = info.toString();
+            mailMsg = info;
         }
 
         callpack(mailMsg);
