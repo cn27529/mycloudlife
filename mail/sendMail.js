@@ -14,10 +14,19 @@ module.exports = function(mailFrom, mailTo, title, body, callpack) {
     //     use_authentication: true//可不給
     // }
 
+    // nodemailer.SMTP = {
+    //     host: "a2plcpnl0572.prod.iad2.secureserver.net", //server位置
+    //     port: 465, //可不給,預設25
+    //     ssl: true, //可不給,預設false
+    //     user: 'service@mycloudedlife.com', //可不給
+    //     pass: '3edc#EDC@pwd', //可不給
+    //     use_authentication: true //可不給
+    // }
+
     nodemailer.SMTP = {
-        host: "a2plcpnl0572.prod.iad2.secureserver.net", //server位置
-        port: 465, //可不給,預設25
-        ssl: true, //可不給,預設false
+        host: "mail.mycloudedlife.com", //server位置
+        port: 25, //可不給,預設25
+        ssl: false, //可不給,預設false
         user: 'service@mycloudedlife.com', //可不給
         pass: '3edc#EDC@pwd', //可不給
         use_authentication: true //可不給
@@ -49,7 +58,7 @@ module.exports = function(mailFrom, mailTo, title, body, callpack) {
 
     //寄出
     transporter.sendMail(mailOptions, function(err, info) {
-      
+
         //info是成功信件相關資訊;err是失敗相關資訊
         var mailMsg = "";
 
