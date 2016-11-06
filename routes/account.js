@@ -7,7 +7,7 @@ var sendMail = require('../mail/sendMail');
 //文件
 //https://cn27529.gitbooks.io/mycloudlife-api/content/account.html
 
-//忘記密碼
+//忘記密碼1106
 router.get('/repwd/:email', function(req, res) {
 
     var email = req.params.email;
