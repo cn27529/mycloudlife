@@ -26,7 +26,7 @@ router.get('/repwd/:email', function(req, res) {
         //mailFrom: 'mycloudedlife1@gmail.com',
         mailFrom: 'service@mycloudedlife.com',
         mailTo: email,
-        title: '忘記密碼qq',
+        title: '忘記密碼',
         body: 'Dear XXX,<br>Thank you for contacting us<br>This is your password: <br>For your account security, please change your passowrd later.',
         pwd: '1234qwer'
     }
