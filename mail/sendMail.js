@@ -49,6 +49,7 @@ module.exports = function(mailFrom, mailTo, title, body, callpack) {
 
     //寄出
     transporter.sendMail(mailOptions, function(err, info) {
+      
         //info是成功信件相關資訊;err是失敗相關資訊
         var mailMsg = "";
 
@@ -68,7 +69,10 @@ module.exports = function(mailFrom, mailTo, title, body, callpack) {
             mailMsg = info;
         }
 
-        callpack(mailMsg);
+        if (typeof callpack === "function") {
+            // do something
+            callpack(mailMsg);
+        }
 
         // models.Maillog.create({
         //     title: mailOptions.subject,
@@ -82,6 +86,7 @@ module.exports = function(mailFrom, mailTo, title, body, callpack) {
         //     if (data != null) {}
         //     console.log('models.Maillog.create');
         // })
+
 
     });
 
