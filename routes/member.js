@@ -6,20 +6,52 @@ var cool = require('cool-ascii-faces');
 //文件
 //https://cn27529.gitbooks.io/mycloudlife-api/content/member.html
 
+router.post('/', function(req, res) {
+
+    //token檢查, 先不檢查
+    //var token = req.body.token;
+    var id = req.body.id;
+    var memberid = req.body.member.memberid;
+    var email = req.body.member.email;
+    var tag = req.body.member.tag;
+
+    console.log(id);
+    console.log(memberid);
+    console.log(email);
+    console.log(tag);
+
+
+    res.send(cool());
+    console.log(cool());
+
+});
+
 //create
 router.post('/create', function(req, res) {
 
     //token檢查, 先不檢查
     //var token = req.body.token;
     var id = req.body.id;
+    var memberid = req.body.member.memberid;
     var email = req.body.member.email;
     var tag = req.body.member.tag;
+    var ProfileId = req.body.member.ProfileId;
+    var flag = "";
+
+    console.log(id);
+    console.log(memberid);
+    console.log(email);
+    console.log(tag);
 
     var json = {
         id: 0,
         msg: "建立過程有錯誤請查看值的正確性",
         err: ""
     }
+
+    //區分三種狀態： 被邀請有account=waiting／己同意被邀請成為對方的成員=accpeted／被邀請沒account=noaccount
+    if (memberid == 0) flag = "noaccount";
+    if (memberid > 0) flag = "waiting";
 
     models.Member.findOrCreate({
             where: {
@@ -28,9 +60,12 @@ router.post('/create', function(req, res) {
                 tag: tag
             },
             defaults: {
+                memberid: memberid,
                 email: email,
                 tag: tag,
-                AccountId: id
+                AccountId: id,
+                flag: flag,
+                ProfileId: ProfileId
             }
         })
         .spread(function(data, created) {
@@ -55,117 +90,88 @@ router.post('/create', function(req, res) {
 });
 
 
+//update
+router.post('/mod', function(req, res) {
 
-//刪除資料
-router.get('/del/:id', function(req, res) {
-
-    var id = req.params.id;
+    var AccountId = req.body.id;
+    var id = req.body.member.id;
+    var memberid = req.body.member.memberid;
+    var email = req.body.member.email;
+    var tag = req.body.member.tag;
+    var ProfileId = req.body.member.ProfileId;
+    var flag = req.body.member.flag;
 
     var json = {
-        id: id,
-        msg: "沒有資料可刪除",
+        id: 0,
+        msg: "沒有資料可更新",
         err: ""
     }
 
-    models.Member.findOne({
-        where: {
-            id: id
-        }
-    }).then(function(data) {
+    models.Member.find({
+            where: {
+                id: id,
+                AccountId: AccountId
+            }
+        })
+        .then(function(data) {
 
-        console.log(data);
+            if (data != null) {
+                data.update({
+                        memberid: memberid,
+                        email: email,
+                        tag: tag,
+                        AccountId: id,
+                        flag: flag,
+                        ProfileId: ProfileId
+                    })
+                    .then(function() {
 
-        if (data != null) {
+                    })
 
-            models.Member.destroy({
-                    where: {
-                        id: req.params.id
-                    }
-                })
-                .then(function(data) {
-                    console.log(data);
+                console.log(data);
+                json.id = data.id; //這是使用者的資料代碼, 可存在用戶端
+                json.err = "";
+                json.msg = "ok,資料己更新";
+            }
 
-                    json.msg = "ok,刪除";
-                    json.id = data.id;
-                    res.json(json);
-                });
-
-        } else {
             res.json(json);
-        }
 
-    }).catch(function(err) {
-        // handle error;
-        console.log(err);
-        json.err = "sql";
-        json.msg = "";
-        res.json(json);
-    });
+        }).catch(function(err) {
+            // handle error;
+            console.log(err);
+            json.err = "sql";
+            //json.msg = "";
+            res.json(json);
+        });
 
 });
 
-//以email查我的成員
-router.get('/email/:email', function(req, res) {
 
-    var email = req.params.email;
+
+//取得我的成員
+router.get('/acc/:id', function(req, res) {
+
+    var id = req.params.id;
+    //var tag = req.params.tag;
     //var token = req.params.token; //先不檢查
     var json = {
-        id: 0,
-        msg: "沒有找到資料",
+        id: "",
+        msg: "沒有資料",
         err: "",
         members: []
     }
 
-    models.Member.findOne({
-        where: {
-            email: req.params.email
-        }
-    }).then(function(data) {
-
-        //console.log(data);
-        if (data != null) {
-            json.msg = "ok";
-            json.id = data.id;
-            json.members = data;
-        }
-        res.json(json);
-
-    }).catch(function(err) {
-        // handle error;
-        console.log(err);
-        json.err = "sql";
-        //json.msg = err.message;
-        res.json(json);
-    });
-    //res.send(cool());
-    //console.log(cool());
-
-});
-
-//取得我的成員
-router.get('/acc/:id/:tag', function(req, res) {
-
-    var id = req.params.id;
-    var tag = req.params.tag;
-    //var token = req.params.token; //先不檢查
-    var json = {
-        id:"",
-        msg: "沒有資料",
-        err: "",
-        members:[]
-    }
-
     models.Member.findAll({
-      where: {
-          AccountId: id,
-          tag: tag
-      }
+        where: {
+            AccountId: id
+                //tag: tag
+        }
     }).then(function(data) {
 
         //if (keyword != "Q_QtaiwanQvQ") data = cool();
         //console.log(data);
-        json.id= id;
-        json.msg="ok";
+        json.id = id;
+        json.msg = "ok";
         json.members = data;
         res.json(json);
 
@@ -218,6 +224,55 @@ router.get('/id/:id', function(req, res) {
     });
     //res.send(cool());
     //console.log(cool());
+
+});
+
+
+//刪除資料
+router.get('/del/:id', function(req, res) {
+
+    var id = req.params.id;
+
+    var json = {
+        id: id,
+        msg: "沒有資料可刪除",
+        err: ""
+    }
+
+    models.Member.findOne({
+        where: {
+            id: id
+        }
+    }).then(function(data) {
+
+        console.log(data);
+
+        if (data != null) {
+
+            models.Member.destroy({
+                    where: {
+                        id: req.params.id
+                    }
+                })
+                .then(function(data) {
+                    console.log(data);
+
+                    json.msg = "ok,刪除";
+                    json.id = data.id;
+                    res.json(json);
+                });
+
+        } else {
+            res.json(json);
+        }
+
+    }).catch(function(err) {
+        // handle error;
+        console.log(err);
+        json.err = "sql";
+        json.msg = "";
+        res.json(json);
+    });
 
 });
 
