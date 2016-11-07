@@ -198,7 +198,7 @@ router.get('/id/:id', function(req, res) {
         id: 0,
         msg: "沒有找到資料",
         err: "",
-        note: null
+        member: null
     }
 
     models.Member.findOne({
@@ -211,7 +211,7 @@ router.get('/id/:id', function(req, res) {
         if (data != null) {
             json.msg = "ok";
             json.id = data.id;
-            json.note = data;
+            json.member = data;
         }
         res.json(json);
 
@@ -260,6 +260,7 @@ router.get('/del/:id', function(req, res) {
                     json.msg = "ok,刪除";
                     json.id = data.id;
                     res.json(json);
+                    
                 });
 
         } else {
