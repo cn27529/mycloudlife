@@ -21,7 +21,8 @@ router.post('/create', function(req, res) {
     models.Profile.findOrCreate({
             where: {
                 name: req.body.profile.name,
-                AccountId: req.body.id
+                AccountId: req.body.id,
+                flag: req.body.profile.flag
             },
             defaults: {
                 name: req.body.profile.name,

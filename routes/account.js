@@ -244,6 +244,8 @@ router.post('/login', function(req, res) {
         err: ""
     }
 
+
+
     models.Account.findOne({
         where: {
             email: req.body.email,
@@ -261,15 +263,40 @@ router.post('/login', function(req, res) {
             json.err = "";
         }
 
+
+
+        //更新member資料
+        models.Member.findOne({
+                where: {
+                    email: data.email,
+                    memberid: 0
+                }
+            })
+            .then(function(data) {
+
+                if (data.flag === "noaccount") {
+                    data.update({
+                            memberid: json.id,
+                            flag: 'waiting'
+                        })
+                        .then(function() {
+
+                        })
+                }
+
+            });
+
         res.json(json);
 
     }).catch(function(err) {
         // handle error;
         console.log(err);
         json.err = "sql";
-        //json.msg = "";
         res.json(json);
+
     });
+
+
 
 });
 
