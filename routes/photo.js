@@ -161,7 +161,7 @@ router.get('/next/:id/:top/:currentid', function(req, res) {
         id: 0,
         msg: "沒有查詢到資料",
         err: "",
-        notes: []
+        photos: []
     }
     var id = req.params.id;
     var top = req.params.top;
@@ -183,7 +183,7 @@ router.get('/next/:id/:top/:currentid', function(req, res) {
 
         //console.log(data);
         if (data.length > 0) {
-            json.notes = data;
+            json.photos = data;
             json.msg = "ok";
         }
         json.id = id;
