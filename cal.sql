@@ -16,5 +16,14 @@ and cal_event.yyyymm='2016/08'  月
 //是布的建立的 或 有人把布加進去people的
 and （ cal_event.ProfileId=2 or cal_event.people like '2' )
 
+where{
+   yyyymm: '2016/08',
+   ProfileId: 2
+},
+or{
+   people &
+}
+
+
 
 --or people like '%2%' //這也是布的
