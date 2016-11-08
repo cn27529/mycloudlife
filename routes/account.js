@@ -267,24 +267,47 @@ router.post('/login', function(req, res) {
 
         //更新member資料
         models.Member.findOne({
-                where: {
-                    email: data.email,
-                    memberid: 0
-                }
-            })
-            .then(function(data) {
+            where: {
+                email: data.email,
+                memberid: 0
+            }
+        }).then(function(data) {
 
-                if (data.flag === "noaccount") {
-                    data.update({
+            if (data.flag === "noaccount") {
+
+                data.update({
+                    memberid: json.id,
+                    flag: 'waiting'
+                }).then(function() {
+
+                })
+
+                //取得profile
+                models.Profile.findOne({
+                    where: {
+                        AccountId: json.id,
+                        flag: 'me'
+                    }
+                }).then(function(data1) {
+
+                    if (data1 != null) {
+
+                        //更新ProfileId
+                        data.update({
                             memberid: json.id,
-                            flag: 'waiting'
-                        })
-                        .then(function() {
+                            flag: 'waiting',
+                            ProfileId: data1.id
+                        }).then(function() {
 
                         })
-                }
 
-            });
+                    }
+
+                });
+
+            }
+
+        });
 
         res.json(json);
 
