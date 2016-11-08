@@ -7,7 +7,10 @@ var router = express.Router();
 //https://cn27529.gitbooks.io/mycloudlife-api/content/account.html
 
 //create ok
-router.post('/create', function(req, res) {
+// method:POST, 使用時機create
+// /create/:mode
+
+router.post('/create/:mode', function(req, res) {
   //token檢查, 先不檢查
   //var token = req.body.token;
   var event;
@@ -25,7 +28,9 @@ router.post('/create', function(req, res) {
       ProfileId: parseInt(req.body.id)
     }
 
-    switch (req.body.mode) {
+    console.log(req.params.mode);
+
+    switch (req.params.mode) {
       case 'multiple':
         event.multiple = req.body.multiple.join(',');
         break;
@@ -33,10 +38,11 @@ router.post('/create', function(req, res) {
         event.repeat_type = req.body.event.repeat_type;
         event.repeat_detail = req.body.event.repeat_detail;
         event.repeat_until = req.body.event.repeat_until;
+        break;
       default:
     }
   } catch (err) {
-    console.log(err.message);
+    // console.log(err.message);
     return res.json({
       err: err.message
     })
@@ -62,7 +68,7 @@ router.post('/create', function(req, res) {
       models.Calendar_event
         .create(event);
 
-      console.log(typeof event.ProfileId, typeof event.CalendarId);
+      // console.log(typeof event.ProfileId, typeof event.CalendarId);
       // mode: single, multiple, repeat
       json = {
         "id": event.ProfileId, //這是使用者的資料代碼, 可存在用戶端
@@ -102,7 +108,7 @@ router.get('/limit/:id/:start/:top', function(req, res) {
     json.msg = "ok";
 
     // 撈calendar的資料
-    models.Calendar.findAll({
+    models.Calendar.findOne({
       where: {
         start: start,
         ProfileId: profileId
@@ -112,7 +118,6 @@ router.get('/limit/:id/:start/:top', function(req, res) {
         model: models.Calendar_event,
       }],
     }).then(function(events) {
-
       res.json(events);
     });
 
