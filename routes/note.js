@@ -143,13 +143,6 @@ router.get('/id/:id', function(req, res) {
 
 });
 
-
-// router.get('/pro', function(req, res) {
-//     res.json(cool());
-// });
-// router.get('/all/:id', function(req, res) {
-//     res.json(cool());
-// });
 // http://yourdomain/note/pro/:id/:top
 // :id 這是profile資料代碼
 // :top 是要取得幾筆給前端, 若10, 表示給前端10筆photo
