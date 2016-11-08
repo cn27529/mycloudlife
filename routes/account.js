@@ -242,8 +242,6 @@ router.post('/login', function(req, res) {
         err: ""
     }
 
-
-
     models.Account.findOne({
         where: {
             email: req.body.email,
@@ -270,7 +268,7 @@ router.post('/login', function(req, res) {
         }).then(function(data) {
 
             if (data.flag === "noaccount") {
-
+              //第1次的資料變更
                 data.update({
                     memberid: json.id,
                     flag: 'waiting'
@@ -288,7 +286,7 @@ router.post('/login', function(req, res) {
 
                     if (data1 != null) {
 
-                        //更新ProfileId
+                        //第2次的資料變更，更新ProfileId
                         data.update({
                             memberid: json.id,
                             flag: 'waiting',
