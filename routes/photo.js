@@ -175,7 +175,10 @@ router.get('/next/:id/:top/:currentid', function(req, res) {
                 $gt: currentid
             }
         },
-        limit: parseInt(top)
+        limit: parseInt(top),
+        include: [{
+            model: models.Photo_image,
+        }],
     }).then(function(data) {
 
         //console.log(data);
@@ -244,7 +247,9 @@ router.get('/all', function(req, res) {
     //var token = req.params.token; //先不檢查
 
     models.Photo.findAll({
-
+      include: [{
+          model: models.Photo_image,
+      }],
     }).then(function(data) {
 
         //if (keyword != "Q_QtaiwanQvQ") data = cool();
