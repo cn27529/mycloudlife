@@ -269,12 +269,12 @@ router.post('/login', function(req, res) {
 
             if (data.flag === "noaccount") {
               //第1次的資料變更
-                data.update({
-                    memberid: json.id,
-                    flag: 'waiting'
-                }).then(function() {
-
-                })
+                // data.update({
+                //     memberid: json.id,
+                //     flag: 'waiting'
+                // }).then(function() {
+                //
+                // })
 
                 //取得profile
                 models.Profile.findOne({
