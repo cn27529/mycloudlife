@@ -72,37 +72,35 @@ router.post('/mod', function(req, res) {
     }
 
     models.Note.find({
-            where: {
-                id: id
-            }
-        })
-        .then(function(data) {
+        where: {
+            id: id
+        }
+    }).then(function(data) {
 
-            if (data != null) {
-                data.update({
-                        title: title,
-                        body: body,
-                        noteday: noteday
-                    })
-                    .then(function() {
+        if (data != null) {
+            data.update({
+                title: title,
+                body: body,
+                noteday: noteday
+            }).then(function() {
 
-                    })
+            })
 
-                console.log(data);
-                json.id = data.id; //這是使用者的資料代碼, 可存在用戶端
-                json.err = "";
-                json.msg = "ok,資料己更新";
-            }
+            console.log(data);
+            json.id = data.id; //這是使用者的資料代碼, 可存在用戶端
+            json.err = "";
+            json.msg = "ok,資料己更新";
+        }
 
-            res.json(json);
+        res.json(json);
 
-        }).catch(function(err) {
-            // handle error;
-            console.log(err);
-            json.err = "sql";
-            //json.msg = "";
-            res.json(json);
-        });
+    }).catch(function(err) {
+        // handle error;
+        console.log(err);
+        json.err = "sql";
+        //json.msg = "";
+        res.json(json);
+    });
 
 });
 
@@ -261,17 +259,16 @@ router.get('/del/:id', function(req, res) {
         if (data != null) {
 
             models.Note.destroy({
-                    where: {
-                        id: req.params.id
-                    }
-                })
-                .then(function(data) {
-                    console.log(data);
+                where: {
+                    id: req.params.id
+                }
+            }).then(function(data) {
+                console.log(data);
 
-                    json.msg = "ok,刪除";
-                    json.id = data.id;
-                    res.json(json);
-                });
+                json.msg = "ok,刪除";
+                json.id = data.id;
+                res.json(json);
+            });
 
         } else {
             res.json(json);

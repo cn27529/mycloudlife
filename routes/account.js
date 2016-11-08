@@ -199,33 +199,31 @@ router.post('/mod', function(req, res) {
     }
 
     models.Account.find({
-            where: {
-                id: id
-            }
-        })
-        .then(function(data) {
+        where: {
+            id: id
+        }
+    }).then(function(data) {
 
-            if (data != null) {
-                data.update({
-                        email: email
-                    })
-                    .then(function() {
+        if (data != null) {
+            data.update({
+                email: email
+            }).then(function() {
 
-                    })
+            })
 
-                console.log(data);
-                json.id = data.id; //這是使用者的資料代碼, 可存在用戶端
-                json.err = "";
-                json.msg = "ok,資料己更新";
-            }
-            res.json(json);
+            console.log(data);
+            json.id = data.id; //這是使用者的資料代碼, 可存在用戶端
+            json.err = "";
+            json.msg = "ok,資料己更新";
+        }
+        res.json(json);
 
-        }).catch(function(err) {
-            // handle error;
-            console.log(err);
-            json.err = "sql";
-            res.json(json);
-        });
+    }).catch(function(err) {
+        // handle error;
+        console.log(err);
+        json.err = "sql";
+        res.json(json);
+    });
 
 });
 
@@ -262,8 +260,6 @@ router.post('/login', function(req, res) {
             json.pwd = data.password;
             json.err = "";
         }
-
-
 
         //更新member資料
         models.Member.findOne({

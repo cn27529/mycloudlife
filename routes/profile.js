@@ -67,43 +67,41 @@ router.post('/mod', function(req, res) {
     //res.send(cool());
 
     models.Profile.find({
-            where: {
-                id: req.body.profile.id
-            }
-        })
-        .then(function(data) {
+        where: {
+            id: req.body.profile.id
+        }
+    }).then(function(data) {
 
-            if (data != null) {
+        if (data != null) {
 
-                data.update({
-                        name: req.body.profile.name,
-                        birthday: req.body.profile.birthday,
-                        sex: req.body.profile.sex,
-                        role: req.body.profile.role,
-                        image: req.body.profile.image,
-                        flag: req.body.profile.flag
-                            //AccountId: req.body.id
-                    })
-                    .then(function() {
+            data.update({
+                name: req.body.profile.name,
+                birthday: req.body.profile.birthday,
+                sex: req.body.profile.sex,
+                role: req.body.profile.role,
+                image: req.body.profile.image,
+                flag: req.body.profile.flag
+                    //AccountId: req.body.id
+            }).then(function() {
 
-                    })
+            })
 
-                //console.log(data);
-                json.id = data.id; //這是 profile id資料代碼, 可存在用戶端
-                json.err = "";
-                json.msg = "ok,資料己更新";
+            //console.log(data);
+            json.id = data.id; //這是 profile id資料代碼, 可存在用戶端
+            json.err = "";
+            json.msg = "ok,資料己更新";
 
-            }
+        }
 
-            res.json(json);
+        res.json(json);
 
-        }).catch(function(err) {
-            // handle error;
-            console.log(err);
-            json.err = "sql";
-            //json.msg = "";
-            res.json(json);
-        });
+    }).catch(function(err) {
+        // handle error;
+        console.log(err);
+        json.err = "sql";
+        //json.msg = "";
+        res.json(json);
+    });
 
 });
 
@@ -221,17 +219,16 @@ router.get('/del/:id', function(req, res) {
         if (data != null) {
 
             models.Profile.destroy({
-                    where: {
-                        id: req.params.id
-                    }
-                })
-                .then(function(data) {
-                    console.log(data);
+                where: {
+                    id: req.params.id
+                }
+            }).then(function(data) {
+                console.log(data);
 
-                    json.msg = "ok,刪除";
-                    json.id = data.id;
-                    res.json(json);
-                });
+                json.msg = "ok,刪除";
+                json.id = data.id;
+                res.json(json);
+            });
 
         } else {
             res.json(json);
