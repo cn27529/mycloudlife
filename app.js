@@ -3,21 +3,13 @@ var express = require('express');
 var app = express();
 var bodyparser = require('body-parser');
 
-app.use(bodyparser.urlencoded({
-    extended: true
-}));
-app.use(bodyparser.json());
+// app.use(bodyparser.urlencoded({ extended: true }));
+// app.use(bodyparser.json());
 
-// app.use('*', (req, res) => {
-//   if( >) {
-//     res.send('');
-//   }
-//   next();
-// })
 
 //http://stackoverflow.com/questions/25332561/node-js-express-large-body-for-bodyparser
 //app.use(bodyparser.json({limit: '50mb'}));
-//app.use(bodyparser.urlencoded({limit: '50mb', extended: true}));
+//app.use(bodyparser.urlencoded({limit: '50mb'}));
 //app.use(bodyparser.raw({limit: '50mb'}));
 
 // //Set Request Size Limit
@@ -35,9 +27,10 @@ var urlencodedParser = bodyparser.urlencoded({
     limit: 1024 * 1024 * 20,
     type: 'application/x-www-form-urlencoding'
 });
+
+
 app.use(jsonParser);
 app.use(urlencodedParser);
-
 
 //URL位置
 var index = require('./routes/index');
