@@ -97,7 +97,7 @@ router.post('/mod', function(req, res) {
                       title: item.title,
                       image: item.image,
                       PhotoId: item.PhotoId,
-                      ProfileId: item.ProfileId
+                      ProfileId: req.body.id
                   })
                 }
 
