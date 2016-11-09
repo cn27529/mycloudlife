@@ -44,6 +44,9 @@ router.post('/create', function(req, res) {
 
 //update ok
 router.post('/mod', function(req, res) {
+
+    console.log('-------------photo/mod---------------------');
+
     var json = {
         id: 0,
         msg: "沒有資料可更新",
@@ -76,6 +79,8 @@ router.post('/mod', function(req, res) {
 
             photo_images.forEach(function(item) {
 
+              console.log('---------------forEach-------------------');
+
                 models.Photo_image.findOne({
                     where: {
                         PhotoId: photoId,
@@ -90,9 +95,14 @@ router.post('/mod', function(req, res) {
                         title: item.title,
                         image: item.image
                     });
+
+                }).catch((err) => {
+                  console.log('err---------------models.Photo_image.findOne-------------------');
                 });
+
+
                 //這是新增的
-                if(item.id==0){
+                if(item.id===0){
                   models.Photo_image.create({
                       title: item.title,
                       image: item.image,
