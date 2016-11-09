@@ -46,7 +46,7 @@ router.post('/create', function(req, res) {
     var json = {
         id: 0,
         msg: "建立過程有錯誤請查看值的正確性",
-        err: ""
+        err: "sql"
     }
 
     //區分三種狀態： 被邀請有account=waiting／己同意被邀請成為對方的成員=accpeted／被邀請沒account=noaccount
@@ -57,7 +57,7 @@ router.post('/create', function(req, res) {
             where: {
                 AccountId: id,
                 email: email
-                //tag: tag
+                    //tag: tag
             },
             defaults: {
                 memberid: memberid,
@@ -70,13 +70,14 @@ router.post('/create', function(req, res) {
         })
         .spread(function(data, created) {
             console.log(data.get({
-                    plain: true
-                }))
-                //console.log(data);
-            json = {
-                "id": data.id, //這是資料代碼
-                "msg": "ok,資料己建立"
-            }
+                plain: true
+            }))
+
+            //console.log(data);
+            json.id = data.id; //這是資料代碼
+            json.msg = "ok,資料己建立";
+            json.err = "";
+
             res.json(json);
 
         }).catch(function(err) {
@@ -126,10 +127,10 @@ router.post('/mod', function(req, res) {
 
             })
 
-            console.log(data);
-            json.id = data.id; //這是使用者的資料代碼, 可存在用戶端
-            json.err = "";
+            //console.log(data);
+            json.id = data.id; //這是資料代碼
             json.msg = "ok,資料己更新";
+            json.err = "";
         }
 
         res.json(json);
