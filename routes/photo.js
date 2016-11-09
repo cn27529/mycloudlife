@@ -68,38 +68,48 @@ router.post('/mod', function(req, res) {
         }));
 
         data.update({
-                title: req.body.photo.title,
-                body: req.body.photo.body,
-            })
-            .then(function(data) {
-                // update photo_image
-                var photo_images = req.body.photo_images || [];
+            title: req.body.photo.title,
+            body: req.body.photo.body,
+        }).then(function(data) {
+            // update photo_image
+            var photo_images = req.body.photo_images || [];
 
-                photo_images.forEach(function(item) {
-                    models.Photo_image.findOne({
-                            where: {
-                                PhotoId: photoId,
-                                id: item.id
-                            }
-                        })
-                        .then(function(image) {
-                            if (image === null) {
-                                return
-                            }
+            photo_images.forEach(function(item) {
 
-                            image.update({
-                                title: item.title,
-                                image: item.image
-                            });
-                        });
+                models.Photo_image.findOne({
+                    where: {
+                        PhotoId: photoId,
+                        id: item.id
+                    }
+                }).then(function(image) {
+                    if (image === null) {
+                        return
+                    }
+
+                    image.update({
+                        title: item.title,
+                        image: item.image
+                    });
                 });
+                //這是新增的
+                if(item.id==0){
+                  models.Photo_image.create({
+                      title: item.title,
+                      image: item.image,
+                      PhotoId: item.PhotoId,
+                      ProfileId: item.ProfileId
+                  })
+                }
 
-                json.err = "";
-                json.msg = "ok,資料己更新";
 
-                res.json(json);
+            });
 
-            })
+            json.err = "";
+            json.msg = "ok,資料己更新";
+
+            res.json(json);
+
+        })
     });
 
 });
@@ -207,18 +217,17 @@ router.get('/next/:id/:top/:currentid', function(req, res) {
 // delete by photo id
 router.get('/del/:id', function(req, res) {
     models.Photo.destroy({
-            where: {
-                id: req.params.id
-            }
+        where: {
+            id: req.params.id
+        }
+    }).then(function(data) {
+        console.log(data);
+        res.json({
+            "id": req.params.id,
+            "msg": "ok",
+            "err": ""
         })
-        .then(function(data) {
-            console.log(data);
-            res.json({
-                "id": req.params.id,
-                "msg": "ok",
-                "err": ""
-            })
-        });
+    });
 });
 
 // delete by photo_image id
@@ -247,9 +256,9 @@ router.get('/all', function(req, res) {
     //var token = req.params.token; //先不檢查
 
     models.Photo.findAll({
-      include: [{
-          model: models.Photo_image,
-      }],
+        include: [{
+            model: models.Photo_image,
+        }],
     }).then(function(data) {
 
         //if (keyword != "Q_QtaiwanQvQ") data = cool();
