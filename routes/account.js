@@ -285,7 +285,11 @@ router.post('/login', function(req, res) {
             }
         }).then(function(data) {
 
-            if (data.flag === "noaccount") {
+          console.log(data);
+          console.log('----------------');
+
+            if (data != null && data.flag === "noaccount") {
+
                 //第1次的資料變更
                 // data.update({
                 //     memberid: json.id,

@@ -17,20 +17,25 @@ var bodyparser = require('body-parser');
 // app.use(express.json({limit: '50mb'}));
 // app.use(express.urlencoded({limit: '50mb'}));
 
-
-var jsonParser = bodyparser.json({
-    limit: 1024 * 1024 * 20,
-    type: 'application/json'
-});
-var urlencodedParser = bodyparser.urlencoded({
+app.use(bodyparser.urlencoded({
     extended: true,
-    limit: 1024 * 1024 * 20,
-    type: 'application/x-www-form-urlencoding'
-});
+    limit: 1024 * 1024 * 20
+}));
+app.use(bodyparser.json({ limit: 1024 * 1024 * 20 }));
 
-
-app.use(jsonParser);
-app.use(urlencodedParser);
+// var jsonParser = bodyparser.json({
+//     limit: 1024 * 1024 * 20
+//     type: 'application/json'
+// });
+// var urlencodedParser = bodyparser.urlencoded({
+//     extended: true,
+//     limit: 1024 * 1024 * 20
+//     //type: 'application/x-www-form-urlencoding'
+// });
+//
+//
+// app.use(jsonParser);
+// app.use(urlencodedParser);
 
 //URL位置
 var index = require('./routes/index');
