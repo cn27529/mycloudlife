@@ -6,10 +6,11 @@ var router = express.Router();
 //文件
 //https://cn27529.gitbooks.io/mycloudlife-api/content/account.html
 
-//create ok
+
 // method:POST, 使用時機create
 // /create/:mode
 
+// create event: ok
 router.post('/create/:mode', function(req, res) {
   //token檢查, 先不檢查
   //var token = req.body.token;
@@ -52,24 +53,11 @@ router.post('/create/:mode', function(req, res) {
 
   // create calendar & event
   models.Calendar
-    .findOrCreate({
-      where: {
-        start: event.start,
-        ProfileId: event.ProfileId
-      },
-      defaults: {
-        start: event.start,
-        ProfileId: event.ProfileId
-      }
-    })
-    .spread(function(data) {
+    .create(event)
+    .then(function(data) {
       // console.log(data.get({ plain: true }));
 
-      event.CalendarId = parseInt(data.id);
-      models.Calendar_event
-        .create(event);
-
-      // console.log(typeof event.ProfileId, typeof event.CalendarId);
+      // console.log(typeof event.ProfileId, typeof event.mode);
       // mode: single, multiple, repeat
       json = {
         "id": event.ProfileId, //這是使用者的資料代碼, 可存在用戶端
@@ -82,7 +70,60 @@ router.post('/create/:mode', function(req, res) {
 });
 
 
-// get by id
+// update event: ok
+router.post('/mod/:mode', function(req, res) {
+  var json = {
+    id: 0,
+    msg: "沒有資料可更新",
+    err: "",
+  }
+
+  models.Calendar.findOne({
+      where: {
+        ProfileId: req.body.id,
+        id: req.body.event.id,
+        mode: req.params.mode
+      }
+    })
+    .then(function(data) {
+      if (data === null) {
+        return res.json(json);
+      }
+
+      var id = data.id;
+      json.id = id; //這是 event id資料代碼, 可存在用戶端
+
+      console.log(data.get({ plain: true }));
+
+      var people = req.body.event.people;
+
+      if (Array.isArray(people)) {
+        people = people.join(',');
+      }
+
+      data.update({
+          title: req.body.event.title,
+          people: people,
+          yyyymm: req.body.event.yyyymm,
+          start: req.body.event.start,
+          end: req.body.event.end,
+          all_day: req.body.event.all_day,
+          reminder: req.body.event.reminder,
+          calendar: req.body.event.calendar,
+          notes: req.body.event.notes,
+        })
+        .then(() => {
+          json.err = "";
+          json.msg = "ok,資料己更新";
+
+          res.json(json);
+        })
+    });
+
+});
+
+
+// get events: ok
 router.get('/event/:id/:yyyy/:mm', function(req, res) {
   var id = parseInt(req.params.id);
   var yyyy = req.params.yyyy;
@@ -95,7 +136,7 @@ router.get('/event/:id/:yyyy/:mm', function(req, res) {
     photos: []
   }
 
-  models.Calendar_event.findAll({
+  models.Calendar.findAll({
     where: {
       yyyymm: yyyy + '/' + mm,
       people: {
@@ -108,56 +149,61 @@ router.get('/event/:id/:yyyy/:mm', function(req, res) {
       }
     }
   }).then(function(events) {
-    if (events === null) {
-      return res.json(json);
-    }
+    // if (events === null) {
+    //   return res.json(json);
+    // }
+    json.id = id;
+    json.msg = "ok";
+    json.events = events;
 
-    res.json(events)
+    res.json(json);
 
   });
 });
 
-// get by id
-router.get('/limit/:id/:start/:top', function(req, res) {
-  var id = parseInt(req.params.id);
-  var start = req.params.start;
-  var top = parseInt(req.params.top);
-  //var token = req.params.token; //先不檢查
+
+// delete event:
+
+router.get('/del/:id', function(req, res) {
+  var id = req.params.id;
+
   var json = {
-    id: 0,
-    msg: "沒有資料",
-    err: "",
-    photos: []
+    id: id,
+    msg: "沒有資料可刪除",
+    err: ""
   }
 
-  models.Profile.findOne({
+  models.Calendar.findOne({
     where: {
       id: id
     }
   }).then(function(data) {
-    if (data === null) {
-      return res.json(json);
+    console.log(data);
+
+    if (data != null) {
+      models.Calendar.destroy({
+        where: {
+          id: req.params.id
+        }
+      }).then(function(data) {
+        console.log(data);
+
+        json.msg = "ok,刪除";
+        json.id = data.id;
+        res.json(json);
+      });
+
+    } else {
+      res.json(json);
     }
-
-    var profileId = data.id;
-    json.id = data.id;
-    json.msg = "ok";
-
-    // 撈calendar的資料
-    models.Calendar.findOne({
-      where: {
-        start: start,
-        ProfileId: profileId
-      },
-      limit: top,
-      include: [{
-        model: models.Calendar_event,
-      }],
-    }).then(function(events) {
-      res.json(events);
-    });
-
+  }).catch(function(err) {
+    // handle error;
+    console.log(err);
+    json.err = "sql";
+    json.msg = "";
+    res.json(json);
   });
 });
+
 
 module.exports = router;
