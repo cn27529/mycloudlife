@@ -97,15 +97,33 @@ router.get('/repwd/:email', function(req, res) {
             json.err = "";
 
             mail_data.pwd = data.password;
+
+            //mail body
             mail_data.body = 'Dear ' + mail_data.mailTo + ',<br>Thank you for contacting us<br>This is your password: ' + mail_data.pwd + '<br>For your account security, please change your passowrd later.';
 
-            console.log(mail_data);
+            //取得profile
+            models.Profile.findOne({
+                where: {
+                    AccountId: data.id
+                }
+            }).then(function(data2) {
+                if (data2 != null) {
+                    //取得name
+                    mail_data.body = 'Dear ' + data2.name + ',<br>Thank you for contacting us<br>This is your password: ' + mail_data.pwd + '<br>For your account security, please change your passowrd later.';
+                    sendMail(mail_data.mailFrom, mail_data.mailTo, mail_data.title, mail_data.body, sendMailCallback);
+                    console.log(mail_data);
+                } else {
+                    sendMail(mail_data.mailFrom, mail_data.mailTo, mail_data.title, mail_data.body, sendMailCallback);
+                    console.log(mail_data);
+                }
+            })
 
-            sendMail(mail_data.mailFrom, mail_data.mailTo, mail_data.title, mail_data.body, sendMailCallback);
+            //sendMail(mail_data.mailFrom, mail_data.mailTo, mail_data.title, mail_data.body, sendMailCallback);
 
             json.err = "";
             json.msg = "ok,郵件己發送";
             res.json(json);
+
 
         } else {
             res.json(json);
@@ -268,7 +286,7 @@ router.post('/login', function(req, res) {
         }).then(function(data) {
 
             if (data.flag === "noaccount") {
-              //第1次的資料變更
+                //第1次的資料變更
                 // data.update({
                 //     memberid: json.id,
                 //     flag: 'waiting'
