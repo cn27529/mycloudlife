@@ -18,6 +18,7 @@ router.post('/create/:mode', function(req, res) {
     event = {
       title: req.body.event.title,
       people: req.body.event.people.join(','),
+      yyyymm: req.body.event.yyyymm,
       start: req.body.event.start,
       end: req.body.event.end,
       all_day: req.body.event.all_day,
@@ -80,6 +81,41 @@ router.post('/create/:mode', function(req, res) {
     });
 });
 
+
+// get by id
+router.get('/event/:id/:yyyy/:mm', function(req, res) {
+  var id = parseInt(req.params.id);
+  var yyyy = req.params.yyyy;
+  var mm = req.params.mm;
+  //var token = req.params.token; //先不檢查
+  var json = {
+    id: 0,
+    msg: "沒有資料",
+    err: "",
+    photos: []
+  }
+
+  models.Calendar_event.findAll({
+    where: {
+      yyyymm: yyyy + '/' + mm,
+      people: {
+        $or: [
+          {$like: id + ',%'},
+          { $like: '%,' + id + ',%' },
+          { $like: '%,' + id }
+        ],
+        $like: '%,' + id + ',%'
+      }
+    }
+  }).then(function(events) {
+    if (events === null) {
+      return res.json(json);
+    }
+
+    res.json(events)
+
+  });
+});
 
 // get by id
 router.get('/limit/:id/:start/:top', function(req, res) {
