@@ -56,8 +56,8 @@ router.post('/create', function(req, res) {
     models.Member.findOrCreate({
             where: {
                 AccountId: id,
-                email: email,
-                tag: tag
+                email: email
+                //tag: tag
             },
             defaults: {
                 memberid: memberid,
