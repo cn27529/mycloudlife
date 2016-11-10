@@ -8,150 +8,118 @@ var sendMail = require('../mail/sendMail');
 //文件
 //https://cn27529.gitbooks.io/mycloudlife-api/content/maillog.html
 
-
 //忘記密碼寄送mail
-router.get('/repwd/:email', function(req, res) {
+router.post('/repwd', function(req, res) {
 
-    //var email = req.body.email;
-    var email = req.params.email;
+    var email = req.body.email;
+    var pwd = req.body.pwd;
+    var name = req.body.name;
 
     var json = {
         "email": email,
-        "pwd": "",
-        "msg": "找不到這個帳號的電子郵件",
-        "err": "repwd",
-        "id": ""
+        "pwd": pwd,
+        "name": "",
+        "msg": "post沒有電子郵件",
+        "err": "repwd"
     }
 
     if (email === undefined) {
-        console.log('undefined');
+        json.msg = "email is undefined";
         res.json(json);
     }
     if (email == null) {
-        console.log('null');
+        json.msg = "email is null";
         res.json(json);
     }
 
-    //找密碼
-    models.Account.findOne({
-        where: {
-            email: email
-        }
-    }).then(function(data) {
+    //props
+    var mail_data = {
+        mailFrom: 'service@mycloudedlife.com',
+        mailTo: email,
+        title: '忘記密碼',
+        body: 'Dear XXX,<br>Thank you for contacting us<br>This is your password: <br>For your account security, please change your passowrd later.',
+        pwd: pwd,
+        name: name
+    }
 
-        console.log(data);
+    //mail body
+    mail_data.body = 'Dear ' + mail_data.name + ',<br>Thank you for contacting us<br>This is your password: ' + mail_data.pwd + '<br>For your account security, please change your passowrd later.';
+    console.log(mail_data);
+    //忘記密碼寄送mail
+    sendMail(mail_data.mailFrom, mail_data.mailTo, mail_data.title, mail_data.body, sendMailCallback);
 
-        if (data != null) {
+    json.err = "";
+    json.msg = "ok,郵件己發送";
+    res.json(json);
 
-            json.msg = "ok,己傳送密碼";
-            json.id = data.id;
-            json.email = data.email;
-            json.pwd = data.password;
-            json.err = "";
+    //callback function
+    function sendMailCallback(mailMsg) {
 
-            console.log(json.msg);
+        var now = new Date();
+        var month = (now.getMonth() + 1);
+        var yy = (now.getFullYear() <= 9) ? '0' + now.getFullYear().toString() : now.getFullYear().toString();
+        var mm = (month <= 9) ? '0' + month.toString() : month.toString();
+        var dd = (now.getDate() <= 9) ? '0' + now.getDate().toString() : now.getDate().toString();
 
-            //props
-            var data = {
-                    mailFrom: 'mycloudedlife1@gmail.com',
-                    mailTo: email,
-                    title: '忘記密碼寄送mail',
-                    body: '<h3>你的密碼：' + json.pwd + '</h3>'
-                }
-                //忘記密碼寄送mail
-            sendMail(data.mailFrom, data.mailTo, data.title, data.body);
-            //createMail('mycloudedlife1@gmail.com', 'cn27529@hotmail.com', '成員邀請', '<h3>測試測試</h3>');
-            res.json(json);
-
-        }
-
-        if (data === null) {
-            console.log(json);
-            res.json(json);
-        }
-
-    }).catch(function(err) {
-        // handle error;
-        console.log(err);
-        json.err = "sql";
-        //json.msg = "";
-        res.json(json);
-    });
+        console.log(mailMsg);
+        console.log("sendMailCallback:" + now.toLocaleString());
 
 
+    }
 
 });
 
 //邀請成員寄送mail
-router.get('/reqemail/:email', function(req, res) {
+router.post('/reqemail', function(req, res) {
 
-    //var email = req.body.email;
-    var email = req.params.email;
+    var email = req.body.email;
+    //var email = req.params.email;
 
     var json = {
         "email": email,
-        "pwd": "",
-        "msg": "找不到這個帳號的電子郵件",
-        "err": "reqemail",
-        "id": ""
+        //"pwd": "",
+        "msg": "post沒有電子郵件",
+        "err": "reqemail"
     }
 
     if (email === undefined) {
-        console.log('undefined');
+        json.msg = "email is undefined";
         res.json(json);
     }
     if (email == null) {
-        console.log('null');
+        json.msg = "email is null";
         res.json(json);
     }
 
-    //找密碼
-    models.Account.findOne({
-        where: {
-            email: email
-        }
-    }).then(function(data) {
+    //props
+    var mail_data = {
+        mailFrom: 'service@mycloudedlife.com',
+        mailTo: email,
+        title: '成員邀請',
+        body: '<h3>測試測試</h3>'
+    }
 
-        console.log(data);
+    console.log(mail_data);
+    //忘記密碼寄送mail
+    sendMail(mail_data.mailFrom, mail_data.mailTo, mail_data.title, mail_data.body, sendMailCallback);
 
-        if (data != null) {
+    json.err = "";
+    json.msg = "ok,郵件己發送";
+    res.json(json);
 
-            json.msg = "ok,己傳送密碼";
-            json.id = data.id;
-            json.email = data.email;
-            json.pwd = data.password;
-            json.err = "";
+    //callback function
+    function sendMailCallback(mailMsg) {
 
-            console.log(json.msg);
+        var now = new Date();
+        var month = (now.getMonth() + 1);
+        var yy = (now.getFullYear() <= 9) ? '0' + now.getFullYear().toString() : now.getFullYear().toString();
+        var mm = (month <= 9) ? '0' + month.toString() : month.toString();
+        var dd = (now.getDate() <= 9) ? '0' + now.getDate().toString() : now.getDate().toString();
 
-            //props
-            var data = {
-                    mailFrom: 'mycloudedlife1@gmail.com',
-                    mailTo: email,
-                    title: '忘記密碼寄送mail',
-                    body: '<h3>你的密碼：' + json.pwd + '</h3>'
-                }
-                //忘記密碼寄送mail
-            sendMail(data.mailFrom, data.mailTo, data.title, data.body);
-            //createMail('mycloudedlife1@gmail.com', 'cn27529@hotmail.com', '成員邀請', '<h3>測試測試</h3>');
-            res.json(json);
+        console.log(mailMsg);
+        console.log("sendMailCallback:" + now.toLocaleString());
 
-        }
-
-        if (data === null) {
-            console.log(json);
-            res.json(json);
-        }
-
-    }).catch(function(err) {
-        // handle error;
-        console.log(err);
-        json.err = "sql";
-        //json.msg = "";
-        res.json(json);
-    });
-
-
+    }
 
 });
 
