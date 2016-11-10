@@ -6,7 +6,6 @@ var router = express.Router();
 //文件
 //https://cn27529.gitbooks.io/mycloudlife-api/content/account.html
 
-
 // method:POST, 使用時機create
 // /create/:mode
 
@@ -137,7 +136,7 @@ router.get('/event/:id/:yyyy/:mm', function(req, res) {
     id: 0,
     msg: "沒有資料",
     err: "",
-    photos: []
+    events: []
   }
 
   models.Calendar.findAll({
@@ -145,7 +144,7 @@ router.get('/event/:id/:yyyy/:mm', function(req, res) {
       yyyymm: yyyy + '/' + mm,
       people: {
         $or: [
-          {$like: id + ',%'},
+          { $like: id + ',%' },
           { $like: '%,' + id + ',%' },
           { $like: '%,' + id }
         ],
@@ -182,6 +181,7 @@ router.get('/del/:id', function(req, res) {
       id: id
     }
   }).then(function(data) {
+
     console.log(data);
 
     if (data != null) {
@@ -200,6 +200,7 @@ router.get('/del/:id', function(req, res) {
     } else {
       res.json(json);
     }
+
   }).catch(function(err) {
     // handle error;
     console.log(err);
