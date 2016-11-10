@@ -13,6 +13,11 @@ var router = express.Router();
 router.post('/create/:mode', function(req, res) {
   //token檢查, 先不檢查
   //var token = req.body.token;
+
+  console.log(req.body.event);
+
+  //return;
+
   var event;
   try {
 
@@ -27,18 +32,22 @@ router.post('/create/:mode', function(req, res) {
       calendar: req.body.event.calendar,
       notes: req.body.event.notes,
       mode: req.params.mode,
-      ProfileId: parseInt(req.body.id)
+      ProfileId: parseInt(req.body.id),
+      repeat_type: "",
+      repeat_until:""
+      //repeat_detail: [],
+      //multiple:[]
     }
 
     console.log(req.params.mode);
 
     switch (req.params.mode) {
       case 'multiple':
-        event.multiple = req.body.multiple.join(',');
+        event.multiple = req.body.event.multiple.join(',');
         break;
       case 'repeat':
         event.repeat_type = req.body.event.repeat_type;
-        event.repeat_detail = req.body.event.repeat_detail;
+        event.repeat_detail = req.body.event.repeat_detail.join(',');
         event.repeat_until = req.body.event.repeat_until;
         break;
       default:
@@ -208,6 +217,36 @@ router.get('/del/:id', function(req, res) {
     json.msg = "";
     res.json(json);
   });
+});
+
+
+//all的通關密語是Q_QtaiwanQvQ
+//router.get('/all/:keyword', function(req, res) {
+router.get('/all', function(req, res) {
+
+    var keyword = req.params.keyword;
+    //var token = req.params.token; //先不檢查
+    var json = {
+        msg: "沒有資料",
+        err: ""
+    }
+
+    models.Calendar.findAll({
+
+    }).then(function(data) {
+
+        //if (keyword != "Q_QtaiwanQvQ") data = cool();
+        if (data == null) data = cool();
+        res.json(data);
+
+    }).catch(function(err) {
+        // handle error;
+        console.log(err);
+        json.err = "sql";
+        res.json(json);
+    });
+    //console.log(cool());
+
 });
 
 
