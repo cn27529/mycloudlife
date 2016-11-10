@@ -112,34 +112,51 @@ router.get('/id/:id', function(req, res) {
     var json = {
         id: 0,
         msg: "沒有資料",
-        profile: null
+        profile: null,
+        err: ""
     }
 
-    models.Profile.findOne({
+    // models.Profile.findOne({
+    //     where: {
+    //         id: id
+    //     }
+    // }).then(function(data) {
+    //
+    //     if (data != null) {
+    //         json.msg = "ok";
+    //         json.id = data.id;
+    //         json.profile = data;
+    //     }
+    //     res.json(json);
+    //
+    // }).catch(function(err) {
+    //
+    //     console.log(err);
+    //     json.err = "sql";
+    //     res.json(json);
+    //
+    // });
+
+    models.Profile.findAll({
         where: {
             id: id
         }
     }).then(function(data) {
 
-        console.log(data);
-
-        if (data != null) {
+        data.map(function(item) {
             json.msg = "ok";
-            json.id = data.id;
-            json.profile = data;
-        }
-
+            json.id = item.id;
+            json.profile = item;
+        })
         res.json(json);
 
     }).catch(function(err) {
-        // handle error;
+
         console.log(err);
         json.err = "sql";
-        //json.msg = "";
         res.json(json);
+
     });
-    //res.send(cool());
-    //console.log(cool());
 
 });
 
