@@ -4,7 +4,7 @@ var router = express.Router();
 
 
 //文件
-//https://cn27529.gitbooks.io/mycloudlife-api/content/account.html
+//https://cn27529.gitbooks.io/mycloudlife-api/content/calendar.html
 
 
 // method:POST, 使用時機create
