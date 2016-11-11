@@ -78,8 +78,9 @@ module.exports = function(mailFrom, mailTo, title, body, callpack) {
             mailMsg = info;
         }
 
-        console.log(typeof callpack);
-        callpack(mailMsg, subject, html, from, to);
+        //console.log(typeof callpack);
+        //callpack(mailMsg, subject, html, from, to);
+        
 
         // if (typeof callpack === "function") {
         //     // do something
