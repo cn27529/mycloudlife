@@ -79,23 +79,12 @@ module.exports = function(mailFrom, mailTo, title, body, callpack) {
         }
 
         console.log(typeof callpack);
+        callpack(mailMsg, subject, html, from, to);
 
-        if (typeof callpack === "function") {
-            // do something
-            callpack(mailMsg, subject, html, from, to);
-        }
-
-        // models.Maillog.create({
-        //     title: mailOptions.subject,
-        //     body: mailOptions.html,
-        //     mailFrom: mailOptions.from,
-        //     mailTo: mailOptions.to,
-        //     msg: mailMsg,
-        //     yymmdd: yy + mm + dd,
-        //     yymm: yy + mm
-        // }).then(function(data) {
-        //     console.log(data);
-        // })
+        // if (typeof callpack === "function") {
+        //     // do something
+        //     callpack(mailMsg, subject, html, from, to);
+        // }
 
     });
 
