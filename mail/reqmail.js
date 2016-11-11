@@ -14,7 +14,7 @@ var data = {
 sendMail(data.mailFrom, data.mailTo, data.title, data.body, sendMailCallback);
 
 //callback function
-function sendMailCallback(mailMsg) {
+function sendMailCallback(mailMsg, subject, html, from, to) {
 
     var now = new Date();
     var month = (now.getMonth() + 1);
@@ -23,7 +23,21 @@ function sendMailCallback(mailMsg) {
     var dd = (now.getDate() <= 9) ? '0' + now.getDate().toString() : now.getDate().toString();
 
     console.log(mailMsg);
-    console.log("sendMailCallback:" + now.toLocaleString());
+    console.log("sendMailCallback: " + now.toLocaleString());
 
+    models.Maillog.create({
+        title: subject,
+        body: html,
+        mailFrom: from,
+        mailTo: to,
+        msg: mailMsg,
+        yymmdd: yy + mm + dd,
+        yymm: yy + mm
+    }).then(function(data) {
+        console.log(data);
+        console.log('models.Maillog.create');
+    }).catch(function(err) {
+        console.log(err);
+    });
 
 }

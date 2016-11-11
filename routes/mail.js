@@ -75,7 +75,9 @@ router.post('/repwd', function(req, res) {
         }).then(function(data) {
             console.log(data);
             console.log('models.Maillog.create');
-        })
+        }).catch(function(err) {
+            console.log(err);
+        });
 
 
     }
@@ -143,7 +145,9 @@ router.post('/reqemail', function(req, res) {
         }).then(function(data) {
             console.log(data);
             console.log('models.Maillog.create');
-        })
+        }).catch(function(err) {
+            console.log(err);
+        });
 
     }
 
