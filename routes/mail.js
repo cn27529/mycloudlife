@@ -53,7 +53,7 @@ router.post('/repwd', function(req, res) {
     res.json(json);
 
     //callback function
-    function sendMailCallback(mailMsg) {
+    function sendMailCallback(mailMsg, subject, html, from, to) {
 
         var now = new Date();
         var month = (now.getMonth() + 1);
@@ -62,7 +62,20 @@ router.post('/repwd', function(req, res) {
         var dd = (now.getDate() <= 9) ? '0' + now.getDate().toString() : now.getDate().toString();
 
         console.log(mailMsg);
-        console.log("sendMailCallback:" + now.toLocaleString());
+        console.log("sendMailCallback: " + now.toLocaleString());
+
+        models.Maillog.create({
+            title: subject,
+            body: html,
+            mailFrom: from,
+            mailTo: to,
+            msg: mailMsg,
+            yymmdd: yy + mm + dd,
+            yymm: yy + mm
+        }).then(function(data) {
+            console.log(data);
+            console.log('models.Maillog.create');
+        })
 
 
     }
@@ -108,7 +121,7 @@ router.post('/reqemail', function(req, res) {
     res.json(json);
 
     //callback function
-    function sendMailCallback(mailMsg) {
+    function sendMailCallback(mailMsg, subject, html, from, to) {
 
         var now = new Date();
         var month = (now.getMonth() + 1);
@@ -117,9 +130,23 @@ router.post('/reqemail', function(req, res) {
         var dd = (now.getDate() <= 9) ? '0' + now.getDate().toString() : now.getDate().toString();
 
         console.log(mailMsg);
-        console.log("sendMailCallback:" + now.toLocaleString());
+        console.log("sendMailCallback: " + now.toLocaleString());
+
+        models.Maillog.create({
+            title: subject,
+            body: html,
+            mailFrom: from,
+            mailTo: to,
+            msg: mailMsg,
+            yymmdd: yy + mm + dd,
+            yymm: yy + mm
+        }).then(function(data) {
+            console.log(data);
+            console.log('models.Maillog.create');
+        })
 
     }
+
 
 });
 
@@ -143,22 +170,17 @@ router.get('/yymmdd/:yymmdd', function(req, res) {
         }
     }).then(function(data) {
 
-        //console.log(data);
         res.json(data);
 
     }).catch(function(err) {
-        // handle error;
+
         console.log(err);
         json.err = "sql";
-        //json.msg = "";
         res.json(json);
+
     });
 
-    //res.send(cool());
-    //console.log(cool());
-
 });
-
 
 router.get('/yymm/:yymm', function(req, res) {
 
@@ -178,19 +200,15 @@ router.get('/yymm/:yymm', function(req, res) {
         }
     }).then(function(data) {
 
-        //console.log(data);
         res.json(data);
 
     }).catch(function(err) {
-        // handle error;
+
         console.log(err);
         json.err = "sql";
-        //json.msg = "";
         res.json(json);
-    });
 
-    //res.send(cool());
-    //console.log(cool());
+    });
 
 });
 
@@ -215,12 +233,12 @@ router.get('/all', function(req, res) {
         res.json(data);
 
     }).catch(function(err) {
-        // handle error;
+
         console.log(err);
         json.err = "sql";
         res.json(json);
+
     });
-    //console.log(cool());
 
 });
 

@@ -78,9 +78,11 @@ module.exports = function(mailFrom, mailTo, title, body, callpack) {
             mailMsg = info;
         }
 
+        console.log(typeof callpack);
+
         if (typeof callpack === "function") {
             // do something
-            callpack(mailMsg);
+            callpack(mailMsg, subject, html, from, to);
         }
 
         // models.Maillog.create({
@@ -92,10 +94,8 @@ module.exports = function(mailFrom, mailTo, title, body, callpack) {
         //     yymmdd: yy + mm + dd,
         //     yymm: yy + mm
         // }).then(function(data) {
-        //     if (data != null) {}
-        //     console.log('models.Maillog.create');
+        //     console.log(data);
         // })
-
 
     });
 

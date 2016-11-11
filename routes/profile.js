@@ -178,39 +178,20 @@ router.get('/acc/:id', function(req, res) {
         }
     }).then(function(data) {
 
-        //json.profiles = data;
         data.map(function(item) {
-
-            console.log("------------" + cool());
-            //console.log(item);
-            var info = {
-                name: item.name,
-                "birthday": item.birthday,
-                "sex": item.sex,
-                "role": item.role,
-                "image": item.image,
-                "flag": item.flag,
-                "id": item.id
-            }
-            json.profiles.push(info);
-
+            json.profiles.push(item);
         });
-
-        if (data.length > 0) {}
-
         json.msg = "ok";
         json.id = id;
         res.json(json);
 
     }).catch(function(err) {
-        // handle error;
+
         console.log(err);
         json.err = "sql";
-        //json.msg = "";
         res.json(json);
+
     });
-    //res.send(cool());
-    //console.log(cool());
 
 });
 
@@ -231,8 +212,6 @@ router.get('/del/:id', function(req, res) {
         }
     }).then(function(data) {
 
-        console.log(data);
-
         if (data != null) {
 
             models.Profile.destroy({
@@ -240,11 +219,11 @@ router.get('/del/:id', function(req, res) {
                     id: req.params.id
                 }
             }).then(function(data) {
-                console.log(data);
 
                 json.msg = "ok,刪除";
                 json.id = data.id;
                 res.json(json);
+
             });
 
         } else {
