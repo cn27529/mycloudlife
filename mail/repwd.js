@@ -4,7 +4,7 @@ var hello = require('./hello');
 var models = require('../models');
 
 //props
-var data = {
+var mail_data = {
     //mailFrom: 'mycloudedlife1@gmail.com',
     mailFrom: 'service@mycloudedlife.com',
     mailTo: 'cn27529@gmail.com',
@@ -21,7 +21,29 @@ var data = {
 // This is your password: @@@$$$$.
 // For your account security, please change your passowrd later.
 
-data.body = 'Dear ' + data.mailTo + ',<br>Thank you for contacting us<br>This is your password: ' + data.pwd + '<br>For your account security, please change your passowrd later.';
+mail_data.body = 'Dear ' + mail_data.mailTo + ',<br>Thank you for contacting us<br>This is your password: ' + mail_data.pwd + '<br>For your account security, please change your passowrd later.';
+
+var now = new Date();
+var month = (now.getMonth() + 1);
+var yy = (now.getFullYear() <= 9) ? '0' + now.getFullYear().toString() : now.getFullYear().toString();
+var mm = (month <= 9) ? '0' + month.toString() : month.toString();
+var dd = (now.getDate() <= 9) ? '0' + now.getDate().toString() : now.getDate().toString();
+
+models.Maillog.create({
+    title: mail_data.title,
+    body: mail_data.body,
+    mailFrom: mail_data.mailFrom,
+    mailTo: mail_data.mailTo,
+    msg: "",
+    yymmdd: yy + mm + dd,
+    yymm: yy + mm
+}).then(function(data) {
+    console.log(data);
+    console.log('models.Maillog.create');
+}).catch(function(err) {
+    console.log(err);
+});
+
 sendMail(data.mailFrom, data.mailTo, data.title, data.body, sendMailCallback);
 
 //callback function
@@ -35,18 +57,5 @@ function sendMailCallback(mailMsg, subject, html, from, to) {
 
     console.log(mailMsg);
     console.log("sendMailCallback: " + now.toLocaleString());
-
-    models.Maillog.create({
-        title: subject,
-        body: html,
-        mailFrom: from,
-        mailTo: to,
-        msg: mailMsg,
-        yymmdd: yy + mm + dd,
-        yymm: yy + mm
-    }).then(function(data) {
-        console.log(data);
-        console.log('models.Maillog.create');
-    })
 
 }
