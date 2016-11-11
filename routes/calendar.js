@@ -257,4 +257,40 @@ router.get('/all', function(req, res) {
 });
 
 
+router.get('/id/:id', function(req, res) {
+
+    var id = req.params.id;
+    //var token = req.params.token; //先不檢查
+    var json = {
+        id: 0,
+        msg: "沒有找到資料",
+        err: "",
+        event: null
+    }
+
+    models.Calendar.findAll({
+        where: {
+            id: id
+        }
+    }).then(function(data) {
+
+        json.id = id;
+        data.map(function(item) {
+            json.msg = "ok";
+            json.event = item;
+        })
+        res.json(json);
+
+    }).catch(function(err) {
+
+        console.log(err);
+        json.err = "sql";
+        json.msg = err;
+        res.json(json);
+
+    });
+
+});
+
+
 module.exports = router;

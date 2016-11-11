@@ -45,10 +45,10 @@ router.post('/create', function(req, res) {
             res.json(json);
 
         }).catch(function(err) {
-          console.log(err);
-          json.err = "sql";
-          json.msg = err;
-          res.json(json);
+            console.log(err);
+            json.err = "sql";
+            json.msg = err;
+            res.json(json);
         });
 
 });
@@ -95,10 +95,10 @@ router.post('/mod', function(req, res) {
         res.json(json);
 
     }).catch(function(err) {
-      console.log(err);
-      json.err = "sql";
-      json.msg = err;
-      res.json(json);
+        console.log(err);
+        json.err = "sql";
+        json.msg = err;
+        res.json(json);
     });
 
 });
@@ -151,10 +151,10 @@ router.get('/id/:id', function(req, res) {
 
     }).catch(function(err) {
 
-      console.log(err);
-      json.err = "sql";
-      json.msg = err;
-      res.json(json);
+        console.log(err);
+        json.err = "sql";
+        json.msg = err;
+        res.json(json);
 
     });
 
@@ -186,10 +186,10 @@ router.get('/acc/:id', function(req, res) {
         res.json(json);
 
     }).catch(function(err) {
-      console.log(err);
-      json.err = "sql";
-      json.msg = err;
-      res.json(json);
+        console.log(err);
+        json.err = "sql";
+        json.msg = err;
+        res.json(json);
     });
 
 });
@@ -205,35 +205,33 @@ router.get('/del/:id', function(req, res) {
         err: ""
     }
 
-    models.Profile.findOne({
+    models.Profile.findAll({
         where: {
             id: id
         }
     }).then(function(data) {
 
-        if (data != null) {
+        data.map(function(item) {
+            json.msg = "ok,刪除";
 
             models.Profile.destroy({
                 where: {
                     id: req.params.id
                 }
             }).then(function(data) {
-
                 json.msg = "ok,刪除";
                 json.id = data.id;
                 res.json(json);
-
             });
 
-        } else {
-            res.json(json);
-        }
+        })
+        res.json(json);
 
     }).catch(function(err) {
-      console.log(err);
-      json.err = "sql";
-      json.msg = err;
-      res.json(json);
+        console.log(err);
+        json.err = "sql";
+        json.msg = err;
+        res.json(json);
     });
 
 });
@@ -254,10 +252,10 @@ router.get('/all', function(req, res) {
         res.json(data);
 
     }).catch(function(err) {
-      console.log(err);
-      json.err = "sql";
-      json.msg = err;
-      res.json(json);
+        console.log(err);
+        json.err = "sql";
+        json.msg = err;
+        res.json(json);
     });
 
 });

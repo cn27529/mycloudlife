@@ -240,6 +240,17 @@ router.get('/del/:id', function(req, res) {
 
         data.map(function(item) {
             json.msg = "ok,刪除";
+
+            models.Member.destroy({
+                where: {
+                    id: req.params.id
+                }
+            }).then(function(data) {
+                json.msg = "ok,刪除";
+                json.id = data.id;
+                res.json(json);
+            });
+
         })
         res.json(json);
 

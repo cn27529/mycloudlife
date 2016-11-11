@@ -232,29 +232,27 @@ router.get('/del/:id', function(req, res) {
         err: ""
     }
 
-    models.Note.findOne({
+    models.Note.findAll({
         where: {
             id: id
         }
     }).then(function(data) {
 
-        if (data != null) {
+        data.map(function(item) {
+            json.msg = "ok,刪除";
 
             models.Note.destroy({
                 where: {
                     id: req.params.id
                 }
             }).then(function(data) {
-                console.log(data);
-
                 json.msg = "ok,刪除";
                 json.id = data.id;
                 res.json(json);
             });
 
-        } else {
-            res.json(json);
-        }
+        })
+        res.json(json);
 
     }).catch(function(err) {
 

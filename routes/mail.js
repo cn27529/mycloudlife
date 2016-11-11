@@ -257,4 +257,47 @@ router.get('/all', function(req, res) {
 
 });
 
+
+//刪除資料
+router.get('/del/:id', function(req, res) {
+
+    var id = req.params.id;
+
+    var json = {
+        id: id,
+        msg: "沒有資料可刪除",
+        err: ""
+    }
+
+    models.Maillog.findAll({
+        where: {
+            id: id
+        }
+    }).then(function(data) {
+
+        data.map(function(item) {
+            json.msg = "ok,刪除";
+
+            models.Maillog.destroy({
+                where: {
+                    id: req.params.id
+                }
+            }).then(function(data) {
+                json.msg = "ok,刪除";
+                json.id = data.id;
+                res.json(json);
+            });
+
+        })
+        res.json(json);
+
+    }).catch(function(err) {
+        console.log(err);
+        json.err = "sql";
+        json.msg = err;
+        res.json(json);
+    });
+
+});
+
 module.exports = router;

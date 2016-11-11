@@ -79,7 +79,7 @@ router.post('/mod', function(req, res) {
 
             photo_images.forEach(function(item) {
 
-              console.log('---------------forEach-------------------');
+                console.log('---------------forEach-------------------');
 
                 models.Photo_image.findOne({
                     where: {
@@ -97,18 +97,18 @@ router.post('/mod', function(req, res) {
                     });
 
                 }).catch((err) => {
-                  console.log('err---------------models.Photo_image.findOne-------------------');
+                    console.log('err---------------models.Photo_image.findOne-------------------');
                 });
 
 
                 //這是新增的
-                if(item.id===0){
-                  models.Photo_image.create({
-                      title: item.title,
-                      image: item.image,
-                      PhotoId: item.PhotoId,
-                      ProfileId: req.body.id
-                  })
+                if (item.id === 0) {
+                    models.Photo_image.create({
+                        title: item.title,
+                        image: item.image,
+                        PhotoId: item.PhotoId,
+                        ProfileId: req.body.id
+                    })
                 }
 
 
@@ -211,10 +211,10 @@ router.get('/next/:id/:top/:currentid', function(req, res) {
 
     }).catch(function(err) {
 
-      console.log(err);
-      json.err = "sql";
-      json.msg = err;
-      res.json(json);
+        console.log(err);
+        json.err = "sql";
+        json.msg = err;
+        res.json(json);
 
     });
     //res.send(cool());
@@ -225,34 +225,91 @@ router.get('/next/:id/:top/:currentid', function(req, res) {
 
 // delete by photo id
 router.get('/del/:id', function(req, res) {
-    models.Photo.destroy({
+
+    var id = req.params.id;
+
+    var json = {
+        id: id,
+        msg: "沒有資料可刪除",
+        err: ""
+    }
+
+    models.Photo.findAll({
         where: {
-            id: req.params.id
+            id: id
         }
     }).then(function(data) {
-        console.log(data);
-        res.json({
-            "id": req.params.id,
-            "msg": "ok",
-            "err": ""
+
+        data.map(function(item) {
+            json.msg = "ok,刪除";
+
+            models.Photo.destroy({
+                where: {
+                    id: req.params.id
+                }
+            }).then(function(data) {
+                json.msg = "ok,刪除";
+                json.id = data.id;
+                res.json(json);
+            });
+
         })
+        res.json(json);
+
+    }).catch(function(err) {
+
+        console.log(err);
+        json.err = "sql";
+        json.msg = err;
+        res.json(json);
+
     });
+
+
 });
 
 // delete by photo_image id
 router.get('/delimage/:id', function(req, res) {
-    models.Photo_image.destroy({
+
+    var id = req.params.id;
+
+    var json = {
+        id: id,
+        msg: "沒有資料可刪除",
+        err: ""
+    }
+
+    models.Photo_image.findAll({
         where: {
-            id: req.params.id
+            id: id
         }
     }).then(function(data) {
-        console.log(data);
-        res.json({
-            "id": req.params.id,
-            "msg": "ok",
-            "err": ""
+
+        data.map(function(item) {
+            json.msg = "ok,刪除";
+
+            models.Photo_image.destroy({
+                where: {
+                    id: req.params.id
+                }
+            }).then(function(data) {
+                json.msg = "ok,刪除";
+                json.id = data.id;
+                res.json(json);
+            });
+
         })
+        res.json(json);
+
+    }).catch(function(err) {
+
+        console.log(err);
+        json.err = "sql";
+        json.msg = err;
+        res.json(json);
+
     });
+
 })
 
 
@@ -275,10 +332,10 @@ router.get('/all', function(req, res) {
         res.json(data);
 
     }).catch(function(err) {
-      console.log(err);
-      json.err = "sql";
-      json.msg = err;
-      res.json(json);
+        console.log(err);
+        json.err = "sql";
+        json.msg = err;
+        res.json(json);
     });
 
 })
@@ -300,10 +357,10 @@ router.get('/imageall', function(req, res) {
         res.json(data);
 
     }).catch(function(err) {
-      console.log(err);
-      json.err = "sql";
-      json.msg = err;
-      res.json(json);
+        console.log(err);
+        json.err = "sql";
+        json.msg = err;
+        res.json(json);
     });
 
 })
