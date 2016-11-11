@@ -1,6 +1,8 @@
 //引用 nodemailer
 var sendMail = require('./sendMail');
 var hello = require('./hello');
+var models = require('../models');
+
 
 //props
 var mail_data = {
@@ -31,8 +33,7 @@ models.Maillog.create({
     console.log(err);
 });
 
-//成員邀請
-sendMail(data.mailFrom, data.mailTo, data.title, data.body, sendMailCallback);
+sendMail(mail_data.mailFrom, mail_data.mailTo, mail_data.title, mail_data.body, sendMailCallback);
 
 //callback function
 function sendMailCallback(mailMsg, subject, html, from, to) {
