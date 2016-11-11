@@ -45,11 +45,10 @@ router.post('/create', function(req, res) {
             res.json(json);
 
         }).catch(function(err) {
-            // handle error;
-            console.log(err);
-            json.err = "sql";
-            //json.msg = "";
-            res.json(json);
+          console.log(err);
+          json.err = "sql";
+          json.msg = err;
+          res.json(json);
         });
 
 });
@@ -96,11 +95,10 @@ router.post('/mod', function(req, res) {
         res.json(json);
 
     }).catch(function(err) {
-        // handle error;
-        console.log(err);
-        json.err = "sql";
-        //json.msg = "";
-        res.json(json);
+      console.log(err);
+      json.err = "sql";
+      json.msg = err;
+      res.json(json);
     });
 
 });
@@ -131,9 +129,10 @@ router.get('/id/:id', function(req, res) {
     //
     // }).catch(function(err) {
     //
-    //     console.log(err);
-    //     json.err = "sql";
-    //     res.json(json);
+    // console.log(err);
+    // json.err = "sql";
+    // json.msg = err;
+    // res.json(json);
     //
     // });
 
@@ -152,9 +151,10 @@ router.get('/id/:id', function(req, res) {
 
     }).catch(function(err) {
 
-        console.log(err);
-        json.err = "sql";
-        res.json(json);
+      console.log(err);
+      json.err = "sql";
+      json.msg = err;
+      res.json(json);
 
     });
 
@@ -186,11 +186,10 @@ router.get('/acc/:id', function(req, res) {
         res.json(json);
 
     }).catch(function(err) {
-
-        console.log(err);
-        json.err = "sql";
-        res.json(json);
-
+      console.log(err);
+      json.err = "sql";
+      json.msg = err;
+      res.json(json);
     });
 
 });
@@ -231,11 +230,10 @@ router.get('/del/:id', function(req, res) {
         }
 
     }).catch(function(err) {
-        // handle error;
-        console.log(err);
-        json.err = "sql";
-        json.msg = "";
-        res.json(json);
+      console.log(err);
+      json.err = "sql";
+      json.msg = err;
+      res.json(json);
     });
 
 });
@@ -256,10 +254,10 @@ router.get('/all', function(req, res) {
         res.json(data);
 
     }).catch(function(err) {
-        // handle error;
-        console.log(err);
-        json.err = "sql";
-        res.json(json);
+      console.log(err);
+      json.err = "sql";
+      json.msg = err;
+      res.json(json);
     });
 
 });

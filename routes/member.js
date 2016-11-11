@@ -81,11 +81,12 @@ router.post('/create', function(req, res) {
             res.json(json);
 
         }).catch(function(err) {
-            // handle error;
+
             console.log(err);
             json.err = "sql";
-            //json.msg = "";
+            json.msg = err;
             res.json(json);
+
         });
 
 });
@@ -136,10 +137,9 @@ router.post('/mod', function(req, res) {
         res.json(json);
 
     }).catch(function(err) {
-        // handle error;
         console.log(err);
         json.err = "sql";
-        //json.msg = "";
+        json.msg = err;
         res.json(json);
     });
 
@@ -163,28 +163,24 @@ router.get('/acc/:id', function(req, res) {
     models.Member.findAll({
         where: {
             AccountId: id
-                //tag: tag
         }
     }).then(function(data) {
 
-        //if (keyword != "Q_QtaiwanQvQ") data = cool();
-        //console.log(data);
         json.id = id;
-        json.msg = "ok";
+        data.map(function(item) {
+            json.msg = "ok";
+        })
         json.members = data;
         res.json(json);
 
     }).catch(function(err) {
-        // handle error;
+
         console.log(err);
         json.err = "sql";
-        //json.msg = err.message;
+        json.msg = err;
         res.json(json);
 
     });
-
-    //res.send(cool());
-    //console.log(cool());
 
 });
 
@@ -200,29 +196,27 @@ router.get('/id/:id', function(req, res) {
         member: null
     }
 
-    models.Member.findOne({
+    models.Member.findAll({
         where: {
             id: id
         }
     }).then(function(data) {
 
-        //console.log(data);
-        if (data != null) {
+        json.id = id;
+        data.map(function(item) {
             json.msg = "ok";
-            json.id = data.id;
-            json.member = data;
-        }
+            json.member = item;
+        })
         res.json(json);
 
     }).catch(function(err) {
-        // handle error;
+
         console.log(err);
         json.err = "sql";
-        //json.msg = err.message;
+        json.msg = err;
         res.json(json);
+
     });
-    //res.send(cool());
-    //console.log(cool());
 
 });
 
@@ -238,39 +232,24 @@ router.get('/del/:id', function(req, res) {
         err: ""
     }
 
-    models.Member.findOne({
+    models.Member.findAll({
         where: {
             id: id
         }
     }).then(function(data) {
 
-        console.log(data);
-
-        if (data != null) {
-
-            models.Member.destroy({
-                where: {
-                    id: req.params.id
-                }
-            }).then(function(data) {
-                console.log(data);
-
-                json.msg = "ok,刪除";
-                json.id = data.id;
-                res.json(json);
-
-            });
-
-        } else {
-            res.json(json);
-        }
+        data.map(function(item) {
+            json.msg = "ok,刪除";
+        })
+        res.json(json);
 
     }).catch(function(err) {
-        // handle error;
+
         console.log(err);
         json.err = "sql";
-        json.msg = "";
+        json.msg = err;
         res.json(json);
+
     });
 
 });
@@ -295,15 +274,13 @@ router.get('/all', function(req, res) {
         res.json(data);
 
     }).catch(function(err) {
-        // handle error;
+
         console.log(err);
         json.err = "sql";
-        //json.msg = err.message;
+        json.msg = err;
         res.json(json);
-    });
 
-    //res.send(cool());
-    //console.log(cool());
+    });
 
 });
 

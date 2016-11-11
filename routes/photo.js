@@ -211,11 +211,10 @@ router.get('/next/:id/:top/:currentid', function(req, res) {
 
     }).catch(function(err) {
 
-        // handle error;
-        console.log(err);
-        json.err = "sql";
-        //json.msg = "";
-        res.json(json);
+      console.log(err);
+      json.err = "sql";
+      json.msg = err;
+      res.json(json);
 
     });
     //res.send(cool());
@@ -276,10 +275,10 @@ router.get('/all', function(req, res) {
         res.json(data);
 
     }).catch(function(err) {
-        // handle error;
-        console.log(err);
-        json.err = "sql";
-        res.json(json);
+      console.log(err);
+      json.err = "sql";
+      json.msg = err;
+      res.json(json);
     });
 
 })
@@ -301,10 +300,10 @@ router.get('/imageall', function(req, res) {
         res.json(data);
 
     }).catch(function(err) {
-        // handle error;
-        console.log(err);
-        json.err = "sql";
-        res.json(json);
+      console.log(err);
+      json.err = "sql";
+      json.msg = err;
+      res.json(json);
     });
 
 })

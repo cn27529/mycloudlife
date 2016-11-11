@@ -47,10 +47,9 @@ router.post('/create', function(req, res) {
             res.json(json);
 
         }).catch(function(err) {
-            // handle error;
             console.log(err);
             json.err = "sql";
-            //json.msg = "";
+            json.msg = err;
             res.json(json);
         });
 
@@ -95,10 +94,9 @@ router.post('/mod', function(req, res) {
         res.json(json);
 
     }).catch(function(err) {
-        // handle error;
         console.log(err);
         json.err = "sql";
-        //json.msg = "";
+        json.msg = err;
         res.json(json);
     });
 
@@ -115,29 +113,25 @@ router.get('/id/:id', function(req, res) {
         note: null
     }
 
-    models.Note.findOne({
+    models.Note.findAll({
         where: {
             id: id
         }
     }).then(function(data) {
 
-        //console.log(data);
-        if (data != null) {
+        data.map(function(item) {
             json.msg = "ok";
-            json.id = data.id;
-            json.note = data;
-        }
+            json.id = item.id;
+            json.note = item;
+        })
         res.json(json);
 
     }).catch(function(err) {
-        // handle error;
         console.log(err);
         json.err = "sql";
-        //json.msg = err.message;
+        json.msg = err;
         res.json(json);
     });
-    //res.send(cool());
-    //console.log(cool());
 
 });
 
@@ -163,25 +157,18 @@ router.get('/pro/:id/:top', function(req, res) {
         limit: parseInt(top)
     }).then(function(data) {
 
-        //console.log(data);
-        if (data.length > 0) {
-            json.notes = data;
+        data.map(function(item) {
             json.msg = "ok";
-        }
-        json.id = id;
+        })
+        json.notes = data;
         res.json(json);
 
     }).catch(function(err) {
-
-        // handle error;
         console.log(err);
         json.err = "sql";
-        //json.msg = "";
+        json.msg = err;
         res.json(json);
-
     });
-    //res.send(cool());
-    //console.log(cool());
 
 });
 
@@ -204,6 +191,8 @@ router.get('/next/:id/:top/:currentid', function(req, res) {
     var currentid = req.params.currentid;
     //var token = req.params.token; //先不檢查
 
+    json.id = id;
+
     models.Note.findAll({
         where: {
             ProfileId: id,
@@ -214,25 +203,20 @@ router.get('/next/:id/:top/:currentid', function(req, res) {
         limit: parseInt(top)
     }).then(function(data) {
 
-        //console.log(data);
-        if (data.length > 0) {
-            json.notes = data;
+        data.map(function(item) {
             json.msg = "ok";
-        }
-        json.id = id;
+        })
+        json.notes = data;
         res.json(json);
 
     }).catch(function(err) {
 
-        // handle error;
         console.log(err);
         json.err = "sql";
-        //json.msg = "";
+        json.msg = err;
         res.json(json);
 
     });
-    //res.send(cool());
-    //console.log(cool());
 
 });
 
@@ -254,8 +238,6 @@ router.get('/del/:id', function(req, res) {
         }
     }).then(function(data) {
 
-        console.log(data);
-
         if (data != null) {
 
             models.Note.destroy({
@@ -275,11 +257,12 @@ router.get('/del/:id', function(req, res) {
         }
 
     }).catch(function(err) {
-        // handle error;
+
         console.log(err);
         json.err = "sql";
-        json.msg = "";
+        json.msg = err;
         res.json(json);
+
     });
 
 });
@@ -305,11 +288,12 @@ router.get('/all', function(req, res) {
         res.json(data);
 
     }).catch(function(err) {
-        // handle error;
+
         console.log(err);
         json.err = "sql";
-        json.msg = "";
+        json.msg = err;
         res.json(json);
+
     });
 
     //res.send(cool());

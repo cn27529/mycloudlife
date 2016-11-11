@@ -32,24 +32,19 @@ router.post('/create', function(req, res) {
         })
         .spread(function(data, created) {
             console.log(data.get({
-                plain: true
-            }))
-
-            //console.log(data);
+                    plain: true
+                }))
+                //console.log(data);
             json.id = data.id; //這是使用者的資料代碼, 可存在用戶端
             json.msg = "ok,資料己建立";
-
             res.json(json);
 
         }).catch(function(err) {
-
             console.log(err);
             json.err = "sql";
+            json.msg = err;
             res.json(json);
-
         });
-
-
 
 });
 
@@ -86,11 +81,10 @@ router.post('/mod', function(req, res) {
         res.json(json);
 
     }).catch(function(err) {
-
         console.log(err);
         json.err = "sql";
+        json.msg = err;
         res.json(json);
-
     });
 
 });
@@ -135,8 +129,8 @@ router.post('/login', function(req, res) {
             }
         }).then(function(data) {
 
-          console.log(data);
-          console.log('----------------');
+            console.log(data);
+            console.log('----------------');
 
             if (data != null && data.flag === "noaccount") {
 
@@ -178,14 +172,11 @@ router.post('/login', function(req, res) {
         res.json(json);
 
     }).catch(function(err) {
-
         console.log(err);
         json.err = "sql";
+        json.msg = err;
         res.json(json);
-
     });
-
-
 
 });
 
@@ -217,11 +208,10 @@ router.get('/id/:id', function(req, res) {
         res.json(json);
 
     }).catch(function(err) {
-
         console.log(err);
         json.err = "sql";
+        json.msg = err;
         res.json(json);
-
     });
 
 });
@@ -261,11 +251,10 @@ router.get('/has/:email', function(req, res) {
         res.json(json);
 
     }).catch(function(err) {
-
         console.log(err);
         json.err = "sql";
+        json.msg = err;
         res.json(json);
-
     });
 
 });
@@ -290,11 +279,10 @@ router.get('/all', function(req, res) {
         res.json(data);
 
     }).catch(function(err) {
-
         console.log(err);
         json.err = "sql";
+        json.msg = err;
         res.json(json);
-
     });
 
 });
