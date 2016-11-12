@@ -19,7 +19,7 @@ router.post('/create/:mode', function(req, res) {
     event = {
       title: req.body.event.title,
       people: req.body.event.people.join(','),
-      yyyymm: req.body.event.yyyymm,
+      yyyymm: req.body.event.start.substr(0, 7),
       start: req.body.event.start,
       end: req.body.event.end,
       all_day: req.body.event.all_day,
@@ -34,7 +34,7 @@ router.post('/create/:mode', function(req, res) {
 
     switch (req.params.mode) {
       case 'multiple':
-        event.multiple = req.body.multiple.join(',');
+        event.multiple = req.body.event.multiple.join(',');
         break;
       case 'repeat':
         event.repeat_type = req.body.event.repeat_type;
@@ -104,7 +104,7 @@ router.post('/mod/:mode', function(req, res) {
       data.update({
           title: req.body.event.title,
           people: people,
-          yyyymm: req.body.event.yyyymm,
+          yyyymm: req.body.event.start.substr(0, 7),
           start: req.body.event.start,
           end: req.body.event.end,
           all_day: req.body.event.all_day,
@@ -133,7 +133,7 @@ router.get('/event/:id/:yyyy/:mm', function(req, res) {
     id: 0,
     msg: "沒有資料",
     err: "",
-    photos: []
+    events: []
   }
 
   models.Calendar.findAll({
