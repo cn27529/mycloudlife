@@ -242,6 +242,10 @@ router.get('/all', function(req, res) {
 
     var keyword = req.params.keyword;
     //var token = req.params.token; //先不檢查
+    var json = {
+        msg: "沒有資料",
+        err: ""
+    }
 
     models.Profile.findAll({
 

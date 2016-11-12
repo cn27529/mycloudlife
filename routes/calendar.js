@@ -256,7 +256,6 @@ router.get('/all', function(req, res) {
 
 });
 
-
 router.get('/id/:id', function(req, res) {
 
     var id = req.params.id;

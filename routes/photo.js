@@ -102,11 +102,11 @@ router.post('/mod', function(req, res) {
 
 
                 //這是新增的
-                if (item.id === 0) {
+                if (item.id == 0) {
                     models.Photo_image.create({
                         title: item.title,
                         image: item.image,
-                        PhotoId: item.PhotoId,
+                        PhotoId: photoId,
                         ProfileId: req.body.id
                     })
                 }
@@ -127,9 +127,11 @@ router.post('/mod', function(req, res) {
 
 // get by id
 router.get('/limit/:id/:top', function(req, res) {
+
     var id = req.params.id;
     var top = req.params.top;
     //var token = req.params.token; //先不檢查
+
     var json = {
         id: 0,
         msg: "沒有資料",
@@ -137,36 +139,66 @@ router.get('/limit/:id/:top', function(req, res) {
         photos: []
     }
 
-    models.Profile.findOne({
+    // models.Profile.findOne({
+    //     where: {
+    //         id: id
+    //     }
+    // }).then(function(data) {
+    //     if (data === null) {
+    //         return res.json(json);
+    //     }
+    //
+    //     var profileId = data.id;
+    //
+    //     json.id = data.id;
+    //     json.msg = "ok";
+    //
+    //     // 撈photo的資料
+    //     models.Photo.findAll({
+    //         where: {
+    //             ProfileId: profileId
+    //         },
+    //         limit: parseInt(top),
+    //         include: [{
+    //             model: models.Photo_image,
+    //             limit: 1
+    //             //order: ['id', 'DESC']
+    //         }],
+    //     }).then(function(photos) {
+    //
+    //         res.json(photos);
+    //     });
+    //
+    // });
+    // //res.send(cool());
+    // console.log(cool());
+
+    // 撈photo的資料
+    models.Photo.findAll({
         where: {
-            id: id
-        }
-    }).then(function(data) {
-        if (data === null) {
-            return res.json(json);
-        }
+            ProfileId: id
+        },
+        limit: parseInt(top),
+        include: [{
+            model: models.Photo_image,
+            limit: 1
+                //order: ['id', 'DESC']
+        }],
+    }).then(function(photos) {
 
-        var profileId = data.id;
-        json.id = data.id;
+        json.id = id;
         json.msg = "ok";
+        json.photos = photos;
+        res.json(json);
 
-        // 撈photo的資料
-        models.Photo.findAll({
-            where: {
-                ProfileId: profileId
-            },
-            limit: parseInt(top),
-            include: [{
-                model: models.Photo_image,
-            }],
-        }).then(function(photos) {
+    }).catch(function(err) {
 
-            res.json(photos);
-        });
+        console.log(err);
+        json.err = "sql";
+        json.msg = err;
+        res.json(json);
 
-    });
-    //res.send(cool());
-    console.log(cool());
+    })
 
 });
 
@@ -198,6 +230,8 @@ router.get('/next/:id/:top/:currentid', function(req, res) {
         limit: parseInt(top),
         include: [{
             model: models.Photo_image,
+            limit: 1
+                //order: ['id', 'DESC']
         }],
     }).then(function(data) {
 
@@ -216,7 +250,7 @@ router.get('/next/:id/:top/:currentid', function(req, res) {
         json.msg = err;
         res.json(json);
 
-    });
+    })
     //res.send(cool());
     //console.log(cool());
 
@@ -313,7 +347,6 @@ router.get('/delimage/:id', function(req, res) {
 })
 
 
-
 //all的通關密語是Q_QtaiwanQvQ
 //router.get('/all/:keyword', function(req, res) {
 router.get('/all', function(req, res) {
@@ -321,10 +354,17 @@ router.get('/all', function(req, res) {
     var keyword = req.params.keyword;
     //var token = req.params.token; //先不檢查
 
+    var json = {
+        msg: "沒有資料",
+        err: ""
+    }
+
     models.Photo.findAll({
-        include: [{
-            model: models.Photo_image,
-        }],
+        // include: [{
+        //     model: models.Photo_image,
+        //     limit: 1
+        //         //order: ['id', 'DESC']
+        // }],
     }).then(function(data) {
 
         //if (keyword != "Q_QtaiwanQvQ") data = cool();
@@ -340,27 +380,68 @@ router.get('/all', function(req, res) {
 
 })
 
+//
+// //all的通關密語是Q_QtaiwanQvQ
+// //router.get('/all/:keyword', function(req, res) {
+// router.get('/imageall', function(req, res) {
+//
+//     var keyword = req.params.keyword;
+//     //var token = req.params.token; //先不檢查
+//     var json = {
+//         msg: "沒有資料",
+//         err: ""
+//     }
+//
+//     models.Photo_image.findAll({
+//
+//     }).then(function(data) {
+//
+//         //if (keyword != "Q_QtaiwanQvQ") data = cool();
+//         if (data == null) data = cool();
+//         res.json(data);
+//
+//     }).catch(function(err) {
+//
+//         console.log(err);
+//         json.err = "sql";
+//         json.msg = err;
+//         res.json(json);
+//
+//     });
+//
+// })
 
-//all的通關密語是Q_QtaiwanQvQ
-//router.get('/all/:keyword', function(req, res) {
-router.get('/imageall', function(req, res) {
 
-    var keyword = req.params.keyword;
+router.get('/images/:id', function(req, res) {
+
+    var photoid = req.params.id;
     //var token = req.params.token; //先不檢查
+    var json = {
+        id: photoid,
+        msg: "沒有資料",
+        err: "",
+        Photo_image: []
+    }
 
     models.Photo_image.findAll({
-
+        where: {
+            PhotoId: photoid
+        }
     }).then(function(data) {
 
         //if (keyword != "Q_QtaiwanQvQ") data = cool();
         if (data == null) data = cool();
-        res.json(data);
+        json.Photo_image = data;
+        json.msg = "ok";
+        res.json(json);
 
     }).catch(function(err) {
+
         console.log(err);
         json.err = "sql";
         json.msg = err;
         res.json(json);
+
     });
 
 })
