@@ -282,6 +282,7 @@ router.get('/all', function(req, res) {
 
         //if (keyword != "Q_QtaiwanQvQ") data = cool();
         //console.log(data);
+        
         res.json(data);
 
     }).catch(function(err) {

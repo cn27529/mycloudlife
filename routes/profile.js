@@ -252,8 +252,23 @@ router.get('/all', function(req, res) {
     }).then(function(data) {
 
         //if (keyword != "Q_QtaiwanQvQ") data = cool();
-        if (data == null) data = cool();
-        res.json(data);
+        //if (data == null) data = cool();
+
+        var list = [];
+        data.map(function(item) {
+            json.msg = "ok";
+            var info = {
+                name: item.name,
+                birthday: item.birthday,
+                sex: item.sex,
+                role: item.role,
+                //image: item.image,
+                flag: item.flag,
+                AccountId: item.AccountId
+            }
+            list.push(info);
+        })
+        res.json(list);
 
     }).catch(function(err) {
         console.log(err);
