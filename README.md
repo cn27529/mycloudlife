@@ -4,9 +4,6 @@
 ```
 heroku mysql
 https://git.heroku.com/cn47499.git
-
-heroku diskdb
-https://git.heroku.com/cn92404.git
 ```
 ## One click
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
