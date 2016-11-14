@@ -114,6 +114,20 @@ router.post('/mod/:mode', function(req, res) {
                 people = people.join(',');
             }
 
+            var repeat_type = req.body.event.repeat_type;
+            if (Array.isArray(repeat_type)) {
+                repeat_type = repeat_type.join(',');
+            }
+            var repeat_until = req.body.event.repeat_until;
+            if (Array.isArray(repeat_until)) {
+                repeat_until = repeat_until.join(',');
+            }
+            var multiple = req.body.event.multiple;
+            if (Array.isArray(multiple)) {
+                multiple = multiple.join(',');
+            }
+
+
             data.update({
                 title: req.body.event.title,
                 people: people,
@@ -124,6 +138,9 @@ router.post('/mod/:mode', function(req, res) {
                 reminder: req.body.event.reminder,
                 calendar: req.body.event.calendar,
                 notes: req.body.event.notes,
+                repeat_type: repeat_type,
+                repeat_until: repeat_until,
+                multiple: multiple
             }).then(() => {
                 json.err = "";
                 json.msg = "ok,資料己更新";
@@ -154,19 +171,40 @@ router.get('/event/:id/:yyyy/:mm', function(req, res) {
         events: []
     }
 
+    var yyyymm = yyyy + '/' + mm;
+    
     models.Calendar.findAll({
         where: {
-            yyyymm: yyyy + '/' + mm,
+
+            //yyyymm: yyyy + '/' + mm,
+            //people: {
+            //    $or: [{
+            //        $like: id + ',%'
+            //    }, {
+            //        $like: '%,' + id + ',%'
+            //    }, {
+            //        $like: '%,' + id
+            //    }],
+            //    $like: '%,' + id + ',%'
+            //}
+
             people: {
-                $or: [{
-                    $like: id + ',%'
-                }, {
-                    $like: '%,' + id + ',%'
-                }, {
-                    $like: '%,' + id
-                }],
-                $like: '%,' + id + ',%'
-            }
+                $like: '%' + id + '%'
+            },
+            $or: [{
+                start: {
+                    $like: '%' + yyyymm + '%'
+                }
+            }, {
+                repeat_until: {
+                    $like: '%' + yyyymm + '%'
+                }
+            }, {
+                multiple: {
+                    $like: '%' + yyyymm + '%'
+                }
+            }]
+
         }
     }).then(function(events) {
         json.id = id;
@@ -180,7 +218,6 @@ router.get('/event/:id/:yyyy/:mm', function(req, res) {
         res.json(json);
     });
 });
-
 
 // delete event:
 
