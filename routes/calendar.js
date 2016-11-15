@@ -118,6 +118,7 @@ router.post('/mod/:mode', function(req, res) {
             if (Array.isArray(repeat_type)) {
                 repeat_type = repeat_type.join(',');
             }
+            //------------------------161114加
             var repeat_until = req.body.event.repeat_until;
             if (Array.isArray(repeat_until)) {
                 repeat_until = repeat_until.join(',');
@@ -126,11 +127,11 @@ router.post('/mod/:mode', function(req, res) {
             if (Array.isArray(multiple)) {
                 multiple = multiple.join(',');
             }
-
             var repeat_detail = req.body.event.repeat_detail;
             if (Array.isArray(repeat_detail)) {
                 repeat_detail = repeat_detail.join(',');
             }
+            //------------------------161114加
 
             data.update({
                 title: req.body.event.title,
@@ -142,9 +143,11 @@ router.post('/mod/:mode', function(req, res) {
                 reminder: req.body.event.reminder,
                 calendar: req.body.event.calendar,
                 notes: req.body.event.notes,
+                //------------------------161114加
                 repeat_type: repeat_type,
                 repeat_detail: repeat_detail.
                 repeat_until: repeat_until,
+                //------------------------161114加
                 multiple: multiple
             }).then(() => {
                 json.err = "";
