@@ -127,6 +127,10 @@ router.post('/mod/:mode', function(req, res) {
                 multiple = multiple.join(',');
             }
 
+            var repeat_detail = req.body.event.repeat_detail;
+            if (Array.isArray(repeat_detail)) {
+                repeat_detail = repeat_detail.join(',');
+            }
 
             data.update({
                 title: req.body.event.title,
@@ -139,6 +143,7 @@ router.post('/mod/:mode', function(req, res) {
                 calendar: req.body.event.calendar,
                 notes: req.body.event.notes,
                 repeat_type: repeat_type,
+                repeat_detail: repeat_detail.
                 repeat_until: repeat_until,
                 multiple: multiple
             }).then(() => {
@@ -172,7 +177,7 @@ router.get('/event/:id/:yyyy/:mm', function(req, res) {
     }
 
     var yyyymm = yyyy + '/' + mm;
-    
+
     models.Calendar.findAll({
         where: {
 
