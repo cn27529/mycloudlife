@@ -413,6 +413,7 @@ router.get('/all', function(req, res) {
 // })
 
 
+//取得相本的所有相片
 router.get('/images/:id', function(req, res) {
 
     var photoid = req.params.id;
