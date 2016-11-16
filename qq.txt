@@ -31,5 +31,15 @@
     "expect.js": "^0.3.1",
     "mocha": "^3.0.2",
     "supertest": "^2.0.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cn27529/node-example.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cn27529/node-example/issues"
+  },
+  "homepage": "https://github.com/cn27529/node-example#readme"
 }
