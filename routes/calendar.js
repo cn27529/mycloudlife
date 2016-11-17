@@ -190,6 +190,8 @@ router.get('/event/:id/:yyyy/:mm', function(req, res) {
                    $like: '%,' + id + ',%'
                }, {
                    $like: '%,' + id
+               },{
+                 $like: '%' + id + '%'
                }],
                $like: '%,' + id + ',%'
             },
