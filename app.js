@@ -8,6 +8,9 @@ var bodyparser = require('body-parser');
 var path = require('path');
 
 
+//var multer = require('multer');
+//app.use(multer({ dest: './uploads/'}));
+
 //http://stackoverflow.com/questions/25332561/node-js-express-large-body-for-bodyparser
 //app.use(bodyparser.json({limit: '50mb'}));
 //app.use(bodyparser.urlencoded({limit: '50mb'}));
@@ -69,18 +72,17 @@ app.use('/file', file); //---------add on 161117
 //http://stackoverflow.com/questions/24433733/learning-node-express-public-folder-not-working
 app.use("/public", express.static(path.join(__dirname, 'public')));
 
-
 // catch 404 and forward to error handler
 app.use(function(err, req, res, next) {
 
-    console.log('-------catch 404---------');
+    //console.log('-------catch 404---------');
     res.status(404);
     //next(err);
     //console.log(next(err));
     //res.render('error', {err: err});
     console.log(err);
     res.end();
-    console.log('-------end catch 404---------');
+    //console.log('-------end catch 404---------');
 
 });
 
