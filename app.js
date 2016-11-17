@@ -2,9 +2,10 @@ var cool = require('cool-ascii-faces');
 var express = require('express');
 var app = express();
 var bodyparser = require('body-parser');
-
 // app.use(bodyparser.urlencoded({ extended: true }));
 // app.use(bodyparser.json());
+
+var path = require('path');
 
 
 //http://stackoverflow.com/questions/25332561/node-js-express-large-body-for-bodyparser
@@ -48,6 +49,8 @@ var cool = require('cool-ascii-faces');
 var mail = require('./routes/mail'); //---------add on 161030
 var member = require('./routes/member'); //---------add on 161107
 var calendar = require('./routes/calendar'); //---------add on 161110
+var file = require('./routes/file'); //---------add on 161117
+//var public = require('./routes/public'); //---------add on 161117
 
 //app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'public')));
@@ -61,6 +64,10 @@ app.use('/photo', photo); //--------add on 161027
 app.use('/mail', mail); //---------add on 161030
 app.use('/member', member); //---------add on 161107
 app.use('/calendar', calendar); //---------add on 161110
+app.use('/file', file); //---------add on 161117
+
+//http://stackoverflow.com/questions/24433733/learning-node-express-public-folder-not-working
+app.use("/public", express.static(path.join(__dirname, 'public')));
 
 
 // catch 404 and forward to error handler
