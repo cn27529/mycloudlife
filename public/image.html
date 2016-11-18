@@ -2,25 +2,23 @@
 <html>
 
 <head>
-    <title></title>
-    <style media="screen">
-        input {
-            font-size: 20px;
-        }
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>one file upload</title>
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
-        .mydiv {
-            text-align: center;
-            margin-top: 50px;
-        }
-    </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link href="css/styles.css" rel="stylesheet">
 
     <script type="text/javascript">
         $(function() {
             //alert('');
             var filename = getUrlVars()['filename'];
             //alert('/public/'+ filename);
-            $('.myimage').attr("src", '/public/'+ filename);
+            $('.myimage').attr("src", '/public/' + filename);
         });
 
         // Read a page's GET URL variables and return them as an associative array.
@@ -36,13 +34,23 @@
             return vars;
         }
     </script>
+
 </head>
 
 <body>
-    <div class="mydiv">
-        <h1>show image</h1>
-        <img src="qq" alt="my image" class="myimage" width="50%" />
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h2>show image</h2>
+                        <img src="qq" alt="my image" class="myimage" width="85%" />
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 
 </body>
 
