@@ -92,11 +92,12 @@ app.use(function(err, req, res, next) {
 
     console.log('-------error handler---------');
     res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: (app.get('env') === 'development') ? err : {}
+    res.json({
+        msg: err.message,
+        err: (app.get('env') === 'development') ? err : {}
     });
     console.log('-------end handler---------');
+
 });
 
 //console.log('hihi');
