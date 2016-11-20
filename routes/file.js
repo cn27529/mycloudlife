@@ -11,7 +11,9 @@ var fs = require('fs');
 var path = require('path');
 
 var multer = require('multer'); //https://github.com/expressjs/multer
-var upload = multer({ dest: 'public/' });
+var upload = multer({
+    dest: 'public/'
+});
 
 // var storage = multer.diskStorage({
 //   destination: function (req, file, cb) {
@@ -80,6 +82,65 @@ router.post('/upload', upload.single('file'), function(req, res, next) {
     //         }
     //     });
     // });
+
+});
+
+
+router.get('/allimage/', function(req, res) {
+
+    //var id = req.params.id;
+    //var token = req.params.token; //先不檢查
+    var json = {
+        id: 0,
+        msg: "沒有資料",
+        err: "",
+        files: []
+    }
+
+    var dirname = path.resolve(__dirname, 'public/');
+    dirname = path.resolve('public');
+
+    console.log(dirname);
+
+    var dir = 'public/';
+
+    var files = fs.readdirSync(dir);
+    files.forEach(function(filename, content) {
+        var fullname = path.join(dir, filename);
+        var stats = fs.statSync(fullname);
+        //if (stats.isDirectory()) filename += '/';
+        // process.stdout.write(filename + '\t' +
+        //     stats.size + '\t' +
+        //     stats.mtime + '\n'
+        // );
+
+        if (stats.isDirectory()) return;
+        //console.log(filename.length);
+        if(filename.length>=32) onFileContent(filename, content);
+        //onFileContent(filename, content);
+
+    });
+
+    res.send(json);
+
+    console.log(json);
+
+
+    function onError(err) {
+        json.msg = err.toString();
+        json.err = "onError";
+        console.log(err);
+        res.send(json);
+    }
+
+    function onFileContent(filename, content) {
+        var file = {};
+        file.name = filename;
+        file.index = content;
+        json.files.push(file);
+    }
+
+
 
 });
 

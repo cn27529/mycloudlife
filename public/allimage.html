@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>one file upload</title>
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <link href="css/styles.css" rel="stylesheet">
+
+    <script type="text/javascript">
+        $(function() {
+            //alert('');
+            //var filename = getUrlVars()['filename'];
+            //alert('/public/'+ filename);
+            //$('.myimage').attr("src", '/public/' + filename);
+
+            $.get("../file/allimage", function(data) {
+
+                data.files.map(function(file) {
+                    //console.log(file.name);
+                    $('.listimage').append('<div title=' + file.name + ' style="float:left;" > <img title=' + file.name + ' src=' + file.name + '><div>');
+                });
+
+            });
+
+        });
+
+        // Read a page's GET URL variables and return them as an associative array.
+        function getUrlVars() {
+            var vars = [],
+                hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+    </script>
+
+</head>
+
+<body>
+    <!-- <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div> -->
+
+    <!-- <img src="69497b8c8b5d4e2415614244b941ece7" />
+    <img src="92de2ea810a208a7e9e8d005e4e19e46" />
+    <img src="aae32bbb0e117ef79b2822d7c3a72530" />
+    <img src="c826c4091fce977a1364d1354893eb63" /> -->
+    <div class="listimage">
+
+    </div>
+
+</body>
+
+</html>
