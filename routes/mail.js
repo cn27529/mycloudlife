@@ -95,11 +95,12 @@ router.post('/repwd', function(req, res) {
 router.post('/reqemail', function(req, res) {
 
     var email = req.body.email;
-    //var email = req.params.email;
+    var name = req.body.name;
 
     var json = {
         "email": email,
         //"pwd": "",
+        "name": name,
         "msg": "post沒有電子郵件",
         "err": "reqemail"
     }
@@ -118,8 +119,35 @@ router.post('/reqemail', function(req, res) {
         mailFrom: 'service@mycloudedlife.com',
         mailTo: email,
         title: '成員邀請',
-        body: '<h3>測試測試</h3>'
+        body: '<h3>測試測試</h3>',
+        name: name
     }
+
+
+    // 主旨: This is the invitation from Peter!
+    // 內容:
+    // Peter wants to invite your into his circle on cloudLife app.
+    // If you dont have this app yet, please downlaod and install cloudLife app from apple store.
+    // We know you will enjoy and have fun with your friends and family on cloudLife app.
+    //
+    //
+    // Download app, https://inbox.google.com/u/1/?pli=1
+    //
+    // If you have any questions about app, we love to help you.
+    // This is our service email:
+    // service@mycloudedlife.com
+
+    mail_data.title = 'This is the invitation from ' + name + '!';
+    mail_data.body = name + ' wants to invite your into his circle on cloudLife app.';
+    mail_data.body += '<br/>If you dont have this app yet, please downlaod and install cloudLife app from apple store.';
+    mail_data.body += '<br/>We know you will enjoy and have fun with your friends and family on cloudLife app.';
+    mail_data.body += '<br/>';
+    mail_data.body += '<br/>';
+    mail_data.body += '<br/>Download app, https://inbox.google.com/u/1/?pli=1';
+    mail_data.body += '<br/>';
+    mail_data.body += '<br/>If you have any questions about app, we love to help you.';
+    mail_data.body += '<br/>This is our service email:';
+    mail_data.body += '<br/>service@mycloudedlife.com';
 
     console.log(mail_data);
     //成員邀請寄送mail
