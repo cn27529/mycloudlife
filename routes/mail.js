@@ -146,8 +146,8 @@ router.post('/reqemail', function(req, res) {
     mail_data.body += '<br/>Download app, https://inbox.google.com/u/1/?pli=1';
     mail_data.body += '<br/>';
     mail_data.body += '<br/>If you have any questions about app, we love to help you.';
-    mail_data.body += '<br/>This is our service email:';
-    mail_data.body += '<br/>service@mycloudedlife.com';
+    mail_data.body += '<br/>This is our service email: service@mycloudedlife.com';
+    mail_data.body += '<br/>';
 
     console.log(mail_data);
     //成員邀請寄送mail
