@@ -2,7 +2,7 @@ var models = require('../models');
 var express = require('express');
 var router = express.Router();
 var cool = require('cool-ascii-faces');
-var sendMail = require('../mail/sendMail');
+//var sendMail = require('../mail/sendMail');
 
 //文件
 //https://cn27529.gitbooks.io/mycloudlife-api/content/file.html
@@ -36,12 +36,9 @@ router.get('/', function(req, res) {
 router.post('/upload', upload.single('file'), function(req, res, next) {
     // req.file is the `avatar` file
     // req.body will hold the text fields, if there were any
-
     console.log(req.file);
-
     //res.send(req.file);
-
-    var qq = {
+    var jsonExample = {
         fieldname: 'file',
         originalname: '螢幕快照 2016-11-14 22.29.48.png',
         encoding: '7bit',
@@ -51,45 +48,19 @@ router.post('/upload', upload.single('file'), function(req, res, next) {
         path: 'public/cecaf4b376629d34593efbf0d4af20e8',
         size: 86041
     }
-
     var json = {
         msg: "ok,己上傳",
         err: "",
         filepath: req.file.path,
         size: req.file.size
     };
-
     res.send(json);
-
-    // fs.readFile(req.file.displayImage.path, function(err, data) {
-    //
-    //     var date = new Date();
-    //     var time1 = date.getTime();
-    //
-    //     //http://localhost:8080/public/123456/123456.png
-    //     var dirname = "/public/" + time1.toString();
-    //     var newPath = __dirname + dirname;
-    //
-    //     fs.writeFile(newPath, data, function(err) {
-    //         if (err) {
-    //             json.msg = err.toString();
-    //             json.err = "upload error"
-    //             res.send(json);
-    //         } else {
-    //             json.msg = "ok,saved";
-    //             json.filepath = newPath;
-    //             res.send(json);
-    //         }
-    //     });
-    // });
 
 });
 
-
+//取得所有圖片檔案
 router.get('/allimage/', function(req, res) {
 
-    //var id = req.params.id;
-    //var token = req.params.token; //先不檢查
     var json = {
         id: 0,
         msg: "沒有資料",
@@ -97,13 +68,7 @@ router.get('/allimage/', function(req, res) {
         files: []
     }
 
-    var dirname = path.resolve(__dirname, 'public/');
-    dirname = path.resolve('public');
-
-    console.log(dirname);
-
-    var dir = 'public/';
-
+    var dir = './public/';
     var files = fs.readdirSync(dir);
     files.forEach(function(filename, content) {
         var fullname = path.join(dir, filename);
@@ -113,18 +78,14 @@ router.get('/allimage/', function(req, res) {
         //     stats.size + '\t' +
         //     stats.mtime + '\n'
         // );
-
         if (stats.isDirectory()) return;
-        //console.log(filename.length);
-        if(filename.length>=32) onFileContent(filename, content);
-        //onFileContent(filename, content);
-
+        if (filename.length >= 32) onFileContent(filename, content);
+        json.msg = "";
     });
 
     res.send(json);
 
     console.log(json);
-
 
     function onError(err) {
         json.msg = err.toString();
@@ -134,13 +95,14 @@ router.get('/allimage/', function(req, res) {
     }
 
     function onFileContent(filename, content) {
-        var file = {};
-        file.name = filename;
-        file.index = content;
+        var file = {
+            name: filename,
+            index: content
+        };
+        // file.name = filename;
+        // file.index = content;
         json.files.push(file);
     }
-
-
 
 });
 
