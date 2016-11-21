@@ -282,8 +282,46 @@ router.get('/all', function(req, res) {
 
         //if (keyword != "Q_QtaiwanQvQ") data = cool();
         //console.log(data);
-        
+
         res.json(data);
+
+    }).catch(function(err) {
+
+        console.log(err);
+        json.err = "sql";
+        json.msg = err;
+        res.json(json);
+
+    });
+
+});
+
+//查看誰加了我
+router.get('/whoaddme/:id/:email', function(req, res) {
+
+    var id = req.params.id;
+    var email = req.params.email;
+
+    var json = {
+        "id": id,
+        msg: "沒有資料",
+        err: "",
+        "members": []
+    }
+
+    models.Member.findAll({
+        where: {
+            AccountId: id,
+            email: email
+        }
+    }).then(function(data) {
+
+        json.id = id;
+        data.map(function(item) {
+            json.msg = "ok";
+        })
+        json.members = data;
+        res.json(json);
 
     }).catch(function(err) {
 
