@@ -184,16 +184,16 @@ router.get('/event/:id/:yyyy/:mm', function(req, res) {
 
             //yyyymm: yyyy + '/' + mm,
             people: {
-               $or: [{
-                   $like: id + ',%'
-               }, {
-                   $like: '%,' + id + ',%'
-               }, {
-                   $like: '%,' + id
-               },{
-                 $like: '%' + id + '%'
-               }],
-               $like: '%,' + id + ',%'
+                $or: [{
+                    $like: id + ',%'
+                }, {
+                    $like: '%,' + id + ',%'
+                }, {
+                    $like: '%,' + id
+                }, {
+                    $like: '%' + id + '%'
+                }],
+                $like: '%,' + id + ',%'
             },
 
             // people: {
@@ -201,6 +201,10 @@ router.get('/event/:id/:yyyy/:mm', function(req, res) {
             // },
             $or: [{
                 start: {
+                    $like: '%' + yyyymm + '%'
+                }
+            }, {
+                end: {
                     $like: '%' + yyyymm + '%'
                 }
             }, {
