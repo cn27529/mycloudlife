@@ -3,12 +3,11 @@ var express = require('express');
 var router = express.Router();
 var cool = require('cool-ascii-faces');
 //var sendMail = require('../mail/sendMail');
+var fs = require('fs');
+var path = require('path');
 
 //文件
 //https://cn27529.gitbooks.io/mycloudlife-api/content/file.html
-
-var fs = require('fs');
-var path = require('path');
 
 var multer = require('multer'); //https://github.com/expressjs/multer
 var upload = multer({
@@ -102,6 +101,55 @@ router.get('/allimage/', function(req, res) {
         // file.name = filename;
         // file.index = content;
         json.files.push(file);
+    }
+
+});
+
+
+//取得所有圖片檔案
+router.get('/del/:filename', function(req, res) {
+
+    var filename = req.params.filename;
+
+    var json = {
+            filename: filename,
+            msg: "沒有資料可刪除",
+            err: ""
+        }
+        //console.log(json);
+
+    var path = './public/'; //路徑
+    var filepath = path + filename; //檔案+路徑
+
+    var exist = statPath(filepath);
+    if (exist && exist.isFile()) {
+        // do something
+    } else {
+        //不存在
+        json.msg = 'ok,己刪除 ' + filepath;
+        res.send(json);
+        return;
+    }
+
+    //delete file
+    fs.unlink(filepath, function(err) {
+        if (err) {
+            json.msg = err.toString(); //throw err;
+            json.err = "fs.unlink";
+            //return console.error(err);
+        } else {
+            json.msg = 'ok,己刪除 ' + filepath;
+        }
+        console.log(json);
+        res.send(json);
+
+    });
+
+    function statPath(path) {
+        try {
+            return fs.statSync(path);
+        } catch (ex) {}
+        return false;
     }
 
 });
