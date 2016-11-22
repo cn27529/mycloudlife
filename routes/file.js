@@ -69,38 +69,41 @@ router.get('/allimage/', function(req, res) {
 
     var dir = './public/';
     var files = fs.readdirSync(dir);
-    files.forEach(function(filename, content) {
-        var fullname = path.join(dir, filename);
-        var stats = fs.statSync(fullname);
+    files.forEach(function(filename, index) {
+        var filepath = path.join(dir, filename);
+        var stat = fs.statSync(filepath);
+        if (stat.isDirectory() || filename.length < 32) return;
+
         //if (stats.isDirectory()) filename += '/';
         // process.stdout.write(filename + '\t' +
         //     stats.size + '\t' +
         //     stats.mtime + '\n'
         // );
-        if (stats.isDirectory()) return;
-        if (filename.length >= 32) onFileContent(filename, content);
-        json.msg = "";
+        //console.log(stats);
+
+        push2Json(filename, index, stat.ctime, stat.size);
+
     });
 
-    res.send(json);
-
-    console.log(json);
-
-    function onError(err) {
-        json.msg = err.toString();
-        json.err = "onError";
-        console.log(err);
-        res.send(json);
+    if (json.files.length > 0) {
+        json.msg = "ok";
+        json.err = "";
     }
 
-    function onFileContent(filename, content) {
+    console.log(json);
+    res.send(json);
+
+    function push2Json(filename, index, ctime, size) {
         var file = {
             name: filename,
-            index: content
+            index: index,
+            ctime: ctime,
+            size: size
         };
         // file.name = filename;
         // file.index = content;
         json.files.push(file);
+
     }
 
 });
