@@ -109,7 +109,7 @@ router.get('/allimage/', function(req, res) {
 });
 
 
-//取得所有圖片檔案
+//刪除圖片檔案
 router.get('/del/:filename', function(req, res) {
 
     var filename = req.params.filename;
