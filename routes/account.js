@@ -136,13 +136,24 @@ router.post('/login', function(req, res) {
 
                 if (item.flag === "noaccount") {
 
-                    item.update({
-                        memberid: json.id,
-                        flag: 'waiting',
-                        ProfileId: 0
-                    }).then(function() {
+                    models.Profile.findOne({
+                        where: {
+                            AccountId: json.id,
+                            flag: "me"
+                        }
+                    }).then(function(prof) {
+
+                        item.update({
+                            memberid: json.id,
+                            flag: 'waiting',
+                            ProfileId: prof.id
+                        }).then(function() {
+
+                        })
 
                     })
+
+
 
                 }
 
