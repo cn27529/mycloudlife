@@ -111,8 +111,8 @@ router.post('/mod', function(req, res) {
 
     models.Member.find({
         where: {
-            id: id,
-            AccountId: AccountId
+            id: id
+            //AccountId: AccountId
         }
     }).then(function(data) {
 
