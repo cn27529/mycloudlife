@@ -137,8 +137,8 @@ router.get('/id/:id', function(req, res) {
 
 // http://yourdomain/note/pro/:id/:top
 // :id 這是profile資料代碼
-// :top 是要取得幾筆給前端, 若10, 表示給前端10筆photo
-router.get('/pro/:id/:top', function(req, res) {
+// :limit 是要取得幾筆給前端, 若10, 表示給前端10筆photo
+router.get('/pro/:id/:limit', function(req, res) {
 
     var json = {
         id: 0,
@@ -147,14 +147,50 @@ router.get('/pro/:id/:top', function(req, res) {
         notes: []
     }
     var id = req.params.id;
-    var top = req.params.top;
+    var limit = req.params.limit;
     //var token = req.params.token; //先不檢查
 
     models.Note.findAll({
         where: {
             ProfileId: id
         },
-        limit: parseInt(top)
+        limit: parseInt(limit),
+        order: 'id DESC'
+    }).then(function(data) {
+
+        data.map(function(item) {
+            json.msg = "ok";
+        })
+        json.notes = data;
+        res.json(json);
+
+    }).catch(function(err) {
+        console.log(err);
+        json.err = "sql";
+        json.msg = err;
+        res.json(json);
+    });
+
+});
+
+router.get('/limit/:id/:limit', function(req, res) {
+
+    var json = {
+        id: 0,
+        msg: "沒有查詢到資料",
+        err: "",
+        notes: []
+    }
+    var id = req.params.id;
+    var limit = req.params.limit;
+    //var token = req.params.token; //先不檢查
+
+    models.Note.findAll({
+        where: {
+            ProfileId: id
+        },
+        limit: parseInt(limit),
+        order: 'id DESC'
     }).then(function(data) {
 
         data.map(function(item) {
@@ -178,7 +214,7 @@ router.get('/pro/:id/:top', function(req, res) {
 // :id 這是profile資料代碼
 // :limit 是要取得幾筆給前端, 若10, 表示給前端10筆
 // :currentid 提供目前最後一筆的note id, 會由目前的note id往下找:limit筆
-router.get('/next/:id/:top/:currentid', function(req, res) {
+router.get('/next/:id/:limit/:currentid', function(req, res) {
 
     var json = {
         id: 0,
@@ -187,20 +223,25 @@ router.get('/next/:id/:top/:currentid', function(req, res) {
         notes: []
     }
     var id = req.params.id;
-    var top = req.params.top;
+    var limit = req.params.limit;
     var currentid = req.params.currentid;
     //var token = req.params.token; //先不檢查
 
     json.id = id;
 
+    //$gt: 6,                // > 6
+    //$gte: 6,               // >= 6
+    //$lt: 10,               // < 10
+
     models.Note.findAll({
         where: {
             ProfileId: id,
             id: {
-                $gt: currentid
+                $lt: currentid
             }
         },
-        limit: parseInt(top)
+        limit: parseInt(limit),
+        order: 'id DESC'
     }).then(function(data) {
 
         data.map(function(item) {

@@ -114,28 +114,6 @@ router.get('/id/:id', function(req, res) {
         err: ""
     }
 
-    // models.Profile.findOne({
-    //     where: {
-    //         id: id
-    //     }
-    // }).then(function(data) {
-    //
-    //     if (data != null) {
-    //         json.msg = "ok";
-    //         json.id = data.id;
-    //         json.profile = data;
-    //     }
-    //     res.json(json);
-    //
-    // }).catch(function(err) {
-    //
-    // console.log(err);
-    // json.err = "sql";
-    // json.msg = err;
-    // res.json(json);
-    //
-    // });
-
     models.Profile.findAll({
         where: {
             id: id
@@ -258,17 +236,18 @@ router.get('/all', function(req, res) {
         data.map(function(item) {
             json.msg = "ok";
             var info = {
+                id: item.id,
                 name: item.name,
                 birthday: item.birthday,
                 sex: item.sex,
                 role: item.role,
-                //image: item.image,
+                image: item.image,
                 flag: item.flag,
                 AccountId: item.AccountId
             }
-            list.push(info);
+            list.push(item);
         })
-        res.json(list);
+        res.json(data);
 
     }).catch(function(err) {
         console.log(err);

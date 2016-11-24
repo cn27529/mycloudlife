@@ -126,10 +126,10 @@ router.post('/mod', function(req, res) {
 
 
 // get by id
-router.get('/limit/:id/:top', function(req, res) {
+router.get('/limit/:id/:limit', function(req, res) {
 
     var id = req.params.id;
-    var top = req.params.top;
+    var limit = req.params.limit;
     //var token = req.params.token; //先不檢查
 
     var json = {
@@ -139,51 +139,20 @@ router.get('/limit/:id/:top', function(req, res) {
         photos: []
     }
 
-    // models.Profile.findOne({
-    //     where: {
-    //         id: id
-    //     }
-    // }).then(function(data) {
-    //     if (data === null) {
-    //         return res.json(json);
-    //     }
-    //
-    //     var profileId = data.id;
-    //
-    //     json.id = data.id;
-    //     json.msg = "ok";
-    //
-    //     // 撈photo的資料
-    //     models.Photo.findAll({
-    //         where: {
-    //             ProfileId: profileId
-    //         },
-    //         limit: parseInt(top),
-    //         include: [{
-    //             model: models.Photo_image,
-    //             limit: 1
-    //             //order: ['id', 'DESC']
-    //         }],
-    //     }).then(function(photos) {
-    //
-    //         res.json(photos);
-    //     });
-    //
-    // });
-    // //res.send(cool());
-    // console.log(cool());
 
     // 撈photo的資料
     models.Photo.findAll({
         where: {
             ProfileId: id
         },
-        limit: parseInt(top),
+        limit: parseInt(limit),
+        order: 'id DESC',
         include: [{
             model: models.Photo_image,
-            limit: 1
-                //order: ['id', 'DESC']
+            order: 'id DESC'
+            //limit: 1
         }],
+        //include : [{model : models.Photo_image, limit 5}]
     }).then(function(photos) {
 
         json.id = id;
@@ -207,7 +176,7 @@ router.get('/limit/:id/:top', function(req, res) {
 // :id 這是profile資料代碼
 // :limit 是要取得幾筆給前端, 若10, 表示給前端10筆
 // :currentid 提供目前最後一筆的note id, 會由目前的note id往下找:limit筆
-router.get('/next/:id/:top/:currentid', function(req, res) {
+router.get('/next/:id/:limit/:currentid', function(req, res) {
 
     var json = {
         id: 0,
@@ -216,22 +185,27 @@ router.get('/next/:id/:top/:currentid', function(req, res) {
         photos: []
     }
     var id = req.params.id;
-    var top = req.params.top;
+    var limit = req.params.limit;
     var currentid = req.params.currentid;
     //var token = req.params.token; //先不檢查
+
+    //$gt: 6,                // > 6
+    //$gte: 6,               // >= 6
+    //$lt: 10,               // < 10
 
     models.Photo.findAll({
         where: {
             ProfileId: id,
             id: {
-                $gt: currentid
+                $lt: currentid
             }
         },
-        limit: parseInt(top),
+        limit: parseInt(limit),
+        order: 'id DESC',
         include: [{
             model: models.Photo_image,
-            limit: 1
-                //order: ['id', 'DESC']
+            order: 'id DESC'
+            //limit: 1
         }],
     }).then(function(data) {
 
