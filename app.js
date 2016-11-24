@@ -1,5 +1,6 @@
-var cool = require('cool-ascii-faces');
 var express = require('express');
+var cool = require('cool-ascii-faces');
+var favicon = require('serve-favicon'); //--------add on 161124
 var app = express();
 var bodyparser = require('body-parser');
 // app.use(bodyparser.urlencoded({ extended: true }));
@@ -7,6 +8,9 @@ var bodyparser = require('body-parser');
 
 var path = require('path');
 
+//app.use(favicon(__dirname + '/public/favicon.ico'));
+var _favicon = favicon(__dirname + '/public/favicon.ico');
+app.use(_favicon);
 
 //var multer = require('multer');
 //app.use(multer({ dest: './uploads/'}));
