@@ -142,6 +142,15 @@ router.post('/login', function(req, res) {
                 //
                 // })
 
+                //第2次的資料變更，更新ProfileId
+                data.update({
+                    memberid: json.id,
+                    flag: 'waiting',
+                    ProfileId: 0
+                }).then(function() {
+
+                })
+
                 //取得profile
                 models.Profile.find({
                     where: {
@@ -149,20 +158,13 @@ router.post('/login', function(req, res) {
                         flag: 'me'
                     }
                 }).then(function(data1) {
-
-                    if (data1 != null) {
-
-                        //第2次的資料變更，更新ProfileId
-                        data.update({
-                            memberid: json.id,
-                            flag: 'waiting',
-                            ProfileId: data1.id
-                        }).then(function() {
-
-                        })
-
-                    }
-
+                    // data1.update({
+                    //     memberid: json.id,
+                    //     flag: 'waiting',
+                    //     ProfileId: data1.id
+                    // }).then(function() {
+                    //
+                    // })
                 });
 
             }
