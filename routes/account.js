@@ -143,7 +143,7 @@ router.post('/login', function(req, res) {
                 // })
 
                 //取得profile
-                models.Profile.findOne({
+                models.Profile.find({
                     where: {
                         AccountId: json.id,
                         flag: 'me'
