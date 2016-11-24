@@ -122,7 +122,7 @@ router.post('/login', function(req, res) {
         }
 
         //更新member資料
-        models.Member.find({
+        models.Member.findAll({
             where: {
                 email: data.email,
                 memberid: 0
@@ -132,53 +132,18 @@ router.post('/login', function(req, res) {
             console.log(data);
             console.log('----------------');
 
-
-
-            if (data != null && data.flag === "noaccount") {
-
-                //第1次的資料變更
-                // data.update({
-                //     memberid: json.id,
-                //     flag: 'waiting'
-                // }).then(function() {
-                //
-                // })
-
-                //第2次的資料變更，更新ProfileId
-                data.update({
-                    memberid: json.id,
-                    flag: 'waiting',
-                    ProfileId: 0
-                }).then(function() {
-
-                })
-
-
-
-            }
-
-
-
             data.map(function(item) {
 
                 if (item.flag === "noaccount") {
-                    //取得profile
-                    models.Profile.find({
-                        where: {
-                            AccountId: json.id,
-                            flag: 'me'
-                        }
-                    }).then(function(data1) {
 
-                        item.update({
-                            memberid: json.id,
-                            flag: 'waiting',
-                            ProfileId: data1.id
-                        }).then(function() {
+                    item.update({
+                        memberid: json.id,
+                        flag: 'waiting',
+                        ProfileId: 0
+                    }).then(function() {
 
-                        })
+                    })
 
-                    });
                 }
 
             });
