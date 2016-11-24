@@ -127,12 +127,12 @@ router.post('/login', function(req, res) {
                 email: data.email,
                 memberid: 0
             }
-        }).then(function(data) {
+        }).then(function(data1) {
 
-            console.log(data);
+            console.log(data1);
             console.log('----------------');
 
-            data.map(function(item) {
+            data1.map(function(item) {
 
                 if (item.flag === "noaccount") {
 
