@@ -121,7 +121,7 @@ router.post('/mod', function(req, res) {
                 memberid: memberid,
                 email: email,
                 tag: tag,
-                AccountId: id,
+                AccountId: AccountId,
                 flag: flag,
                 ProfileId: ProfileId
             }).then(function() {
