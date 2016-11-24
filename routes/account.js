@@ -122,7 +122,7 @@ router.post('/login', function(req, res) {
         }
 
         //更新member資料
-        models.Member.findOne({
+        models.Member.find({
             where: {
                 email: data.email,
                 memberid: 0
