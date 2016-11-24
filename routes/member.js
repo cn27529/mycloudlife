@@ -311,7 +311,7 @@ router.get('/whoaddme/:id/:email', function(req, res) {
 
     models.Member.findAll({
         where: {
-            AccountId: id,
+            memberid: id,
             email: email
         }
     }).then(function(data) {
