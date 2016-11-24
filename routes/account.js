@@ -170,7 +170,7 @@ router.post('/login', function(req, res) {
                         }
                     }).then(function(data1) {
 
-                        data.update({
+                        item.update({
                             memberid: json.id,
                             flag: 'waiting',
                             ProfileId: data1.id
