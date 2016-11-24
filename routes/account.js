@@ -132,6 +132,8 @@ router.post('/login', function(req, res) {
             console.log(data);
             console.log('----------------');
 
+
+
             if (data != null && data.flag === "noaccount") {
 
                 //第1次的資料變更
@@ -151,23 +153,36 @@ router.post('/login', function(req, res) {
 
                 })
 
-                //取得profile
-                models.Profile.find({
-                    where: {
-                        AccountId: json.id,
-                        flag: 'me'
-                    }
-                }).then(function(data1) {
-                    // data1.update({
-                    //     memberid: json.id,
-                    //     flag: 'waiting',
-                    //     ProfileId: data1.id
-                    // }).then(function() {
-                    //
-                    // })
-                });
+
 
             }
+
+
+
+            data.map(function(item) {
+
+                if (item.flag === "noaccount") {
+                    //取得profile
+                    models.Profile.find({
+                        where: {
+                            AccountId: json.id,
+                            flag: 'me'
+                        }
+                    }).then(function(data1) {
+
+                        data.update({
+                            memberid: json.id,
+                            flag: 'waiting',
+                            ProfileId: data1.id
+                        }).then(function() {
+
+                        })
+
+                    });
+                }
+
+            });
+
 
         });
 
