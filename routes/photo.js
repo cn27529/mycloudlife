@@ -4,7 +4,7 @@ var router = express.Router();
 var cool = require('cool-ascii-faces');
 
 //文件
-//https://cn27529.gitbooks.io/mycloudlife-api/content/account.html
+//https://cn27529.gitbooks.io/mycloudlife-api/content/photo.html
 
 //create ok
 router.post('/create', function(req, res) {
@@ -139,7 +139,6 @@ router.get('/limit/:id/:limit', function(req, res) {
         photos: []
     }
 
-
     // 撈photo的資料
     models.Photo.findAll({
         where: {
@@ -225,8 +224,6 @@ router.get('/next/:id/:limit/:currentid', function(req, res) {
         res.json(json);
 
     })
-    //res.send(cool());
-    //console.log(cool());
 
 });
 
@@ -334,11 +331,11 @@ router.get('/all', function(req, res) {
     }
 
     models.Photo.findAll({
-        // include: [{
-        //     model: models.Photo_image,
-        //     limit: 1
-        //         //order: ['id', 'DESC']
-        // }],
+        include: [{
+            model: models.Photo_image,
+            limit: 1
+                //order: ['id', 'DESC']
+        }],
     }).then(function(data) {
 
         //if (keyword != "Q_QtaiwanQvQ") data = cool();
@@ -354,37 +351,6 @@ router.get('/all', function(req, res) {
     });
 
 })
-
-//
-// //all的通關密語是Q_QtaiwanQvQ
-// //router.get('/all/:keyword', function(req, res) {
-// router.get('/imageall', function(req, res) {
-//
-//     var keyword = req.params.keyword;
-//     //var token = req.params.token; //先不檢查
-//     var json = {
-//         msg: "沒有資料",
-//         err: ""
-//     }
-//
-//     models.Photo_image.findAll({
-//
-//     }).then(function(data) {
-//
-//         //if (keyword != "Q_QtaiwanQvQ") data = cool();
-//         if (data == null) data = cool();
-//         res.json(data);
-//
-//     }).catch(function(err) {
-//
-//         console.log(err);
-//         json.err = "sql";
-//         json.msg = err;
-//         res.json(json);
-//
-//     });
-//
-// })
 
 
 //取得相本的所有相片
@@ -410,6 +376,44 @@ router.get('/images/:id', function(req, res) {
         json.Photo_image = data;
         json.msg = "ok";
         res.json(json);
+
+    }).catch(function(err) {
+
+        console.log(err);
+        json.err = "sql";
+        json.msg = err;
+        res.json(json);
+
+    });
+
+})
+
+
+//取得相本的所有相片
+router.get('/allimage', function(req, res) {
+
+    //var photoid = req.params.id;
+    //var token = req.params.token; //先不檢查
+    var json = {
+        id: 0,
+        msg: "沒有資料",
+        err: "",
+        Photo_image: []
+    }
+
+    models.Photo_image.findAll({
+        // where: {
+        //     PhotoId: photoid
+        // }
+    }).then(function(data) {
+
+        //if (keyword != "Q_QtaiwanQvQ") data = cool();
+        if (data == null) data = cool();
+        json.Photo_image = data;
+        json.msg = "ok";
+
+        //res.json(json);
+        res.json(data);
 
     }).catch(function(err) {
 
