@@ -87,7 +87,7 @@ router.post('/create/:mode', function(req, res) {
             // console.log(typeof event.ProfileId, typeof event.mode);
             // mode: single, multiple, repeat
             json = {
-                "id": event.ProfileId, //這是使用者的資料代碼, 可存在用戶端
+                "id": data.id, 
                 "msg": "ok,資料己建立",
                 "err": ""
             };
