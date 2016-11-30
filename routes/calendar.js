@@ -43,12 +43,30 @@ router.post('/create/:mode', function(req, res) {
 
         switch (req.params.mode) {
             case 'multiple':
-                event.multiple = req.body.event.multiple.join(',');
+                //event.multiple = req.body.event.multiple.join(',');
+                if (Array.isArray(req.body.event.multiple)) {
+                    event.multiple = req.body.event.multiple.join(',');
+                } else {
+                    event.multiple = req.body.event.multiple;
+                }
+
                 break;
             case 'repeat':
                 event.repeat_type = req.body.event.repeat_type;
-                event.repeat_detail = req.body.event.repeat_detail.join(',');
-                event.repeat_until = req.body.event.repeat_until;
+
+                if (Array.isArray(req.body.event.repeat_detail)) {
+                    event.repeat_detail = req.body.event.repeat_detail.join(',');
+                } else {
+                    event.repeat_detail = req.body.event.repeat_detail;
+                }
+
+
+                if (Array.isArray(req.body.event.repeat_until)) {
+                    event.repeat_until = req.body.event.repeat_until.join(',');
+                } else {
+                    event.repeat_until = req.body.event.repeat_until;
+                }
+
                 break;
             default:
         }
@@ -119,10 +137,7 @@ router.post('/mod/:mode', function(req, res) {
                 repeat_type = repeat_type.join(',');
             }
             //------------------------161114加
-            var repeat_until = req.body.event.repeat_until;
-            if (Array.isArray(repeat_until)) {
-                repeat_until = repeat_until.join(',');
-            }
+
             var multiple = req.body.event.multiple;
             if (Array.isArray(multiple)) {
                 multiple = multiple.join(',');
@@ -131,7 +146,15 @@ router.post('/mod/:mode', function(req, res) {
             if (Array.isArray(repeat_detail)) {
                 repeat_detail = repeat_detail.join(',');
             }
-            //------------------------161114加
+
+
+            //------------------------161130加
+            var repeat_until = req.body.event.repeat_until;
+            if (Array.isArray(repeat_until)) {
+                repeat_until = repeat_until.join(',');
+            } else {
+                repeat_until = req.body.event.repeat_until;
+            }
 
             data.update({
                 title: req.body.event.title,
