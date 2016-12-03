@@ -154,7 +154,7 @@ router.post('/reqemail', function(req, res) {
     // We know you will enjoy it while having fun with your friends and family on the MyCloudLife App.
 
     //161202改
-    mail_data.body = name + 'wants to invite you into their circle on the MyCloudLife App.';
+    mail_data.body = name + ' wants to invite you into their circle on the MyCloudLife App.';
     mail_data.body += '<br/>If you dont have this app yet, please download and install the MyCloudLife app from apple store.';
     mail_data.body += '<br/>We know you will enjoy it while having fun with your friends and family on the MyCloudLife App.';
     mail_data.body += '<br/>';
