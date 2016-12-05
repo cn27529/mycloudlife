@@ -130,40 +130,37 @@ router.post('/reqemail', function(req, res) {
     // If you dont have this app yet, please downlaod and install cloudLife app from apple store.
     // We know you will enjoy and have fun with your friends and family on cloudLife app.
     //
-    //
     // Download app, https://inbox.google.com/u/1/?pli=1
     //
     // If you have any questions about app, we love to help you.
     // This is our service email:
     // service@mycloudedlife.com
 
-    mail_data.title = 'This is the invitation from ' + name + '!';
-    mail_data.body = name + ' wants to invite your into his circle on cloudLife app.';
-    mail_data.body += '<br/>If you dont have this app yet, please downlaod and install cloudLife app from apple store.';
-    mail_data.body += '<br/>We know you will enjoy and have fun with your friends and family on cloudLife app.';
-    mail_data.body += '<br/>';
-    mail_data.body += '<br/>';
-    mail_data.body += '<br/>Download app, https://inbox.google.com/u/1/?pli=1';
-    mail_data.body += '<br/>';
-    mail_data.body += '<br/>If you have any questions about app, we love to help you.';
-    mail_data.body += '<br/>This is our service email: service@mycloudedlife.com';
-    mail_data.body += '<br/>';
 
+    var ed = '</ed>';
+    mail_data.title = 'This is the invitation from ' + name + '!';
+
+    // mail_data.body = name + ' wants to invite your into his circle on cloudLife app.';
+    // mail_data.body += ed + 'If you dont have this app yet, please downlaod and install cloudLife app from apple store.';
+    // mail_data.body += ed + ed + 'We know you will enjoy and have fun with your friends and family on cloudLife app.';
+    // mail_data.body += ed + ed + 'Download app, https://inbox.google.com/u/1/?pli=1';
+    // mail_data.body += ed + 'If you have any questions about app, we love to help you.';
+    // mail_data.body += ed + 'This is our service email: service@mycloudedlife.com';
+
+    //161202改
     // undefined wants to invite you into their circle on the MyCloudLife App.
     // If you dont have this app yet, please download and install the MyCloudLife app from apple store.
     // We know you will enjoy it while having fun with your friends and family on the MyCloudLife App.
 
-    //161202改
-    mail_data.body = name + ' wants to invite you into their circle on the MyCloudLife App.';
-    mail_data.body += '<br/>If you dont have this app yet, please download and install the MyCloudLife app from apple store.';
-    mail_data.body += '<br/>We know you will enjoy it while having fun with your friends and family on the MyCloudLife App.';
-    mail_data.body += '<br/>';
-    mail_data.body += '<br/>';
-    mail_data.body += '<br/>Download app, https://inbox.google.com/u/1/?pli=1';
-    mail_data.body += '<br/>';
-    mail_data.body += '<br/>If you have any questions about app, we love to help you.';
-    mail_data.body += '<br/>This is our service email: service@mycloudedlife.com';
-    mail_data.body += '<br/>';
+    var str1 = name + ' wants to invite you into their circle on the MyCloudLife App.';
+    var str2 = 'If you dont have this app yet, please download and install the MyCloudLife app from apple store.';
+    var str3 = 'We know you will enjoy it while having fun with your friends and family on the MyCloudLife App.';
+    var str4 = 'Download app, https://inbox.google.com/u/1/?pli=1';
+    var str5 = 'If you have any questions about app, we love to help you.';
+    var str6 = 'This is our service email: service@mycloudedlife.com';
+
+    var res_body = str1.concat(ed, str2, ed, str3, ed, ed, str4, ed, ed, str5, ed, str6);
+    mail_data.body = res_body;
 
     console.log(mail_data);
     //成員邀請寄送mail
