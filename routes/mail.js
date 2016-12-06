@@ -42,9 +42,21 @@ router.post('/repwd', function(req, res) {
         name: name
     }
 
+    var ed = '<br>';
+
     //mail body
-    mail_data.body = 'Dear ' + mail_data.name + ',<br>Thank you for contacting us<br>This is your password: ' + mail_data.pwd + '<br>For your account security, please change your passowrd later.';
-    console.log(mail_data);
+    //mail_data.body = 'Dear ' + mail_data.name + ',<br>Thank you for contacting us<br>This is your password: ' + mail_data.pwd + '<br>For your account security, please change your passowrd later.';
+
+    var str1 = 'Dear ' + mail_data.name + ',';
+    var str2 = 'Thank you for contacting us';
+    var str3 = 'This is your password: ' + mail_data.pwd;
+    var str4 = 'For your account security, please change your passowrd later.';
+
+    var body_result = str1.concat(ed, str2, ed, str3, ed, str4, ed);
+
+    mail_data.body = body_result;
+
+    console.log(mail_data.body);
     //忘記密碼寄送mail
 
 
@@ -135,27 +147,18 @@ router.post('/reqemail', function(req, res) {
     // We know you will enjoy and have fun with your friends and family on cloudLife app.
     //
     // Download app, https://inbox.google.com/u/1/?pli=1
-    //
     // If you have any questions about app, we love to help you.
-    // This is our service email:
-    // service@mycloudedlife.com
+    // This is our service email: service@mycloudedlife.com
 
 
-    var ed = '</br>';
-    mail_data.title = 'This is the invitation from ' + name + '!';
+    var ed = '<br>';
 
-    // mail_data.body = name + ' wants to invite your into his circle on cloudLife app.';
-    // mail_data.body += ed + 'If you dont have this app yet, please downlaod and install cloudLife app from apple store.';
-    // mail_data.body += ed + ed + 'We know you will enjoy and have fun with your friends and family on cloudLife app.';
-    // mail_data.body += ed + ed + 'Download app, https://inbox.google.com/u/1/?pli=1';
-    // mail_data.body += ed + 'If you have any questions about app, we love to help you.';
-    // mail_data.body += ed + 'This is our service email: service@mycloudedlife.com';
-
-    //161202改
+    //161202改內容
     // undefined wants to invite you into their circle on the MyCloudLife App.
     // If you dont have this app yet, please download and install the MyCloudLife app from apple store.
     // We know you will enjoy it while having fun with your friends and family on the MyCloudLife App.
 
+    mail_data.title = 'This is the invitation from ' + name + '!';
     var str1 = name + ' wants to invite you into their circle on the MyCloudLife App.';
     var str2 = 'If you dont have this app yet, please download and install the MyCloudLife app from apple store.';
     var str3 = 'We know you will enjoy it while having fun with your friends and family on the MyCloudLife App.';
@@ -163,7 +166,7 @@ router.post('/reqemail', function(req, res) {
     var str5 = 'If you have any questions about app, we love to help you.';
     var str6 = 'This is our service email: service@mycloudedlife.com';
 
-    var body_result = str1.concat(ed, str2, ed, str3, ed, ed, str4, ed, ed, str5, ed, str6);
+    var body_result = str1.concat(ed, str2, ed, str3, ed, ed, str4, ed, ed, str5, ed, str6, ed);
 
     mail_data.body = body_result;
 
