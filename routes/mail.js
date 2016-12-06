@@ -141,7 +141,7 @@ router.post('/reqemail', function(req, res) {
     // service@mycloudedlife.com
 
 
-    var ed = '</ed>';
+    var ed = '</br>';
     mail_data.title = 'This is the invitation from ' + name + '!';
 
     // mail_data.body = name + ' wants to invite your into his circle on cloudLife app.';
