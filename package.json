@@ -37,7 +37,8 @@
             "sources": [
                 "mail/*.js",
                 "models/*.js",
-                "*.js"
+                "index.js",
+                "app.js"
             ],
             "data": [
 
