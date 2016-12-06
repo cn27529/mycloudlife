@@ -102,7 +102,11 @@ router.post('/reqemail', function(req, res) {
         //"pwd": "",
         "name": name,
         "msg": "post沒有電子郵件",
-        "err": "reqemail"
+        "err": "reqemail",
+        "mailFrom": "mailFrom",
+        "mailTo": "mailTo",
+        "title": "title",
+        "body": "body"
     }
 
     if (email === undefined) {
@@ -159,10 +163,11 @@ router.post('/reqemail', function(req, res) {
     var str5 = 'If you have any questions about app, we love to help you.';
     var str6 = 'This is our service email: service@mycloudedlife.com';
 
-    var res_body = str1.concat(ed, str2, ed, str3, ed, ed, str4, ed, ed, str5, ed, str6);
-    mail_data.body = res_body;
+    var body_result = str1.concat(ed, str2, ed, str3, ed, ed, str4, ed, ed, str5, ed, str6);
 
-    console.log(mail_data);
+    mail_data.body = body_result;
+
+    console.log(mail_data.body);
     //成員邀請寄送mail
 
     var now = new Date();
@@ -193,6 +198,13 @@ router.post('/reqemail', function(req, res) {
 
     json.err = "";
     json.msg = "ok,郵件己發送";
+
+    //json result --------------------add at 161206
+    json.mailFrom = mail_data.mailFrom;
+    json.mailTo = mail_data.mailTo;
+    json.title = mail_data.title;
+    json.body = mail_data.body;
+
     res.json(json);
 
     //callback function
