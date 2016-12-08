@@ -20,7 +20,11 @@ router.post('/repwd', function(req, res) {
         "pwd": pwd,
         "name": "",
         "msg": "post沒有電子郵件",
-        "err": "repwd"
+        "err": "repwd",
+        "mailFrom": "mailFrom",
+        "mailTo": "mailTo",
+        "title": "title",
+        "body": "body"
     }
 
     if (email === undefined) {
@@ -37,22 +41,23 @@ router.post('/repwd', function(req, res) {
         mailFrom: 'service@mycloudedlife.com',
         mailTo: email,
         title: '忘記密碼',
-        body: 'Dear XXX,<br>Thank you for contacting us<br>This is your password: <br>For your account security, please change your passowrd later.',
+        body: 'body',
         pwd: pwd,
         name: name
     }
 
-    var ed = '<br>';
+    var br = '<br>';
 
     //mail body
     //mail_data.body = 'Dear ' + mail_data.name + ',<br>Thank you for contacting us<br>This is your password: ' + mail_data.pwd + '<br>For your account security, please change your passowrd later.';
 
+    mail_data.title = '忘記密碼';
     var str1 = 'Dear ' + mail_data.name + ',';
     var str2 = 'Thank you for contacting us';
     var str3 = 'This is your password: ' + mail_data.pwd;
     var str4 = 'For your account security, please change your passowrd later.';
 
-    var body_result = str1.concat(ed, str2, ed, str3, ed, str4, ed);
+    var body_result = str1.concat(ed, str2, br, str3, br, str4, br);
 
     mail_data.body = body_result;
 
@@ -139,21 +144,19 @@ router.post('/reqemail', function(req, res) {
         name: name
     }
 
+    var br = '<br>';
 
-    // 主旨: This is the invitation from Peter!
-    // 內容:
+    // title:
+    // This is the invitation from Peter!
+    // body:
     // Peter wants to invite your into his circle on cloudLife app.
     // If you dont have this app yet, please downlaod and install cloudLife app from apple store.
     // We know you will enjoy and have fun with your friends and family on cloudLife app.
-    //
     // Download app, https://inbox.google.com/u/1/?pli=1
     // If you have any questions about app, we love to help you.
     // This is our service email: service@mycloudedlife.com
 
-
-    var ed = '<br>';
-
-    //161202改內容
+    //161202改body
     // undefined wants to invite you into their circle on the MyCloudLife App.
     // If you dont have this app yet, please download and install the MyCloudLife app from apple store.
     // We know you will enjoy it while having fun with your friends and family on the MyCloudLife App.
@@ -166,7 +169,7 @@ router.post('/reqemail', function(req, res) {
     var str5 = 'If you have any questions about app, we love to help you.';
     var str6 = 'This is our service email: service@mycloudedlife.com';
 
-    var body_result = str1.concat(ed, str2, ed, str3, ed, ed, str4, ed, ed, str5, ed, str6, ed);
+    var body_result = str1.concat(ed, str2, br, str3, br, br, str4, br, br, str5, br, str6, br);
 
     mail_data.body = body_result;
 
