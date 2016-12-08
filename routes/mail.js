@@ -6,7 +6,7 @@ var cool = require('cool-ascii-faces');
 var sendMail = require('../mail/sendMail');
 
 //文件
-//https://cn27529.gitbooks.io/mycloudlife-api/content/maillog.html
+//https://cn27529.gitbooks.io/mycloudlife-api/content/mail.html
 
 //忘記密碼寄送mail
 router.post('/repwd', function(req, res) {
