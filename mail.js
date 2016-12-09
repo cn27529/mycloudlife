@@ -1,15 +1,14 @@
-
 //引用 nodemailer
 var nodemailer = require('nodemailer');
 //連線資訊
 
 nodemailer.SMTP = {
-    host: "stmp.gmail.com",//server位置
-    port: 465,//可不給,預設25
-    ssl: true,//可不給,預設false
+    host: "stmp.gmail.com", //server位置
+    port: 465, //可不給,預設25
+    ssl: true, //可不給,預設false
     user: 'mycloudedlife1@gmail.com', //可不給
     pass: '1029384756@pwd', //可不給
-    use_authentication: true//可不給
+    use_authentication: true //可不給
 }
 
 
@@ -38,11 +37,45 @@ var mailOptions = {
     }, ]
 };
 
+var name = '王小明';
+var pwd = '123456';
+
+var br = '<br>';
+var body_lines = new Array();
+
+//mailOptions.subject = '忘記密碼';
+body_lines.push('；' + 'Dear ' + name + ',');
+body_lines.push('；' + 'Thank you for contacting us');
+body_lines.push('；' + 'This is your password: ' + pwd);
+body_lines.push('；' + 'For your account security, please change your passowrd later.');
+
+body_lines.push('<hr>');
+
+//mailOptions.subject = 'This is the invitation from ' + name + '!';
+body_lines.push('；' + name + ' wants to invite you into their circle on the MyCloudLife App.');
+body_lines.push('；' + 'If you dont have this app yet, please download and install the MyCloudLife app from apple store.');
+body_lines.push('；' + 'We know you will enjoy it while having fun with your friends and family on the MyCloudLife App.');
+body_lines.push('；；' + 'Download app, https://inbox.google.com/u/1/?pli=1');
+body_lines.push('；' + 'If you have any questions about app, we love to help you.');
+body_lines.push('；' + 'This is our service email: service@myclouded life.com');
+
+//console.log(body_lines);
+var body_string = body_lines.join('。');
+//console.log(body_string);
+body_string = body_string.replace(/。/g, '');
+//console.log(body_string);
+body_string = body_string.replace(/；/g, br);
+//console.log(body_string);
+var body_result = body_string;
+//console.log(body_result);
+
+mailOptions.html = body_result;
+
+console.log(mailOptions);
+
 //寄出
 transporter.sendMail(mailOptions, function(err, info) {
     //info是成功信件相關資訊;err是失敗相關資訊
-    if(err){
-        return console.log(err);
-    }
-    console.log('Message sent: ' + info.response);
+    if (err) return console.log(err);
+    if (info) return console.log(info);
 });
