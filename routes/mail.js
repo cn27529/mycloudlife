@@ -53,7 +53,7 @@ router.post('/repwd', function(req, res) {
     body_lines.push('；' + 'Dear ' + name + ',');
     body_lines.push('；' + 'Thank you for contacting us');
     body_lines.push('；' + 'This is your password: ' + pwd);
-    body_lines.push('；' + 'For your account security, please change your passowrd later.');
+    //body_lines.push('；' + 'For your account security, please change your passowrd later.'); //161212移除
 
     //console.log(body_lines);
     var body_string = body_lines.join('。');
@@ -165,11 +165,11 @@ router.post('/reqemail', function(req, res) {
     var br = '<br>';
     var body_lines = new Array();
 
-    body_lines.push('；' + name + ' wants to invite you into their circle on the MyCloudLife App.');
-    body_lines.push('；' + 'If you dont have this app yet, please download and install the MyCloudLife app from apple store.');
-    body_lines.push('；' + 'We know you will enjoy it while having fun with your friends and family on the MyCloudLife App.');
+    body_lines.push('' + name + ' wants to invite you into their circle on the MyCloudLife App.');
+    body_lines.push('；；' + 'If you dont have this app yet, please download and install the MyCloudLife app from apple store.');
+    body_lines.push('；；' + 'We know you will enjoy it while having fun with your friends and family on the MyCloudLife App.');
     body_lines.push('；；' + 'Download app, https://inbox.google.com/u/1/?pli=1');
-    body_lines.push('；' + 'If you have any questions about app, we love to help you.');
+    body_lines.push('；；' + 'If you have any questions about app, we love to help you.');
     body_lines.push('；' + 'This is our service email: service@myclouded life.com');
 
     //console.log(body_lines);
