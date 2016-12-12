@@ -51,8 +51,8 @@ router.post('/repwd', function(req, res) {
     var br = '<br>';
     var body_lines = new Array();
     body_lines.push('；' + 'Dear ' + name + ',');
-    body_lines.push('；' + 'Thank you for contacting us');
-    body_lines.push('；' + 'This is your password: ' + pwd);
+    body_lines.push('；；' + 'Thank you for contacting us');
+    body_lines.push('；；' + 'This is your password: ' + pwd);
     //body_lines.push('；' + 'For your account security, please change your passowrd later.'); //161212移除
 
     //console.log(body_lines);
