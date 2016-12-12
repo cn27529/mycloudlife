@@ -167,7 +167,7 @@ router.post('/reqemail', function(req, res) {
     var body_lines = new Array();
 
     body_lines.push('' + name + ' wants to invite you into their circle on the MyCloudLife App.');
-    body_lines.push('；；' + 'If you dont have this app yet, please download and install the MyCloudLife app from apple store.');
+    body_lines.push('；；' + 'If you don\'t have this app yet, please download and install the MyCloudLife app from apple store.');
     body_lines.push('；；' + 'We know you will enjoy it while having fun with your friends and family on the MyCloudLife App.');
     body_lines.push('；；' + 'Welcome to download My Clouded Life App:');
     body_lines.push('；' + 'https://itunes.apple.com/us/app/my-clouded-life/id1178890865?l=zh&amp;ls=1&amp;mt=8');
