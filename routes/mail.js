@@ -47,6 +47,9 @@ router.post('/repwd', function(req, res) {
     }
 
     mail_data.title = '忘記密碼';
+    //Brcue, 忘記密碼的信，主旨是用中文: 忘記密碼
+    //請幫我改: forget password
+    mail_data.title = 'forget password'; //--------170107改
 
     var br = '<br>';
     var body_lines = new Array();
