@@ -89,8 +89,6 @@ router.post('/mod', function(req, res) {
 
 });
 
-
-
 router.post('/login', function(req, res) {
 
     //var email = req.body.email;
@@ -208,9 +206,6 @@ router.get('/id/:id', function(req, res) {
     });
 
 });
-
-
-
 
 router.get('/has/:email', function(req, res) {
 
