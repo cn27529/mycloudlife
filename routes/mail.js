@@ -82,7 +82,7 @@ router.post('/repwd', function(req, res) {
         yymmdd: yy + mm + dd,
         yymm: yy + mm
     }).then(function(data) {
-        console.log(data);
+        //console.log(data);
         console.log('models.Maillog.create');
     }).catch(function(err) {
         console.log(err);

@@ -14,14 +14,53 @@ module.exports = function(mailFrom, mailTo, title, body, callpack) {
     //     use_authentication: true//可不給
     // }
 
-    nodemailer.SMTP = {
-        host: "a2plcpnl0572.prod.iad2.secureserver.net", //server位置
-        port: 465, //可不給,預設25
-        ssl: true, //可不給,預設false
-        user: 'service@mycloudedlife.com', //可不給
-        pass: '3edc#EDC@pwd', //可不給
-        use_authentication: true //可不給
+//     nodemailer.SMTP = {
+//         host: "a2plcpnl0572.prod.iad2.secureserver.net", //server位置
+//         port: 465, //可不給,預設25
+//         ssl: true, //可不給,預設false
+//         user: 'service@mycloudedlife.com', //可不給
+//         pass: '3edc#EDC@pwd', //可不給
+//         use_authentication: true //可不給
+//     }
+
+// 	nodemailer.SMTP = {
+//         host: "a2nlvphout-v01.shr.prod.iad2.secureserver.net", //server位置
+//         port: 465, //可不給,預設25
+//         ssl: true, //可不給,預設false
+//         user: 'mycloudeduser', //可不給
+//         pass: '12345678@qazwP', //可不給
+//         use_authentication: true //可不給
+//     }
+
+// 	nodemailer.SMTP = {
+//         host: "smtp.zoho.com", 
+//         port: 465, 
+//         ssl: true,
+//         user: 'service@mycloudedlife.com',
+//         pass: 'a94139413C',
+//         use_authentication: true 
+//     }
+
+// 	nodemailer.SMTP = {
+//         host: "smtpout.secureserver.net", 
+//         port: 465, 
+//         ssl: true,
+//         user: 'info@mycloudedlife.com',
+//         pass: 'a94139413C',
+//         use_authentication: true 
+//     }
+
+	nodemailer.SMTP = {
+        host: "a2plcpnl0572.prod.iad2.secureserver.net", 
+        port: 465, 
+        ssl: true,
+        user: 'service@mycloudedlife.com',
+        pass: 'a94139413C',
+        use_authentication: true 
     }
+
+
+
 
     // nodemailer.SMTP = {
     //     host: "mail.mycloudedlife.com", //server位置
@@ -34,10 +73,22 @@ module.exports = function(mailFrom, mailTo, title, body, callpack) {
 
     //create reusable transporter object using SMTP transport
     var transporter = nodemailer.createTransport();
+    
+    
+//     var transporter = nodemailer.createTransport({
+//        service: 'Godaddy',
+//        host: "a2nlvphout-v01.shr.prod.iad2.secureserver.net",
+//        auth: {
+//            user: 'mycloudeduser',
+//            pass: '12345678@qazwP'
+//        }
+//     })
+    
+    
 
     //信件內容參數
     var mailOptions = {
-        from: mailFrom,
+        from: 'service@mycloudedlife.com', //mailFrom,
         to: mailTo,
         subject: title,
         html: body
