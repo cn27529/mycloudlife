@@ -3,5 +3,4 @@ npm-debug.log
 *.sqlite
 .bash_profile
 zips
-public
 cal.sql
