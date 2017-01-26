@@ -12,19 +12,8 @@ var path = require('path');
 var _favicon = favicon(__dirname + '/public/favicon.ico');
 app.use(_favicon);
 
-//var multer = require('multer');
-//app.use(multer({ dest: './uploads/'}));
 
 //http://stackoverflow.com/questions/25332561/node-js-express-large-body-for-bodyparser
-//app.use(bodyparser.json({limit: '50mb'}));
-//app.use(bodyparser.urlencoded({limit: '50mb'}));
-//app.use(bodyparser.raw({limit: '50mb'}));
-
-// //Set Request Size Limit
-// app.use(express.limit(100000000));
-// app.use(express.json({limit: '50mb'}));
-// app.use(express.urlencoded({limit: '50mb'}));
-
 app.use(bodyparser.urlencoded({
     extended: true,
     limit: 1024 * 1024 * 20

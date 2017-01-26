@@ -2,7 +2,7 @@
 
 ## Heroku git path
 ```
-heroku mysql
+heroku
 https://git.heroku.com/cn47499.git
 ```
 ## One click
@@ -14,7 +14,7 @@ git status
 git add .
 git commit -am "heroku"
 git push heroku master <---push to heroku
-heroku logs --tail   <---see push logs
+heroku logs --tail   <---see pushed logs
 ```
 # [ API文件 ](https://cn27529.gitbooks.io/mycloudlife-api/content/)  
 # [ DB文件 ](https://cn27529.gitbooks.io/mycloudlife-book/content/)  
