@@ -31,19 +31,5 @@
         "expect.js": "^0.3.1",
         "mocha": "^3.0.2",
         "supertest": "^2.0.0"
-    },
-    "npk_target": {
-        "myapp.js": {
-            "sources": [
-                "mail/*.js",
-                "models/*.js",
-                "index.js",
-                "app.js"
-            ],
-            "data": [
-
-            ]
-        }
     }
-
 }
