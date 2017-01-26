@@ -40,6 +40,6 @@ transporter.sendMail(mailOptions, function(err, info) {
         console.log(err);
     } else {
         console.log('Server is ready to take our messages');
-        console.log(err);
+        console.log(info);
     }
 });
