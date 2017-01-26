@@ -11,7 +11,7 @@ var path = require('path');
 
 var multer = require('multer'); //https://github.com/expressjs/multer
 var upload = multer({
-    dest: 'public/'
+    dest: 'public/images/'
 });
 
 // var storage = multer.diskStorage({
@@ -42,9 +42,9 @@ router.post('/upload', upload.single('file'), function(req, res, next) {
         originalname: '螢幕快照 2016-11-14 22.29.48.png',
         encoding: '7bit',
         mimetype: 'image/png',
-        destination: 'public/',
+        destination: 'public/images/',
         filename: 'cecaf4b376629d34593efbf0d4af20e8',
-        path: 'public/cecaf4b376629d34593efbf0d4af20e8',
+        path: 'public/images/cecaf4b376629d34593efbf0d4af20e8',
         size: 86041
     }
     var json = {
@@ -67,7 +67,7 @@ router.get('/allimage/', function(req, res) {
         files: []
     }
 
-    var dir = './public/';
+    var dir = './public/images/';
     var files = fs.readdirSync(dir);
     files.forEach(function(filename, index) {
         var filepath = path.join(dir, filename);
@@ -121,7 +121,7 @@ router.get('/del/:filename', function(req, res) {
         }
         //console.log(json);
 
-    var path = './public/'; //路徑
+    var path = './public/images/'; //路徑
     var filepath = path + filename; //檔案+路徑
 
     var exist = statPath(filepath);
