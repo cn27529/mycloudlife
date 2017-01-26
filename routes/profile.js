@@ -258,5 +258,51 @@ router.get('/all', function(req, res) {
 
 });
 
+//david, 20170116
+var getAccIDByProfileId = function(profileId) {
+    return models.Profile.findAll({
+        where: {
+            id: profileId
+        }
+    }).then(function(data) {
+        //console.log(data);
+        var accinfo = {};
+        data.map(function(item) {
+            //console.log(item);
+            //console.log(item.AccountId );
+            accinfo.accid = item.AccountId;
+            accinfo.accname = item.name;
+        })
+        return accinfo;
+    }).catch(function(err) {
+        console.log(err);
+    });
+};
 
-module.exports = router;
+
+var getProfileIdByAccID = function(accid) {
+    return models.Profile.findAll({
+        where: {
+            AccountId: accid
+        }
+    }).then(function(data) {
+        //console.log(data);
+        var profileid = '';
+        data.map(function(item) {
+            //console.log(item);
+            console.log(item.id );
+            profileid = item.id;
+        })
+        return profileid;
+    }).catch(function(err) {
+        console.log(err);
+    });
+};
+
+//module.exports = router;
+//david, 20170116
+module.exports = {
+    profile: router,
+    getAccIDByProfileId: getAccIDByProfileId,
+    getProfileIdByAccID: getProfileIdByAccID
+};

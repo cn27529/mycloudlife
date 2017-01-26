@@ -1,7 +1,7 @@
 var models = require('../models');
 var express = require('express');
 var router = express.Router();
-
+var eventNotifyEmail = require('../mail/eventNotifyEmail');
 
 //文件
 //https://cn27529.gitbooks.io/mycloudlife-api/content/account.html
@@ -93,8 +93,10 @@ router.post('/create/:mode', function(req, res) {
             };
 
             res.json(json);
-        });
 
+            //david, 20170116
+            eventNotifyEmail(req.body.id, 'create', req.body.event.start); // profile id
+        });
 });
 
 
@@ -170,19 +172,20 @@ router.post('/mod/:mode', function(req, res) {
                 repeat_detail: repeat_detail,
                 repeat_until: repeat_until,
                 multiple: multiple
-            }).then(() => {
+            }).then(function() {
                 json.err = "";
                 json.msg = "ok,資料己更新";
                 res.json(json);
+
+                //david, 20170116
+                eventNotifyEmail(req.body.id, 'modify', req.body.event.start); // profile id
             }).catch(function(err) {
                 console.log(err);
                 json.err = "sql";
                 json.msg = err;
                 res.json(json);
             })
-
         })
-
 });
 
 
@@ -271,7 +274,9 @@ router.get('/del/:id', function(req, res) {
         }
     }).then(function(data) {
 
-        console.log(data);
+        //console.log(data);
+        var stime = data.start;
+        var profileid = data.ProfileId;
 
         if (data != null) {
             models.Calendar.destroy({
@@ -279,11 +284,13 @@ router.get('/del/:id', function(req, res) {
                     id: req.params.id
                 }
             }).then(function(data) {
-                console.log(data);
+                //console.log(data);
 
                 json.msg = "ok,刪除";
                 json.id = data.id;
                 res.json(json);
+                //david, 20170116
+                eventNotifyEmail(profileid, 'remove', stime); // profile id
             });
 
         } else {

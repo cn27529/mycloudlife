@@ -48,13 +48,13 @@ app.use(bodyparser.json({ limit: 1024 * 1024 * 20 }));
 //URL位置
 var index = require('./routes/index');
 //var users  = require('./routes/users');
-var account = require('./routes/account');
-var profile = require('./routes/profile');
+var account = require('./routes/account').account;//david, 20170116
+var profile = require('./routes/profile').profile;//david, 20170116
 var note = require('./routes/note');
 var photo = require('./routes/photo'); //--------add on 161027
 var cool = require('cool-ascii-faces');
 var mail = require('./routes/mail'); //---------add on 161030
-var member = require('./routes/member'); //---------add on 161107
+var member = require('./routes/member').member;//david, 20170116
 var calendar = require('./routes/calendar'); //---------add on 161110
 var file = require('./routes/file'); //---------add on 161117
 //var public = require('./routes/public'); //---------add on 161117

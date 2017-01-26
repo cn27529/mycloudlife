@@ -2,6 +2,8 @@ var models = require('../models');
 var express = require('express');
 var router = express.Router();
 var cool = require('cool-ascii-faces');
+var getProfileIdByAccID = require('../routes/profile').getProfileIdByAccID;
+var getEmailByAccId = require('../routes/account').getEmailByAccId;
 
 //文件
 //https://cn27529.gitbooks.io/mycloudlife-api/content/member.html
@@ -91,7 +93,6 @@ router.post('/create', function(req, res) {
 
 });
 
-
 //update
 router.post('/mod', function(req, res) {
 
@@ -126,15 +127,58 @@ router.post('/mod', function(req, res) {
                 ProfileId: ProfileId
             }).then(function() {
 
+                console.log();
+
+                var profileid = getProfileIdByAccID(memberid);
+                profileid.then(function(fid){
+
+                    var accountmail = getEmailByAccId(AccountId);
+                    accountmail.then(function(accmail){
+
+                        models.Member.findOrCreate({
+                                where: {
+                                    AccountId: id,
+                                    email: email
+                                    //tag: tag
+                                },
+                                defaults: {
+                                    memberid: AccountId,
+                                    email: accmail,
+                                    tag: tag,
+                                    AccountId: memberid,
+                                    flag: flag,
+                                    ProfileId:fid
+                                }
+                            })
+                            .spread(function(data1, created) {
+                                console.log(data1.get({
+                                    plain: true
+                                }))
+
+                                console.log(data);
+                                json.id = data.id; //這是資料代碼
+                                json.msg = "ok,資料己更新";
+                                json.err = "";
+
+                                res.json(json);
+
+                            }).catch(function(err) {
+
+                                console.log(err);
+                                json.err = "sql";
+                                json.msg = err;
+                                res.json(json);
+
+                            });
+
+                    });
+                });
             })
 
-            //console.log(data);
-            json.id = data.id; //這是資料代碼
-            json.msg = "ok,資料己更新";
-            json.err = "";
+
         }
 
-        res.json(json);
+        //res.json(json);
 
     }).catch(function(err) {
         console.log(err);
@@ -145,12 +189,25 @@ router.post('/mod', function(req, res) {
 
 });
 
-
-
 //取得我的成員
 router.get('/acc/:id', function(req, res) {
 
     var id = req.params.id;
+    //var tag = req.params.tag;
+    //var token = req.params.token; //先不檢查
+
+    //david, 20170116
+    var mlist = getMemList(id);
+    mlist.then(function(data) {
+        //console.log('--member list');
+        //console.log(data);
+        res.json(data);
+    });
+});
+
+//david, 20170116
+var getMemList = function (id) {
+
     //var tag = req.params.tag;
     //var token = req.params.token; //先不檢查
     var json = {
@@ -160,29 +217,25 @@ router.get('/acc/:id', function(req, res) {
         members: []
     }
 
-    models.Member.findAll({
+    return models.Member.findAll({
         where: {
             AccountId: id
         }
     }).then(function(data) {
-
         json.id = id;
         data.map(function(item) {
             json.msg = "ok";
         })
         json.members = data;
-        res.json(json);
-
+        return json;
     }).catch(function(err) {
-
         console.log(err);
         json.err = "sql";
         json.msg = err;
-        res.json(json);
 
+        return json;
     });
-
-});
+};
 
 
 router.get('/id/:id', function(req, res) {
@@ -335,4 +388,9 @@ router.get('/whoaddme/:id/:email', function(req, res) {
 });
 
 
-module.exports = router;
+//module.exports = router;
+//david, 20170116
+module.exports = {
+    member: router,
+    getMemList: getMemList
+};

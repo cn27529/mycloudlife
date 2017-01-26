@@ -2,7 +2,7 @@ var models = require('../models');
 var express = require('express');
 var router = express.Router();
 var cool = require('cool-ascii-faces');
-var sendMail = require('../mail/sendMail');
+var signupSuccessEmail  = require('../mail/signupsuccessemail');
 
 //文件
 //https://cn27529.gitbooks.io/mycloudlife-api/content/account.html
@@ -38,6 +38,8 @@ router.post('/create', function(req, res) {
             json.id = data.id; //這是使用者的資料代碼, 可存在用戶端
             json.msg = "ok,資料己建立";
             res.json(json);
+            //david, 20170116
+            signupSuccessEmail(email, email, pwd);
 
         }).catch(function(err) {
             console.log(err);
@@ -88,6 +90,8 @@ router.post('/mod', function(req, res) {
     });
 
 });
+
+
 
 router.post('/login', function(req, res) {
 
@@ -207,6 +211,36 @@ router.get('/id/:id', function(req, res) {
 
 });
 
+var getEmailByAccId = function (accid) {
+    //var json = {
+    //    id: 0,
+    //    msg: "沒有資料",
+    //    err: "",
+    //    email: "",
+    //    pwd: ""
+    //}
+
+    return models.Account.findOne({
+        where: {
+            id: accid
+        }
+    }).then(function(data) {
+        //console.log(data);
+        if (data != null) {
+            return data.email;
+        } else {
+            return '';
+        }
+
+    }).catch(function(err) {
+        console.log(err);
+        json.err = "sql";
+        json.msg = err;
+        res.json(json);
+    });
+};
+
+
 router.get('/has/:email', function(req, res) {
 
     var email = req.params.email;
@@ -275,4 +309,9 @@ router.get('/all', function(req, res) {
 
 });
 
-module.exports = router;
+//module.exports = router;
+//david, 20170116
+module.exports = {
+    account: router,
+    getEmailByAccId: getEmailByAccId
+};
