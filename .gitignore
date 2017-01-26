@@ -4,5 +4,5 @@ npm-debug.log
 .bash_profile
 zips
 public
-mail.js
+./mail.js
 cal.sql
