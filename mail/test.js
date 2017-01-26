@@ -13,13 +13,13 @@ nodemailer.SMTP = {
 */
 
 nodemailer.SMTP = {
-      host: "a2plcpnl0572.prod.iad2.secureserver.net",
-      port: 465,
-      ssl: true,
-      user: 'service@mycloudedlife.com',
-      pass: 'a94139413C',
-      use_authentication: true
-  }
+    host: "a2plcpnl0572.prod.iad2.secureserver.net",
+    port: 465,
+    ssl: true,
+    user: 'service@mycloudedlife.com',
+    pass: 'a94139413C',
+    use_authentication: true
+}
 
 //create reusable transporter object using SMTP transport
 var transporter = nodemailer.createTransport();
@@ -30,19 +30,16 @@ var mailOptions = {
     to: 'cn27529@gmail.com',
     subject: '信件測試-20170126',
     text: '信件內容-20170126',
-    html: '<h1>Hello world 🐴</h1>', // html body
-    attachments: [{ // utf-8 string as an attachment
-        filename: 'README.md',
-        content: 'README.md'
-    }, ]
+    html: '<h1>Hello world 🐴</h1>'
 };
 
 //寄出
 transporter.sendMail(mailOptions, function(err, info) {
     //info是成功信件相關資訊;err是失敗相關資訊
-    if(err){
-        return console.log(err);
+    if (err) {
+        console.log(err);
+    } else {
+        console.log('Server is ready to take our messages');
+        console.log(err);
     }
-    //console.log('Message sent: ' + info.response);
-    return console.log(info);
 });
