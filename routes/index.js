@@ -4,7 +4,8 @@ var router = express.Router();
 var cool = require('cool-ascii-faces');
 
 router.get('/', function(req, res) {
-    res.send(cool());
+    let hello = '<h1>'+cool()+'</h1>';
+    res.send(hello);
     console.log(cool());
 });
 
