@@ -39,13 +39,13 @@
 
         });
 
-
         //刪除圖檔案
         function removefile(filename, targetObj) {
             //alert(filename); alert(targetObj);
             if (filename == '') return;
             $.get("../file/del/" + filename, function(data) {
                 //alert(data.err);
+                console.log(data);
                 if (data.err == '') $(targetObj).hide(1000);
             });
         }
