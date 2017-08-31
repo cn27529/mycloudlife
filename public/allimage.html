@@ -30,7 +30,7 @@
                 data.files.map(function(file) {
                     //console.log(file.name);
                     //$('.listimage').append('<div title=' + file.name + ' style="float:left;"><img width="50%" title=' + file.name + ' src=' + file.name + '><div>');
-                    $('.listimage').append('<div><img ondblclick="removefile(\'' + file.name + '\',this);" class="floatimage" title=' + file.name + ' src=images/' + file.name + '></div>');
+                    $('.listimage').append('<div><img ondblclick="removefile(\'' + file.name + '\',this);" class="floatimage" title="' + file.name + '" src="images/' + file.name + '"></div>');
                     //ondblclick="removefile(' + file.name + ', this);"
                     //ondblclick = "removefile();"
                     //
