@@ -11,7 +11,7 @@ var path = require('path');
 
 var multer = require('multer'); //https://github.com/expressjs/multer
 var upload = multer({
-    dest: 'public/images/'
+    dest: '/public/images/'
 });
 
 // var storage = multer.diskStorage({
