@@ -11,7 +11,7 @@ var path = require('path');
 
 var multer = require('multer'); //https://github.com/expressjs/multer
 var upload = multer({
-    dest: '/public/images/'
+    dest: 'public/images/'
 });
 
 // var storage = multer.diskStorage({
@@ -27,8 +27,10 @@ var upload = multer({
 // var upload = multer({ storage: storage })
 
 router.get('/', function(req, res) {
+
     res.send(cool());
     console.log(cool());
+
 });
 
 //router.post('/upload', function(req, res) {
@@ -47,13 +49,20 @@ router.post('/upload', upload.single('file'), function(req, res, next) {
         path: 'public/images/cecaf4b376629d34593efbf0d4af20e8',
         size: 86041
     }
+
     var json = {
         msg: "ok,己上傳",
         err: "",
         filepath: req.file.path,
+        destination: req.file.destination,
+        filename: req.file.filename,
         size: req.file.size
     };
-    res.send(json);
+
+    //res.send(json);
+
+    //
+    res.redirect('../public/image.html?filepath=' + req.file.destination + req.file.filename);
 
 });
 
